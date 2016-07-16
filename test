@@ -1,0 +1,4 @@
+#!/bin/sh
+
+source bin/activate
+dotenv -f .env.test py.test tests/ $@
