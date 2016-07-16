@@ -1,0 +1,678 @@
+{
+  "status": 200,
+  "$schema": "TODO schema",
+  "data": [
+    {
+      "data": {
+        "id": "554b45441f6fd628073eef1b",
+        "title": "Формула Кино Заневский Каскад",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru/"
+        ],
+        "address": "Заневский просп., 67/2, ТК «Заневский Каскад»",
+        "ticket": {
+          "id": "140",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Ладожская",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Новочеркасская",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Проспект Большевиков",
+              "colors": [
+                "#ff7f00"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (800) 250-80-25 (автоинформатор)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551798501f7d154a12ddf259",
+        "title": "Формула Кино Меркурий",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru/"
+        ],
+        "address": "ул. Савушкина, 141, ТРК «Меркурий»",
+        "ticket": {
+          "id": "136",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Старая Деревня",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Комендантский проспект",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Крестовский остров",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 448-44-48, +7 (812) 600-09-06 (call-центр)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "5517984e1f7d154a12ddf24b",
+        "title": "Формула Кино Нео",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru"
+        ],
+        "address": "Большой просп. В.О., 68/Б, ТК «Балтийский», 1 этаж",
+        "ticket": {
+          "id": "141",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Василеостровская",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Приморская",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Спортивная",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (800) 250-80-25 (автоинформатор)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "5517984e1f7d154a12ddf24a",
+        "title": "Формула Кино Норд",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru/"
+        ],
+        "address": "просп. Просвещения, 19, ТК «Норд», 3 этаж",
+        "ticket": {
+          "id": "142",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Проспект Просвещения",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Парнас",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Озерки",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (800) 250-80-25 (автоинформатор)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554c82f5179b11665cabdb1b",
+        "title": "Формула Кино Питерлэнд",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru"
+        ],
+        "address": "Приморский просп., 72",
+        "ticket": {
+          "id": "137",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Старая Деревня",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Крестовский остров",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Приморская",
+              "colors": [
+                "#038f53"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (800) 250-80-25 (автоинформатор)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "55424ddc1f6fd64c8c37932f",
+        "title": "Формула Кино Сити Молл",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.kronverkcinema.ru"
+        ],
+        "address": "Коломяжский просп., 17а, ТРЦ «Сити Молл», 4 этаж",
+        "ticket": {
+          "id": "138",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Пионерская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Удельная",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Чёрная речка",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 448-44-48 (автоинформатор), +7 (812) 600-09-06 (call-центр)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551797ea1f7d154a12ddf058",
+        "title": "Формула кино Академ Парк",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru"
+        ],
+        "address": "Гражданский просп., 41",
+        "ticket": {
+          "id": "297",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Академическая",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Политехническая",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Площадь Мужества",
+              "colors": [
+                "#cc0000"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (800) 250-80-25"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "5517980b1f7d154a12ddf109",
+        "title": "Формула кино Лондон Молл",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru/"
+        ],
+        "address": "ул. Коллонтай, 3, ТРК «Лондон Молл», 4 этаж",
+        "ticket": {
+          "id": "135",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Проспект Большевиков",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Улица Дыбенко",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Ладожская",
+              "colors": [
+                "#ff7f00"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (800) 250-80-25 (автоинформатор)",
+          "+7 (812) 600-09-06 (call-центр)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554b45601f6fd628083eee1e",
+        "title": "Формула кино Родео Драйв",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.formulakino.ru"
+        ],
+        "address": "просп. Культуры, 1, ТРК «Родео Драйв», 3 этаж",
+        "ticket": {
+          "id": "298",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Озерки",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Политехническая",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Проспект Просвещения",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 448-44-48, +7 (812) 600-09-06 (call-центр)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551798471f7d154a12ddf22f",
+        "title": "Художественный",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.poravkino.ru"
+        ],
+        "address": "Невский просп., 67",
+        "metro": {
+          "stations": [
+            {
+              "name": "Маяковская",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Площадь Восстания",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Владимирская",
+              "colors": [
+                "#cc0000"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 314-00-45"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    }
+  ],
+  "paging": {
+    "total": 70,
+    "limit": 20,
+    "offset": 60
+  }
+}

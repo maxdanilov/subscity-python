@@ -12,6 +12,7 @@ class YandexAfishaParser(object):
 
     @staticmethod
     def fetch(url):
+        print url
         return urllib.urlopen(url).read()
 
     @staticmethod
@@ -50,13 +51,12 @@ class YandexAfishaParser(object):
                 data = cinema['data']
                 metro = ', '.join([station['name'] for station in data['metro']['stations']])
                 result.append({'api_id': data['id'],
-                               'title': data['title'],
-                               'address': data['address'],
-                               'phone': ', '.join(data['phones']),
+                               'title': data['title'].encode('utf-8'),
+                               'address': data['address'].encode('utf-8'),
+                               'phone': ', '.join(data['phones']).encode('utf-8'),
                                'url': ', '.join(data['links']),
-                               'metro': metro,
-                               'city': city,
-                               'fetch_all': False})
+                               'metro': metro.encode('utf-8'),
+                               'city': city})
             offset += limit
         return result
 

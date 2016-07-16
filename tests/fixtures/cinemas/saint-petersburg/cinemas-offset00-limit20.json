@@ -1,0 +1,1285 @@
+{
+  "status": 200,
+  "$schema": "TODO schema",
+  "data": [
+    {
+      "data": {
+        "id": "5735eebb100c0a775703e656",
+        "title": "Angleterre Cinema Lounge",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.angleterrecinema.ru/"
+        ],
+        "address": "ул. М. Морская, 24, отель «Англетер»",
+        "ticket": {
+          "id": "174",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Адмиралтейская",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Садовая",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Сенная площадь",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 494-59-90, +7 981-870-77-57"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551797fd1f7d154a12ddf0bb",
+        "title": "Cinema Grand Palace",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.cinemagrandpalace.ru"
+        ],
+        "address": "ул. Итальянская, 15",
+        "ticket": {
+          "id": "314",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Гостиный двор",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Невский проспект",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Адмиралтейская",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 449-94-99"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "5580a805cc1c72106ab34338",
+        "title": "FFF — Flicks for Friends",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://facebook.com/648120528633096"
+        ],
+        "address": "ул. 8-я Советская, 4",
+        "metro": {
+          "stations": [
+            {
+              "name": "Площадь Восстания",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Чернышевская",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Маяковская",
+              "colors": [
+                "#038f53"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (905) 219-42-54"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551797dc1f7d154a12ddf013",
+        "title": "Mori Cinema",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.mori-cinema.ru/"
+        ],
+        "address": "Индустриальный просп., 24, литера А, ТРК «Июнь», 3 этаж",
+        "ticket": {
+          "id": "235",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Ладожская",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Проспект Большевиков",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Новочеркасская",
+              "colors": [
+                "#ff7f00"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 635-65-05"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "55f64e244336ff2d7abb5071",
+        "title": "Roof Cinema",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.modclub.info/"
+        ],
+        "address": "наб. канала Грибоедова, 7",
+        "metro": {
+          "stations": [
+            {
+              "name": "Невский проспект",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Гостиный двор",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Адмиралтейская",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 712-07-34"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551797ee1f7d154a12ddf070",
+        "title": "SkyFilm",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.pulkovotri.ru"
+        ],
+        "address": "ул. Шереметьевская, 15, ТРК «Пулково 3»",
+        "ticket": {
+          "id": "586",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Звёздная",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Купчино",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Московская",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 615-11-00 (администратор), 458-52-85 (автоответчик), 458-52-50 (администратор)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "55265a8e179b1124e0fbffe1",
+        "title": "Аврора",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.avrora.spb.ru"
+        ],
+        "address": "Невский просп., 60",
+        "ticket": {
+          "id": "585",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Гостиный двор",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Невский проспект",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Достоевская",
+              "colors": [
+                "#ff7f00"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 942-80-20 (заказ билетов), +7 (812) 315-52-54 (автоответчик)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551913201f7d152cc737a373",
+        "title": "Аврора (Петродворец)",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.peterburg-kino.spb.ru/aurora"
+        ],
+        "address": "г. Петродворец (Петергоф), Санкт-Петербургский просп., 17",
+        "metro": {
+          "stations": []
+        },
+        "phones": [
+          "+7 (812) 450-54-54"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "55795bd5100c0a7ecc857232",
+        "title": "Великан Парк",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://velikan-park.ru"
+        ],
+        "address": "Александровский парк, 4/3, литера А",
+        "ticket": {
+          "id": "295",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Горьковская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Петроградская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Чкаловская",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 676-61-51"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551797ee1f7d154a12ddf06f",
+        "title": "Восход",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://voshodkino.ru/"
+        ],
+        "address": "ул. Пограничника Гарькавого, 22/1",
+        "metro": {
+          "stations": []
+        },
+        "phones": [
+          "+7 (812) 738-82-00, +7 (812) 744-61-00"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "55d63ec53775362f745c79c2",
+        "title": "Дом Кино",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.domkino.spb.ru"
+        ],
+        "address": "ул. Караванная, 12",
+        "metro": {
+          "stations": [
+            {
+              "name": "Гостиный двор",
+              "colors": [
+                "#038f53"
+              ]
+            },
+            {
+              "name": "Невский проспект",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Маяковская",
+              "colors": [
+                "#038f53"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 314-56-14 (бронирование билетов), +7 (812) 314-06-38 (автоинформатор)"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551bc46b1f6fd6136ce5bea2",
+        "title": "Дружба",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.peterburg-kino.spb.ru/druzba"
+        ],
+        "address": "Московский просп., 202",
+        "metro": {
+          "stations": [
+            {
+              "name": "Парк Победы",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Московская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Электросила",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 373-30-61"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "551798191f7d154a12ddf154",
+        "title": "Заневский",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.peterburg-kino.spb.ru/zanevsky"
+        ],
+        "address": "Новочеркасский просп., 47/1",
+        "metro": {
+          "stations": [
+            {
+              "name": "Новочеркасская",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Ладожская",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Площадь Александра Невского 1",
+              "colors": [
+                "#038f53"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 444-37-85"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554b45321f6fd628073eef1a",
+        "title": "Каро 5 Невский-2",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "просп. Большевиков, 18, ТРК «Невский 2», 4 этаж",
+        "ticket": {
+          "id": "126",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Улица Дыбенко",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Проспект Большевиков",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Ладожская",
+              "colors": [
+                "#ff7f00"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 333-16-87"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554c7139179b116662abdb25",
+        "title": "Каро 5 на Байконурской",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "ул. Байконурская, 14, литера А, ТРК «Континент»",
+        "ticket": {
+          "id": "125",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Комендантский проспект",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Пионерская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Старая Деревня",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 333-39-82"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554c7033179b116661abdb16",
+        "title": "Каро 6 на Пионерской",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "Коломяжский просп., 19, корп. 2, ТЦ «Капитолий», 3 этаж",
+        "ticket": {
+          "id": "127",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Пионерская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Удельная",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Комендантский проспект",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 336-85-49"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554b45261f6fd628063eee83",
+        "title": "Каро 7 Атмосфера",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "Комендантская пл., 1А, ТРК «Атмосфера», 4 этаж",
+        "ticket": {
+          "id": "128",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Комендантский проспект",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Старая Деревня",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Пионерская",
+              "colors": [
+                "#0099cc"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 459-95-25"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554b43e41f6fd6280a3eeed7",
+        "title": "Каро 7 Лиговъ",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "Лиговский просп., 153, ТЦ «Лиговъ»",
+        "ticket": {
+          "id": "129",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Обводный канал",
+              "colors": [
+                "#73057d"
+              ]
+            },
+            {
+              "name": "Лиговский проспект",
+              "colors": [
+                "#ff7f00"
+              ]
+            },
+            {
+              "name": "Звенигородская",
+              "colors": [
+                "#73057d"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 602-01-32"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554b455b1f6fd6280a3eeedf",
+        "title": "Каро 7 на Стачек",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "просп. Стачек, 99, ТРК «Континент»",
+        "ticket": {
+          "id": "130",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Автово",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Ленинский проспект",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Проспект Ветеранов",
+              "colors": [
+                "#cc0000"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 333-12-92"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "id": "554c71b6179b11665babdaf5",
+        "title": "Каро 9 Варшавский экспресс",
+        "city": {
+          "id": "saint-petersburg",
+          "name": "Санкт-Петербург",
+          "geoid": 2,
+          "timezone": "Europe/Moscow"
+        },
+        "links": [
+          "http://www.karofilm.ru"
+        ],
+        "address": "наб. Обводного канала, 118, ТРК «Варшавский экспресс»",
+        "ticket": {
+          "id": "131",
+          "price": null
+        },
+        "metro": {
+          "stations": [
+            {
+              "name": "Фрунзенская",
+              "colors": [
+                "#0099cc"
+              ]
+            },
+            {
+              "name": "Балтийская",
+              "colors": [
+                "#cc0000"
+              ]
+            },
+            {
+              "name": "Технологический институт-1",
+              "colors": [
+                "#cc0000"
+              ]
+            }
+          ]
+        },
+        "phones": [
+          "+7 (812) 333-10-93"
+        ],
+        "tags": [
+          {
+            "id": "5575d418cc1c724f5a8e111e",
+            "code": "cinema_theater",
+            "type": "place",
+            "status": "approved",
+            "name": "Кинотеатр",
+            "nameCases": {
+              "acc": "в кинотеатр"
+            }
+          }
+        ],
+        "type": {
+          "id": "5575d418cc1c724f5a8e111e",
+          "code": "cinema_theater",
+          "type": "place",
+          "status": "approved",
+          "name": "Кинотеатр",
+          "nameCases": {
+            "acc": "в кинотеатр"
+          }
+        }
+      }
+    }
+  ],
+  "paging": {
+    "total": 70,
+    "limit": 20,
+    "offset": 0
+  }
+}
