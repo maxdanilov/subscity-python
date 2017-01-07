@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from sqlalchemy import (
     Column,
     Integer,
@@ -10,9 +9,10 @@ from sqlalchemy import (
 
 from subscity.main import DB
 
+
 class Cinema(DB.Model):  # pylint: disable=no-init
     __tablename__ = 'cinemas'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
     api_id = Column(String(64), primary_key=True)  # was cinema_id before
     city_id = Column(Integer, nullable=False)
     name = Column(String(255), nullable=False)
