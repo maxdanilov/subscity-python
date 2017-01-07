@@ -8,8 +8,9 @@ from sqlalchemy import (
     Boolean
 )
 
+from subscity.main import DB
 
-class Cinema(object):  # pylint: disable=no-init
+class Cinema(DB.Model):  # pylint: disable=no-init
     __tablename__ = 'cinemas'
     id = Column(Integer, primary_key=True)
     api_id = Column(String(64), primary_key=True)  # was cinema_id before
