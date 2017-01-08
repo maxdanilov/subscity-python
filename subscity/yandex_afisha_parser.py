@@ -1,9 +1,5 @@
 import json
-import urllib
-
-
-def print_utf8(string):
-    print string.encode('utf-8')
+import urllib.request
 
 
 class YandexAfishaParser(object):
@@ -12,8 +8,8 @@ class YandexAfishaParser(object):
 
     @staticmethod
     def fetch(url):
-        print url
-        return urllib.urlopen(url).read()
+        print(url)
+        return urllib.request.urlopen(url).read()
 
     @staticmethod
     def url_movies(limit, offset, city):
@@ -51,11 +47,11 @@ class YandexAfishaParser(object):
                 data = cinema['data']
                 metro = ', '.join([station['name'] for station in data['metro']['stations']])
                 result.append({'api_id': data['id'],
-                               'title': data['title'].encode('utf-8'),
-                               'address': data['address'].encode('utf-8'),
-                               'phone': ', '.join(data['phones']).encode('utf-8'),
+                               'title': data['title'],
+                               'address': data['address'],
+                               'phone': ', '.join(data['phones']),
                                'url': ', '.join(data['links']),
-                               'metro': metro.encode('utf-8'),
+                               'metro': metro,
                                'city': city})
             offset += limit
         return result

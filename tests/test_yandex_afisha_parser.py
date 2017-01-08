@@ -42,7 +42,7 @@ class TestYandexAfishaParser(object):
             def read(self):
                 return 'fake-val'
 
-        mock_url_open = mocker.patch('urllib.urlopen', return_value=UrlOpenResultFake())
+        mock_url_open = mocker.patch('urllib.request.urlopen', return_value=UrlOpenResultFake())
         assert Yap.fetch('some-url') == 'fake-val'
         mock_url_open.assert_called_once_with('some-url')
 
@@ -66,21 +66,21 @@ class TestYandexAfishaParser(object):
                                           'tag=cinema_theater&city=saint-petersburg')])
         assert len(result) == 70
         assert result[0] == {
-            'api_id': '5735eebb100c0a775703e656',
-            'title': 'Angleterre Cinema Lounge',
-            'address': 'ул. М. Морская, 24, отель «Англетер»',
-            'phone': '+7 (812) 494-59-90, +7 981-870-77-57',
-            'url': 'http://www.angleterrecinema.ru/',
-            'metro': 'Адмиралтейская, Садовая, Сенная площадь',
-            'city': 'saint-petersburg'
+            'api_id': u'5735eebb100c0a775703e656',
+            'title': u'Angleterre Cinema Lounge',
+            'address': u'ул. М. Морская, 24, отель «Англетер»',
+            'phone': u'+7 (812) 494-59-90, +7 981-870-77-57',
+            'url': u'http://www.angleterrecinema.ru/',
+            'metro': u'Адмиралтейская, Садовая, Сенная площадь',
+            'city': u'saint-petersburg'
         }
 
         assert result[60] == {
-            'api_id': '554b45441f6fd628073eef1b',
-            'title': 'Формула Кино Заневский Каскад',
-            'address': 'Заневский просп., 67/2, ТК «Заневский Каскад»',
-            'phone': '+7 (800) 250-80-25 (автоинформатор)',
-            'url': 'http://www.formulakino.ru/',
-            'metro': 'Ладожская, Новочеркасская, Проспект Большевиков',
-            'city': 'saint-petersburg'
+            'api_id': u'554b45441f6fd628073eef1b',
+            'title': u'Формула Кино Заневский Каскад',
+            'address': u'Заневский просп., 67/2, ТК «Заневский Каскад»',
+            'phone': u'+7 (800) 250-80-25 (автоинформатор)',
+            'url': u'http://www.formulakino.ru/',
+            'metro': u'Ладожская, Новочеркасская, Проспект Большевиков',
+            'city': u'saint-petersburg'
         }
