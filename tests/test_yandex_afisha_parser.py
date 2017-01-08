@@ -14,11 +14,11 @@ class TestYandexAfishaParser(object):
 
     @parametrize('limit, offset, city, expected',
                  [(20, 40, 'moscow',
-                   'https://afisha.yandex.ru/api/places?limit=20&offset=40&'
-                   'tag=cinema_theater&city=moscow'),
+                   'https://afisha.yandex.ru/api/events/cinema/places?limit=20&offset=40&'
+                   'city=moscow'),
                   (11, '42', 'saint-petersburg',
-                   'https://afisha.yandex.ru/api/places?limit=11&offset=42&'
-                   'tag=cinema_theater&city=saint-petersburg')])
+                   'https://afisha.yandex.ru/api/events/cinema/places?limit=11&offset=42&'
+                   'city=saint-petersburg')])
     def test_url_places(self, limit, offset, city, expected):
         assert Yap.url_places(limit, offset, city) == expected
 
@@ -56,31 +56,35 @@ class TestYandexAfishaParser(object):
                                       self._fread(fixtures_path + 'cinemas-offset60-limit20.json')])
         result = Yap.get_cinemas('saint-petersburg')
         assert mock_fetch.call_count == 4
-        mock_fetch.assert_has_calls([call('https://afisha.yandex.ru/api/places?limit=20&offset=0&'
-                                          'tag=cinema_theater&city=saint-petersburg'),
-                                     call('https://afisha.yandex.ru/api/places?limit=20&offset=20&'
-                                          'tag=cinema_theater&city=saint-petersburg'),
-                                     call('https://afisha.yandex.ru/api/places?limit=20&offset=40&'
-                                          'tag=cinema_theater&city=saint-petersburg'),
-                                     call('https://afisha.yandex.ru/api/places?limit=20&offset=60&'
-                                          'tag=cinema_theater&city=saint-petersburg')])
-        assert len(result) == 70
+        mock_fetch.assert_has_calls([call('https://afisha.yandex.ru/api/events/cinema/places?'
+                                          'limit=20&offset=0&city=saint-petersburg'),
+                                     call('https://afisha.yandex.ru/api/events/cinema/places?'
+                                          'limit=20&offset=20&city=saint-petersburg'),
+                                     call('https://afisha.yandex.ru/api/events/cinema/places?'
+                                          'limit=20&offset=40&city=saint-petersburg'),
+                                     call('https://afisha.yandex.ru/api/events/cinema/places?'
+                                          'limit=20&offset=60&city=saint-petersburg')])
+        assert len(result) == 63
         assert result[0] == {
-            'api_id': u'5735eebb100c0a775703e656',
+            'api_id': u'580b58f18323013d82c1e980',
             'title': u'Angleterre Cinema Lounge',
-            'address': u'ул. М. Морская, 24, отель «Англетер»',
-            'phone': u'+7 (812) 494-59-90, +7 981-870-77-57',
-            'url': u'http://www.angleterrecinema.ru/',
+            'address': u'ул. Малая Морская, 24, отель «Англетер»',
+            'phone': u'+7 (812) 494-59-90, +7 (981) 870-77-57',
+            'url': u'http://www.angleterrecinema.ru',
             'metro': u'Адмиралтейская, Садовая, Сенная площадь',
-            'city': u'saint-petersburg'
+            'city': u'saint-petersburg',
+            'latitude': 59.933946,
+            'longitude': 30.308878
         }
 
-        assert result[60] == {
+        assert result[54] == {
             'api_id': u'554b45441f6fd628073eef1b',
             'title': u'Формула Кино Заневский Каскад',
             'address': u'Заневский просп., 67/2, ТК «Заневский Каскад»',
             'phone': u'+7 (800) 250-80-25 (автоинформатор)',
             'url': u'http://www.formulakino.ru/',
-            'metro': u'Ладожская, Новочеркасская, Проспект Большевиков',
-            'city': u'saint-petersburg'
+            'metro': u'Ладожская, Новочеркасская',
+            'city': u'saint-petersburg',
+            'latitude': 59.933032,
+            'longitude': 30.437617
         }

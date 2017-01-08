@@ -26,8 +26,7 @@ class YandexAfishaParser(object):
         if city not in YandexAfishaParser.CITIES:
             raise ValueError('city must be one of ' + str(YandexAfishaParser.CITIES))
         url = YandexAfishaParser.BASE_URL_API
-        url += 'places?limit={}&offset={}&tag=cinema_theater&city={}'. \
-            format(limit, offset, city)
+        url += 'events/cinema/places?limit={}&offset={}&city={}'.format(limit, offset, city)
         return url
 
     @staticmethod
@@ -45,14 +44,17 @@ class YandexAfishaParser(object):
 
             for cinema in data['data']:
                 data = cinema['data']
-                metro = ', '.join([station['name'] for station in data['metro']['stations']])
+                metro = ', '.join([station['name'] for station in data['metro']])
                 result.append({'api_id': data['id'],
                                'title': data['title'],
                                'address': data['address'],
-                               'phone': ', '.join(data['phones']),
+                               'phone': ', '.join(sum([x['numbers'] for x in data['phones']], [])),
                                'url': ', '.join(data['links']),
                                'metro': metro,
-                               'city': city})
+                               'city': city,
+                               'latitude': data['coordinates']['latitude'],
+                               'longitude': data['coordinates']['longitude']
+                               })
             offset += limit
         return result
 
