@@ -53,8 +53,7 @@ class YandexAfishaParser(object):
                                'metro': metro,
                                'city': city,
                                'latitude': data['coordinates']['latitude'],
-                               'longitude': data['coordinates']['longitude']
-                               })
+                               'longitude': data['coordinates']['longitude']})
             offset += limit
         return result
 

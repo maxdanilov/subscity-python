@@ -23,6 +23,6 @@ virtualenv -p python3 .
 ## Running
 
 ```
-FLASK_APP=subscity/main.py ./run python -m flask run
+./run python -m flask run
 ```
 
