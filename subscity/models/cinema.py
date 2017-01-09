@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from sqlalchemy import (
     Column,
     Integer,
@@ -7,12 +7,12 @@ from sqlalchemy import (
     Boolean
 )
 
-from subscity.main import DB
+from subscity.models.base import Base
 
 
-class Cinema(DB.Model):  # pylint: disable=no-init
+class Cinema(Base):  # pylint: disable=no-init
     __tablename__ = 'cinemas'
-    id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
+    id = Column(Integer, autoincrement=True, primary_key=True)  # pylint: disable=invalid-name
     api_id = Column(String(64), primary_key=True)  # was cinema_id before
     city_id = Column(Integer, nullable=False)
     name = Column(String(255), nullable=False)
@@ -21,8 +21,9 @@ class Cinema(DB.Model):  # pylint: disable=no-init
     url = Column(String(255), nullable=True)
     phone = Column(String(255), nullable=True)
     fetch_all = Column(Boolean, default=False, nullable=False)
-    created_at = Column(DateTime, default=datetime.now, nullable=False)
-    updated_at = Column(DateTime, onupdate=datetime.now, nullable=False)
+    created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
+    updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
+                        nullable=False)
 
     @staticmethod
     def get(data):
