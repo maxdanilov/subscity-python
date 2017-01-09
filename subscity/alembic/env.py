@@ -11,7 +11,6 @@ DB_NAME = 'subscity'
 
 logger = logging.getLogger('alembic.runtime.migration')
 logger.setLevel(logging.INFO)
-USE_TWOPHASE = False
 config = context.config
 target_metadata = {DB_NAME: ModelsBase.metadata}
 
@@ -31,11 +30,7 @@ def run_migrations_online():
     for name, rec in engines.items():
         engine = rec['engine']
         rec['connection'] = conn = engine.connect()
-
-        if USE_TWOPHASE:
-            rec['transaction'] = conn.begin_twophase()
-        else:
-            rec['transaction'] = conn.begin()
+        rec['transaction'] = conn.begin()
 
     try:
         for name, rec in engines.items():
@@ -46,10 +41,6 @@ def run_migrations_online():
                 target_metadata=target_metadata.get(name)
             )
             context.run_migrations(engine_name=name)
-
-        if USE_TWOPHASE:
-            for rec in engines.values():
-                rec['transaction'].prepare()
 
         for rec in engines.values():
             rec['transaction'].commit()

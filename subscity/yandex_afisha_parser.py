@@ -58,6 +58,6 @@ class YandexAfishaParser(object):
         return result
 
 
-if __name__ == '__main__':
-    CINEMAS = YandexAfishaParser.get_cinemas('moscow')
-    # CINEMAS = YandexAfishaParser.get_cinemas('saint-petersburg')
+# if __name__ == '__main__':
+#     CINEMAS = YandexAfishaParser.get_cinemas('moscow')
+#     CINEMAS = YandexAfishaParser.get_cinemas('saint-petersburg')

@@ -34,10 +34,7 @@ def setup_clean_db(app):
     metadata.reflect()
     for table in metadata.tables.values():
         for fk in table.foreign_keys:
-            try:
-                engine.execute(DropConstraint(fk.constraint))
-            except ProgrammingError:
-                pass
+            engine.execute(DropConstraint(fk.constraint))
     metadata.drop_all()
     apply_migrations()
 
