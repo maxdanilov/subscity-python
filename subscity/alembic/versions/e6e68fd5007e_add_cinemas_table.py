@@ -1,7 +1,7 @@
 """add_cinemas_table
 
 Revision ID: e6e68fd5007e
-Revises: 
+Revises:
 Create Date: 2017-01-09 20:48:05.974076
 
 """
