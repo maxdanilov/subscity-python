@@ -8,42 +8,45 @@ class TestModelCinema(object):
         assert len(result) == 0
 
     def test_db_add(self, dbsession):
-        # from tests.utils import mock_datetime
-        # with mock_datetime(datetime.datetime(2017, 1, 2, 3, 4, 5)):
         from subscity.models.cinema import Cinema
+        import datetime
         c = Cinema(city_id=1,
                    api_id='deadbeef',
-                   name='Cinema')
+                   name='Cinema',
+                   url='url',
+                   phone='phone',
+                   created_at=datetime.datetime(2017, 1, 1),
+                   updated_at=datetime.datetime(2017, 1, 1))
         dbsession.add(c)
         dbsession.commit()
         result = dbsession.query(Cinema).all()
         assert len(result) == 1
 
         res = result[0].to_dict()
-        res.pop('created_at')
-        res.pop('updated_at')
-        created_at = result[0].created_at
-        updated_at = result[0].updated_at
-        assert (updated_at - created_at).total_seconds() < 0.01
         assert res == {'id': 1,
                        'api_id': 'deadbeef',
                        'city_id': 1,
                        'name': 'Cinema',
                        'address': None,
                        'metro': None,
-                       'url': None,
-                       'phone': None,
-                       'fetch_all': False}
+                       'url': 'url',
+                       'phone': 'phone',
+                       'fetch_all': False,
+                       'created_at': '2017-01-01T00:00:00',
+                       'updated_at': '2017-01-01T00:00:00'}
 
         c.name = 'New Näme ъ'
         c.metro = 'metro'
+        c.fetch_all = True
         dbsession.add(c)
         dbsession.commit()
         result2 = dbsession.query(Cinema).all()
+
         assert len(result2) == 1
         created_at2 = result2[0].created_at
         updated_at2 = result2[0].updated_at
         assert result2[0].name == 'New Näme ъ'
         assert result2[0].metro == 'metro'
-        assert created_at2 == created_at
-        assert updated_at2 > updated_at
+        assert result2[0].fetch_all is True
+        assert created_at2 == datetime.datetime(2017, 1, 1)
+        assert updated_at2 > datetime.datetime(2017, 1, 1)
