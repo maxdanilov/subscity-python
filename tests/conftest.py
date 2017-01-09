@@ -20,7 +20,6 @@ def apply_migrations():
 def app():
     # Setting up a flask test client
     APP.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
-    # APP.config['SQLALCHEMY_BINDS'] = {'subscity-test': os.environ.get('DB_URI')}
     APP.testing = True
     return APP
 
@@ -46,7 +45,7 @@ def setup_clean_db(app):
 @pytest.yield_fixture
 def dbsession(request, monkeypatch, setup_clean_db):
     from subscity.main import DB
-    # Prevent the setup_smartb_dbsession from closing (make it a no-op) and
+    # Prevent the dbsession from closing (make it a no-op) and
     # committing (redirect to flush() instead)
     session = DB.session
     monkeypatch.setattr(session, 'commit', session.flush)
