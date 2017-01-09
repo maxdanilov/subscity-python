@@ -4,8 +4,8 @@
 
 ```
 virtualenv -p python3 .
-./run pip install -r requirements.txt
-./run pip install -e .
+./run pip3 install -r requirements.txt
+./run pip3 install -e .
 ```
 
 ## Tests
