@@ -47,7 +47,7 @@ class TestYandexAfishaParser(object):
         mock_url_open.assert_called_once_with('some-url')
 
     def test_get_cinemas(self, mocker):
-        fixtures_path = 'fixtures/cinemas/saint-petersburg/'
+        fixtures_path = '../fixtures/cinemas/saint-petersburg/'
         mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
                                   side_effect=[
                                       self._fread(fixtures_path + 'cinemas-offset00-limit20.json'),

@@ -1,2 +1,2 @@
 [run]
-omit = subscity/alembic/*
+omit = subscity/alembic/*,*__init__*

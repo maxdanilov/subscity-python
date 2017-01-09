@@ -24,6 +24,11 @@ def app():
     return APP
 
 
+@pytest.fixture
+def client(app):
+    return app.test_client()
+
+
 @pytest.fixture(scope='session')
 def setup_clean_db(app):
     # Clear out any existing tables
@@ -32,9 +37,9 @@ def setup_clean_db(app):
     engine = DB.get_engine(APP)
     metadata = MetaData(engine)
     metadata.reflect()
-    for table in metadata.tables.values():
-        for fk in table.foreign_keys:
-            engine.execute(DropConstraint(fk.constraint))
+    # for table in metadata.tables.values():
+    #     for fk in table.foreign_keys:
+    #         engine.execute(DropConstraint(fk.constraint))
     metadata.drop_all()
     apply_migrations()
 

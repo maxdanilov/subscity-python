@@ -3,16 +3,11 @@ import datetime
 from sqlalchemy import DateTime
 
 from subscity.main import DB
+from subscity.utils import format_datetime
 
 
 class Base(DB.Model):
     __abstract__ = True
-
-    @staticmethod
-    def format_datetime(date_time):
-        if not date_time:
-            return None
-        return date_time.isoformat()
 
     def to_dict(self, stringify_datetime=True):  # pylint: disable=R0912
         result = {}
@@ -26,5 +21,5 @@ class Base(DB.Model):
             for column_name in datetime_columns:
                 value = getattr(self, column_name)
                 if isinstance(value, datetime.datetime):
-                    result[column_name] = self.format_datetime(value)
+                    result[column_name] = format_datetime(value)
         return result
