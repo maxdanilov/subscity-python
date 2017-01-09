@@ -10,7 +10,7 @@ class TestModelCinema(object):
     def test_db_add(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c = Cinema(city_id=1,
+        c = Cinema(city='moscow',
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
@@ -25,7 +25,7 @@ class TestModelCinema(object):
         res = result[0].to_dict()
         assert res == {'id': 1,
                        'api_id': 'deadbeef',
-                       'city_id': 1,
+                       'city': 'moscow',
                        'name': 'Cinema',
                        'address': None,
                        'metro': None,
@@ -40,13 +40,11 @@ class TestModelCinema(object):
         c.fetch_all = True
         dbsession.add(c)
         dbsession.commit()
-        result2 = dbsession.query(Cinema).all()
+        result_2 = dbsession.query(Cinema).all()
 
-        assert len(result2) == 1
-        created_at2 = result2[0].created_at
-        updated_at2 = result2[0].updated_at
-        assert result2[0].name == 'New Näme ъ'
-        assert result2[0].metro == 'metro'
-        assert result2[0].fetch_all is True
-        assert created_at2 == datetime.datetime(2017, 1, 1)
-        assert updated_at2 > datetime.datetime(2017, 1, 1)
+        assert len(result_2) == 1
+        assert result_2[0].name == 'New Näme ъ'
+        assert result_2[0].metro == 'metro'
+        assert result_2[0].fetch_all is True
+        assert result_2[0].created_at == datetime.datetime(2017, 1, 1)
+        assert result_2[0].updated_at > datetime.datetime(2017, 1, 1)
