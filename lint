@@ -1,10 +1,10 @@
 #!/bin/sh
 source bin/activate
 if [ -z $1 ]; then
-    pylint --rcfile=pylint.ini subscity
+    pylint --rcfile=.pylintrc subscity
     pep8 --config=pep8.ini subscity
 else
-    pylint --rcfile=pylint.ini $@
+    pylint --rcfile=.pylintrc $@
     pep8 --config=pep8.ini $@
 fi
 
