@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 DB_URI = os.environ.get('DB_URI')
 APP = Flask(__name__)
@@ -14,4 +15,4 @@ DB = SQLAlchemy(APP)
 
 @APP.route('/')
 def hello_world():
-    return 'Hello, World!' + str(Yap.CITIES)
+    return u'Hello, World! тест'
