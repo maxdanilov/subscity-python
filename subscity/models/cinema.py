@@ -6,6 +6,7 @@ from sqlalchemy import (
     DateTime,
     Boolean
 )
+from sqlalchemy import Float
 
 from sqlalchemy import or_
 
@@ -19,11 +20,13 @@ class Cinema(Base):  # pylint: disable=no-init
     api_id = Column(String(64), primary_key=True)  # was cinema_id before
     city = Column(String(64), nullable=False)
     name = Column(String(255), primary_key=True)
-    address = Column(String(255), nullable=True)
+    address = Column(String(512), nullable=True)
     metro = Column(String(255), nullable=True)
     url = Column(String(255), nullable=True)
     phone = Column(String(255), nullable=True)
     fetch_all = Column(Boolean, default=False, nullable=False)
+    latitude = Column(String(255), nullable=True)
+    longitude = Column(Float(), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)

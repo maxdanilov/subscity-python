@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
 
 
 class TestModelCinema(object):
+    def _fread(self, fname):
+        return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
     def test_to_dict(self):
         import datetime
         from subscity.models.cinema import Cinema
+
         c = Cinema(city='moscow',
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
                    phone='phone',
+                   latitude=45.4,
+                   longitude=32.1,
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
         assert c.to_dict() == {'address': None,
@@ -23,6 +29,8 @@ class TestModelCinema(object):
                                'name': 'Cinema',
                                'phone': 'phone',
                                'updated_at': '2017-01-01T00:00:00',
+                               'latitude': 45.4,
+                               'longitude': 32.1,
                                'url': 'url'}
 
     def test_update_from_dict(self):
@@ -37,11 +45,14 @@ class TestModelCinema(object):
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
         dict_ = {'id': 123, 'city': 'paris', 'url': 'https',
+                 'latitude': 21, 'longitude': None,
                  'created_at': datetime.datetime(2016, 1, 1)}
         c.update_from_dict(dict_, skip_keys=['id', 'url'])
         assert c.id == 12
         assert c.city == 'paris'
         assert c.url == 'url'
+        assert c.latitude == 21
+        assert c.longitude is None
         assert c.created_at == datetime.datetime(2016, 1, 1)
 
     def test_db_empty(self, dbsession):
@@ -57,6 +68,8 @@ class TestModelCinema(object):
                    name='Cinema',
                    url='url',
                    phone='phone',
+                   longitude=12,
+                   latitude=16,
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
         dbsession.add(c)
@@ -74,6 +87,8 @@ class TestModelCinema(object):
                        'url': 'url',
                        'phone': 'phone',
                        'fetch_all': False,
+                       'longitude': 12,
+                       'latitude': 16,
                        'created_at': '2017-01-01T00:00:00',
                        'updated_at': '2017-01-01T00:00:00'}
 
@@ -127,6 +142,8 @@ class TestModelCinema(object):
                                         'name': 'Cinema',
                                         'phone': 'phone',
                                         'updated_at': '2017-02-03T00:00:00',
+                                        'latitude': None,
+                                        'longitude': None,
                                         'url': 'url'}
 
     def test_save_or_update_with_same_api_id(self, dbsession):
@@ -165,6 +182,8 @@ class TestModelCinema(object):
                                         'name': 'New Cinema',
                                         'phone': 'phone',
                                         'updated_at': '2017-02-03T00:00:00',
+                                        'latitude': None,
+                                        'longitude': None,
                                         'url': 'url'}
 
     def test_save_or_update(self, dbsession):
@@ -195,3 +214,39 @@ class TestModelCinema(object):
         assert len(result2) == 2
         assert result2[0].to_dict() == c.to_dict()
         assert result2[1].to_dict() == d.to_dict()
+
+    def test_parse_and_save(self, mocker, dbsession):
+        from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
+        from subscity.main import DB
+        from subscity.models.cinema import Cinema
+
+        fixtures_path = '../fixtures/cinemas/saint-petersburg/'
+        mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
+                     side_effect=[
+                         self._fread(fixtures_path + 'cinemas-offset00-limit20.json'),
+                         self._fread(fixtures_path + 'cinemas-offset20-limit20.json'),
+                         self._fread(fixtures_path + 'cinemas-offset40-limit20.json'),
+                         self._fread(fixtures_path + 'cinemas-offset60-limit20.json')])
+        result = Yap.get_cinemas('saint-petersburg')
+        cinema = Cinema(**result[37])
+        cinema.save_or_update()
+
+        dbresult = DB.session.query(Cinema).all()
+        assert len(dbresult) == 1
+        dict_ = dbresult[0].to_dict()
+        created_at = dict_.pop('created_at')
+        updated_at = dict_.pop('updated_at')
+        assert updated_at > created_at
+        assert dict_ == {
+            'id': cinema.id,
+            'api_id': u'580b58f18323013d82c1e980',
+            'name': u'Angleterre Cinema Lounge',
+            'address': u'ул. Малая Морская, 24, отель «Англетер»',
+            'phone': u'+7 (812) 494-59-90, +7 (981) 870-77-57',
+            'url': u'http://www.angleterrecinema.ru',
+            'metro': u'Адмиралтейская, Садовая, Сенная площадь',
+            'city': u'saint-petersburg',
+            'latitude': 59.933946,
+            'longitude': 30.308878,
+            'fetch_all': False
+        }

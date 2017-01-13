@@ -72,7 +72,7 @@ class TestYandexAfishaParser(object):
         assert len(result) == 62
         assert result[37] == {
             'api_id': u'580b58f18323013d82c1e980',
-            'title': u'Angleterre Cinema Lounge',
+            'name': u'Angleterre Cinema Lounge',
             'address': u'ул. Малая Морская, 24, отель «Англетер»',
             'phone': u'+7 (812) 494-59-90, +7 (981) 870-77-57',
             'url': u'http://www.angleterrecinema.ru',
@@ -84,7 +84,7 @@ class TestYandexAfishaParser(object):
 
         assert result[16] == {
             'api_id': u'554b45441f6fd628073eef1b',
-            'title': u'Формула Кино Заневский Каскад',
+            'name': u'Формула Кино Заневский Каскад',
             'address': u'Заневский просп., 67/2, ТК «Заневский Каскад»',
             'phone': u'+7 (800) 250-80-25 (автоинформатор)',
             'url': u'http://www.formulakino.ru/',

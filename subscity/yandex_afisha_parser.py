@@ -44,7 +44,7 @@ class YandexAfishaParser(object):
             for data in data['items']:
                 metro = ', '.join([station['name'] for station in data['metro']])
                 result.append({'api_id': data['id'],
-                               'title': data['title'],
+                               'name': data['title'],
                                'address': data['address'],
                                'phone': ', '.join(sum([x['numbers'] for x in data['phones']], [])),
                                'url': ', '.join(data['links']),
