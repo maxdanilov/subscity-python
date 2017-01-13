@@ -1,6 +1,23 @@
 from mock import mock_open, patch, call
 
 
+def test_update_database(mocker):
+    from subscity.yandex_afisha_parser import YandexAfishaParser
+    from subscity.scripts import update_database
+    from subscity.models.cinema import Cinema
+
+    mock_get_cinemas = mocker.patch.object(YandexAfishaParser, 'get_cinemas',
+                                           side_effect=[[{'name': '1'}, {'name': '2'}],
+                                                        [{'name': '3'}, {'name': '4'}]])
+    mock_cinema_init = mocker.patch.object(Cinema, '__init__', return_value=None)
+    mock_cinema_save = mocker.patch.object(Cinema, 'save_or_update')
+    update_database()
+    assert mock_get_cinemas.call_args_list == [call('moscow'), call('saint-petersburg')]
+    assert mock_cinema_init.call_args_list == [call(name='1'), call(name='2'), call(name='3'),
+                                               call(name='4')]
+    assert mock_cinema_save.call_args_list == [call(), call(), call(), call()]
+
+
 def test_update_test_fixtures(mocker):
     from subscity.scripts import update_test_fixtures
     from subscity.yandex_afisha_parser import YandexAfishaParser
