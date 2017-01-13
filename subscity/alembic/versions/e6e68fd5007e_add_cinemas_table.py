@@ -35,8 +35,8 @@ def upgrade_subscity():
                     sa.Column('url', sa.String(length=255), nullable=True),
                     sa.Column('phone', sa.String(length=255), nullable=True),
                     sa.Column('fetch_all', sa.Boolean(), nullable=False),
-                    sa.Column('latitude', sa.Float(), nullable=True),
-                    sa.Column('longitude', sa.Float(), nullable=True),
+                    sa.Column('latitude', sa.DECIMAL(11, 8), nullable=True),
+                    sa.Column('longitude', sa.DECIMAL(11, 8), nullable=True),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
                     sa.PrimaryKeyConstraint('id', 'api_id', 'name'))

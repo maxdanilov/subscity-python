@@ -1,14 +1,14 @@
 import datetime
+
 from sqlalchemy import (
     Column,
     Integer,
     String,
     DateTime,
-    Boolean
+    Boolean,
+    Numeric,
+    or_
 )
-from sqlalchemy import Float
-
-from sqlalchemy import or_
 
 from subscity.main import DB
 from subscity.models.base import Base
@@ -25,8 +25,8 @@ class Cinema(Base):  # pylint: disable=no-init
     url = Column(String(255), nullable=True)
     phone = Column(String(255), nullable=True)
     fetch_all = Column(Boolean, default=False, nullable=False)
-    latitude = Column(String(255), nullable=True)
-    longitude = Column(Float(), nullable=True)
+    latitude = Column(Numeric(precision=11, scale=8), nullable=True)
+    longitude = Column(Numeric(precision=11, scale=8), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
