@@ -23,3 +23,9 @@ class Base(DB.Model):  # pylint:disable=no-init
                 if isinstance(value, datetime.datetime):
                     result[column_name] = format_datetime(value)
         return result
+
+    def update_from_dict(self, dict_, skip_keys=['id']):
+        for key in dict_.keys():
+            if key in self.__table__.columns and key not in skip_keys:
+                setattr(self, key, dict_[key])
+        return self

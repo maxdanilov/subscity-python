@@ -37,7 +37,7 @@ def upgrade_subscity():
                     sa.Column('fetch_all', sa.Boolean(), nullable=False),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
-                    sa.PrimaryKeyConstraint('id', 'api_id'))
+                    sa.PrimaryKeyConstraint('id', 'api_id', 'name'))
 
 
 def downgrade_subscity():
