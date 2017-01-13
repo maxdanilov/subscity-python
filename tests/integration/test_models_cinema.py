@@ -42,10 +42,11 @@ class TestModelCinema(object):
                    name='Cinema',
                    url='url',
                    phone='phone',
+                   fetch_all=True,
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
         dict_ = {'id': 123, 'city': 'paris', 'url': 'https',
-                 'latitude': 21, 'longitude': None,
+                 'latitude': 21, 'longitude': None, 'fetch_all': None,
                  'created_at': datetime.datetime(2016, 1, 1)}
         c.update_from_dict(dict_, skip_keys=['id', 'url'])
         assert c.id == 12
@@ -53,6 +54,7 @@ class TestModelCinema(object):
         assert c.url == 'url'
         assert c.latitude == 21
         assert c.longitude is None
+        assert c.fetch_all is True  # is not nullable
         assert c.created_at == datetime.datetime(2016, 1, 1)
 
     def test_db_empty(self, dbsession):

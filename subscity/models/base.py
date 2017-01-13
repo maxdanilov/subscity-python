@@ -27,5 +27,6 @@ class Base(DB.Model):  # pylint:disable=no-init
     def update_from_dict(self, dict_, skip_keys=['id']):
         for key in dict_.keys():
             if key in self.__table__.columns and key not in skip_keys:
-                setattr(self, key, dict_[key])
+                if not (self.__table__.c[key].nullable is False and not dict_[key]):
+                    setattr(self, key, dict_[key])
         return self
