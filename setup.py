@@ -13,8 +13,14 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Information Technology',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.7'
+        'Programming Language :: Python :: 3.6'
     ],
     package_dir={'subscity': 'subscity'},
+    entry_points={
+        'console_scripts': [
+            'update_database=subscity.scripts:update_database',
+            'update_test_fixtures=subscity.scripts:update_test_fixtures'
+        ]
+    },
     packages=find_packages()
 )

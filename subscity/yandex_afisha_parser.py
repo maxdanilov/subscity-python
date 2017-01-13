@@ -41,9 +41,7 @@ class YandexAfishaParser(object):
             contents = YandexAfishaParser.fetch(url)
             data = json.loads(contents)
             total = data['paging']['total']
-
-            for cinema in data['data']:
-                data = cinema['data']
+            for data in data['items']:
                 metro = ', '.join([station['name'] for station in data['metro']])
                 result.append({'api_id': data['id'],
                                'title': data['title'],

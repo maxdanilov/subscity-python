@@ -69,8 +69,8 @@ class TestYandexAfishaParser(object):
                                           'limit=20&offset=40&city=saint-petersburg'),
                                      call('https://afisha.yandex.ru/api/events/cinema/places?'
                                           'limit=20&offset=60&city=saint-petersburg')])
-        assert len(result) == 63
-        assert result[0] == {
+        assert len(result) == 62
+        assert result[37] == {
             'api_id': u'580b58f18323013d82c1e980',
             'title': u'Angleterre Cinema Lounge',
             'address': u'ул. Малая Морская, 24, отель «Англетер»',
@@ -82,7 +82,7 @@ class TestYandexAfishaParser(object):
             'longitude': 30.308878
         }
 
-        assert result[54] == {
+        assert result[16] == {
             'api_id': u'554b45441f6fd628073eef1b',
             'title': u'Формула Кино Заневский Каскад',
             'address': u'Заневский просп., 67/2, ТК «Заневский Каскад»',
