@@ -32,6 +32,11 @@ class TestYandexAfishaParser(object):
     def test_url_movies(self, limit, offset, city, expected):
         assert Yap.url_movies(limit, offset, city) == expected
 
+    def test_url_movies_wrong_cinema(self):
+        with pytest.raises(ValueError) as exc:
+            Yap.url_movies('fake_limit', 'fake_liimt', 'fake_city')
+        assert str(exc.value) == "city must be one of ('moscow', 'saint-petersburg')"
+
     def test_url_places_wrong_city(self):
         with pytest.raises(ValueError) as exc:
             Yap.url_places(limit='fake-limit', offset='fake_offset', city='fake_city')
