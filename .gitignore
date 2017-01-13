@@ -33,6 +33,7 @@ LICENSE
 README
 htmlcov/
 .coverage
+tests/.cache/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
