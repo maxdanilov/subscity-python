@@ -41,6 +41,8 @@ def upgrade_subscity():
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
                     sa.PrimaryKeyConstraint('id', 'api_id', 'name'))
 
+    op.execute('CREATE INDEX ix_api_id_city ON cinemas (api_id, city)')
+
 
 def downgrade_subscity():
     op.drop_table('cinemas')

@@ -34,6 +34,35 @@ class YandexAfishaParser(object):
         return url
 
     @staticmethod
+    def get_cinema_screenings(api_id: str, date: datetime, city: str) -> List[Dict]:
+        url = YandexAfishaParser.url_cinema_schedule(api_id, date, city)
+        contents = YandexAfishaParser.fetch(url)
+        data = json.loads(contents)
+        movies = data['schedule']['items']
+        result = []
+        for movie in movies:
+            if 'TheatreHD' in [x['code'] for x in movie['event']['tags']]:
+                continue
+            for schedule in movie['schedule']:
+                if 'На языке оригинала' in [x['name'] for x in schedule['tags']]:
+                    for session in schedule['sessions']:
+                        min_price = max_price = ticket_id = None
+                        if session['ticket']:
+                            ticket_id = session['ticket']['id']
+                            min_price = (session['ticket']['price']['min'] or 0) / 100 or None
+                            max_price = (session['ticket']['price']['max'] or 0) / 100 or None
+                        screening = {
+                            'cinema_api_id': api_id,
+                            'movie_api_id': movie['event']['id'],
+                            'ticket_api_id': ticket_id,
+                            'datetime': session['datetime'],
+                            'city': city,
+                            'price_min': min_price,
+                            'price_max': max_price}
+                        result.append(screening)
+        return result
+
+    @staticmethod
     def get_cinemas(city: str) -> List[Dict]:
         result = []
         offset = 0
