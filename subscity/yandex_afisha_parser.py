@@ -7,6 +7,8 @@ import urllib.request
 class YandexAfishaParser(object):
     CITIES = ('moscow', 'saint-petersburg')
     BASE_URL_API = 'https://afisha.yandex.ru/api/'
+    SKIPPED_GENRES = set([x.lower() for x in ['TheatreHD']])
+    HAS_SUBS_TAG = 'На языке оригинала'
 
     @staticmethod
     def fetch(url: str) -> str:
@@ -41,10 +43,12 @@ class YandexAfishaParser(object):
         movies = data['schedule']['items']
         result = []
         for movie in movies:
-            if 'TheatreHD' in [x['code'] for x in movie['event']['tags']]:
+            tag_codes = set([x['code'].lower() for x in movie['event']['tags']])
+            if YandexAfishaParser.SKIPPED_GENRES.intersection(tag_codes):
                 continue
             for schedule in movie['schedule']:
-                if 'На языке оригинала' in [x['name'] for x in schedule['tags']]:
+                if YandexAfishaParser.HAS_SUBS_TAG.lower() \
+                        in [x['name'].lower() for x in schedule['tags']]:
                     for session in schedule['sessions']:
                         min_price = max_price = ticket_id = None
                         if session['ticket']:
