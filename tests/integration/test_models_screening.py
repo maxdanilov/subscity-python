@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
+
 class TestModelScreening(object):
     def _fread(self, fname):
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -91,15 +92,14 @@ class TestModelScreening(object):
         sc2 = Screening(**result[1])
         sc2.save()
 
-        dbresult = dbsession.query(Screening).all()
+        result = dbsession.query(Screening).all()
+        assert len(result) == 2
 
-        assert len(dbresult) == 2
-
-        dict_ = dbresult[0].to_dict()
+        dict_ = result[0].to_dict()
         created_at = dict_.pop('created_at')
         updated_at = dict_.pop('updated_at')
         assert updated_at > created_at
-        assert dbresult == [sc1, sc2]
+        assert result == [sc1, sc2]
         assert dict_ == {'cinema_api_id': '561fdfed37753624b592f13f',
                          'city': 'moscow',
                          'date_time': '2017-01-15T11:15:00',
