@@ -103,7 +103,7 @@ class TestModelScreening(object):
         assert dict_ == {'cinema_api_id': '561fdfed37753624b592f13f',
                          'city': 'moscow',
                          'date_time': '2017-01-15T11:15:00',
-                         'id': 6,
+                         'id': sc1.id,
                          'movie_api_id': '5874ea2a685ae0b186614bb5',
                          'price_max': None,
                          'price_min': None,
