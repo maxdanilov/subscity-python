@@ -41,8 +41,27 @@ def upgrade_subscity():
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
                     sa.PrimaryKeyConstraint('id', 'api_id', 'name'))
 
-    op.execute('CREATE INDEX ix_api_id_city ON cinemas (api_id, city)')
+    op.create_table('screenings',
+                    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
+                    sa.Column('cinema_api_id', sa.String(length=64), nullable=False),
+                    sa.Column('movie_api_id', sa.String(length=64), nullable=False),
+                    sa.Column('ticket_api_id', sa.String(length=128), nullable=True),
+                    sa.Column('city', sa.String(length=64), nullable=False),
+                    sa.Column('date_time', sa.DateTime(), nullable=False),
+                    sa.Column('price_min', sa.Float(), nullable=True),
+                    sa.Column('price_max', sa.Float(), nullable=True),
+                    sa.Column('created_at', sa.DateTime(), nullable=False),
+                    sa.Column('updated_at', sa.DateTime(), nullable=False),
+                    sa.PrimaryKeyConstraint('id', 'cinema_api_id', 'movie_api_id')
+                    )
+
+    op.create_index('ix_cinemas', 'cinemas', ['api_id', 'city'], unique=False)
+    op.create_index('ix_screenings', 'screenings', ['cinema_api_id', 'movie_api_id', 'city',
+                                                    'date_time'], unique=False)
 
 
 def downgrade_subscity():
+    op.drop_index('ix_cinemas', table_name='cinemas')
+    op.drop_index('ix_screenings', table_name='screenings')
     op.drop_table('cinemas')
+    op.drop_table('screenings')

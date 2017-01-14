@@ -59,7 +59,7 @@ class YandexAfishaParser(object):
                             'cinema_api_id': api_id,
                             'movie_api_id': movie['event']['id'],
                             'ticket_api_id': ticket_id,
-                            'datetime': session['datetime'],
+                            'date_time': session['datetime'],
                             'city': city,
                             'price_min': min_price,
                             'price_max': max_price}

@@ -20,6 +20,7 @@ def run_migrations_online():
     # engines, then run all migrations, then commit all transactions.
     from subscity.main import APP
     from subscity.models.cinema import Cinema
+    from subscity.models.screening import Screening
 
     engines = {DB_NAME: {}}
     engines[DB_NAME]['engine'] = engine_from_config(
