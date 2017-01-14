@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dotenv -f .env.travis py.test tests/ $@
