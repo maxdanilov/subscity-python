@@ -7,9 +7,6 @@ services:
   - mysql
 # command to install dependencies
 install:
-  - sudo apt-get install python-virtualenv
-  - virtualenv -p python3 .
-  - source bin/activate
   - pip install -r requirements.txt
   - pip install -e .
 # command to run tests
