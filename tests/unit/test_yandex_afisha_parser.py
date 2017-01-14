@@ -65,8 +65,9 @@ class TestYandexAfishaParser(object):
         assert set([r['city'] for r in result]) == {'moscow'}
         assert set([r['date_time'][0:10] for r in result]) == {'2017-01-15'}
 
-        assert list(result[0].keys()) == ['cinema_api_id', 'movie_api_id', 'ticket_api_id',
-                                          'date_time', 'city', 'price_min', 'price_max']
+        assert sorted(list(result[0].keys())) == ['cinema_api_id', 'city', 'date_time',
+                                                  'movie_api_id', 'price_max', 'price_min',
+                                                  'ticket_api_id']
         assert [list(r.values()) for r in result] == \
            [['561fdfed37753624b592f13f', '5874ea2a685ae0b186614bb5', None,
              '2017-01-15T11:15:00', 'moscow', None, None],
