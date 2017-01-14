@@ -219,7 +219,6 @@ class TestModelCinema(object):
 
     def test_parse_and_save(self, mocker, dbsession):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
-        from subscity.main import DB
         from subscity.models.cinema import Cinema
 
         fixtures_path = '../fixtures/cinemas/saint-petersburg/'
@@ -233,7 +232,7 @@ class TestModelCinema(object):
         cinema = Cinema(**result[37])
         cinema.save_or_update()
 
-        dbresult = DB.session.query(Cinema).all()
+        dbresult = dbsession.query(Cinema).all()
         assert len(dbresult) == 1
         dict_ = dbresult[0].to_dict()
         created_at = dict_.pop('created_at')
