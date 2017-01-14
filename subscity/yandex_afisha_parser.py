@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict
 import json
 import urllib.request
@@ -9,6 +9,7 @@ class YandexAfishaParser(object):
     BASE_URL_API = 'https://afisha.yandex.ru/api/'
     SKIPPED_GENRES = set([x.lower() for x in ['TheatreHD']])
     HAS_SUBS_TAG = 'На языке оригинала'
+    DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
 
     @staticmethod
     def fetch(url: str) -> str:

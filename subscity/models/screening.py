@@ -11,6 +11,7 @@ from sqlalchemy import Float
 
 from subscity.main import DB
 from subscity.models.base import Base
+from subscity.yandex_afisha_parser import YandexAfishaParser
 
 
 class Screening(Base):  # pylint: disable=no-init
@@ -39,7 +40,7 @@ class Screening(Base):  # pylint: disable=no-init
         query = query.filter(Screening.city == city if city else True)
         if day:
             date = day.replace(hour=0, minute=0, second=0, microsecond=0)
-            date_start = date + datetime.timedelta(hours=2.5)  # new day starts @ 02:30 not 00:00
+            date_start = date + YandexAfishaParser.DAY_STARTS_AT
             date_end = date_start + datetime.timedelta(days=1)
             query = query.filter(Screening.date_time >= date_start, Screening.date_time <= date_end)
         query = query.order_by(Screening.date_time)
