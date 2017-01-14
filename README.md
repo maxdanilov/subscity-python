@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/maxdanilov/subscity-python.svg?branch=master)](https://travis-ci.org/maxdanilov/subscity-python)
+
 # SubsCity
 
 ## Setup
