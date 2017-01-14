@@ -41,7 +41,7 @@ class TestModelScreening(object):
 
         sc2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
                         ticket_api_id='fake_ticket2', price_min=400.0, price_max=450,
-                        city='moscow', date_time=datetime(2017, 1, 2, 2, 31))
+                        city='paris', date_time=datetime(2017, 1, 2, 2, 31))
 
         sc3 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
                         ticket_api_id='fake_ticket3', price_min=400.0, price_max=450,
@@ -49,7 +49,7 @@ class TestModelScreening(object):
 
         sc4 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie4',
                         ticket_api_id='fake_ticket4', price_min=400.0, price_max=450,
-                        city='moscow', date_time=datetime(2017, 1, 2, 2, 29))
+                        city='london', date_time=datetime(2017, 1, 2, 2, 29))
 
         dbsession.add(sc1)
         dbsession.add(sc2)
@@ -68,3 +68,6 @@ class TestModelScreening(object):
 
         result4 = Screening.get(day=datetime(2017, 1, 2), cinema_api_id='fake_something')
         assert result4 == []
+
+        result5 = Screening.get(city='moscow')
+        assert result5 == [sc1, sc3]
