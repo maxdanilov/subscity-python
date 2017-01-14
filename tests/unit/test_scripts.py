@@ -22,7 +22,7 @@ def test_update_test_fixtures(mocker):
     from subscity.scripts import update_test_fixtures
     from subscity.yandex_afisha_parser import YandexAfishaParser
     mock_file_open = mock_open()
-    mock_urls = mocker.patch.object(YandexAfishaParser, 'url_places',
+    mock_urls = mocker.patch.object(YandexAfishaParser, 'url_cinemas',
                                     side_effect=['url1', 'url2', 'url3', 'url4'])
     mock_fetch = mocker.patch.object(YandexAfishaParser, 'fetch',
                                      side_effect=['{"json": 1}', '{"json": 2}', '{"json": 3}',

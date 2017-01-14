@@ -1,3 +1,5 @@
+from datetime import datetime
+from typing import List, Dict
 import json
 import urllib.request
 
@@ -7,37 +9,39 @@ class YandexAfishaParser(object):
     BASE_URL_API = 'https://afisha.yandex.ru/api/'
 
     @staticmethod
-    def fetch(url):
+    def fetch(url: str) -> str:
         print(url)
         return urllib.request.urlopen(url).read()
 
     @staticmethod
-    def url_movies(limit, offset, city):
-        if city not in YandexAfishaParser.CITIES:
-            raise ValueError('city must be one of ' + str(YandexAfishaParser.CITIES))
-
+    def url_movies(limit: int, offset: int, city: str) -> str:
         url = YandexAfishaParser.BASE_URL_API
         url += 'events/actual?limit={}&offset={}&tag=cinema&hasMixed=0&city={}'. \
             format(limit, offset, city)
         return url
 
     @staticmethod
-    def url_places(limit, offset, city):
-        if city not in YandexAfishaParser.CITIES:
-            raise ValueError('city must be one of ' + str(YandexAfishaParser.CITIES))
+    def url_cinemas(limit: int, offset: int, city: str) -> str:
         url = YandexAfishaParser.BASE_URL_API
         url += 'events/cinema/places?limit={}&offset={}&city={}'.format(limit, offset, city)
         return url
 
     @staticmethod
-    def get_cinemas(city):
+    def url_cinema_schedule(api_id: str, date: datetime, city: str) -> str:
+        url = YandexAfishaParser.BASE_URL_API
+        date = date.strftime("%Y-%m-%d")
+        url += 'places/{}/schedule_cinema?date={}&city={}'.format(api_id, date, city)
+        return url
+
+    @staticmethod
+    def get_cinemas(city: str) -> List[Dict]:
         result = []
         offset = 0
         limit = 20
         total = limit
 
         while offset < total:
-            url = YandexAfishaParser.url_places(limit=limit, offset=offset, city=city)
+            url = YandexAfishaParser.url_cinemas(limit=limit, offset=offset, city=city)
             contents = YandexAfishaParser.fetch(url)
             data = json.loads(contents)
             total = data['paging']['total']

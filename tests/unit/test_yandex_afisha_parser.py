@@ -19,8 +19,8 @@ class TestYandexAfishaParser(object):
                   (11, '42', 'saint-petersburg',
                    'https://afisha.yandex.ru/api/events/cinema/places?limit=11&offset=42&'
                    'city=saint-petersburg')])
-    def test_url_places(self, limit, offset, city, expected):
-        assert Yap.url_places(limit, offset, city) == expected
+    def test_url_cinemas(self, limit, offset, city, expected):
+        assert Yap.url_cinemas(limit, offset, city) == expected
 
     @parametrize('limit, offset, city, expected',
                  [(20, 40, 'moscow',
@@ -32,15 +32,13 @@ class TestYandexAfishaParser(object):
     def test_url_movies(self, limit, offset, city, expected):
         assert Yap.url_movies(limit, offset, city) == expected
 
-    def test_url_movies_wrong_cinema(self):
-        with pytest.raises(ValueError) as exc:
-            Yap.url_movies('fake_limit', 'fake_liimt', 'fake_city')
-        assert str(exc.value) == "city must be one of ('moscow', 'saint-petersburg')"
-
-    def test_url_places_wrong_city(self):
-        with pytest.raises(ValueError) as exc:
-            Yap.url_places(limit='fake-limit', offset='fake_offset', city='fake_city')
-        assert str(exc.value) == "city must be one of ('moscow', 'saint-petersburg')"
+    def test_url_cinema_schedule(self):
+        from datetime import datetime
+        result = Yap.url_cinema_schedule(api_id='fake_id', date=datetime(2016, 1, 12),
+                                         city='fake_city')
+        expected = "https://afisha.yandex.ru/api/places/fake_id/schedule_cinema?date=2016-01-12&" \
+                   "city=fake_city"
+        assert result == expected
 
     def test_fetch(self, mocker):
         class UrlOpenResultFake(object):

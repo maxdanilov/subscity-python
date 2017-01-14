@@ -31,7 +31,7 @@ class Cinema(Base):  # pylint: disable=no-init
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
 
-    def save_or_update(self):
+    def save_or_update(self) -> None:
         query = DB.session.query(Cinema)
         query = query.filter(or_(Cinema.name == self.name, Cinema.api_id == self.api_id))
         obj_in_db = query.one_or_none()

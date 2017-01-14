@@ -13,7 +13,7 @@ DB = SQLAlchemy(APP)
 
 
 @APP.route('/')
-def hello_world():
+def hello_world() -> str:
     return u'Hello, World! тест'
 
 
