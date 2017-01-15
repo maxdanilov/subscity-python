@@ -1,5 +1,6 @@
 import datetime
 import json
+import time
 
 from subscity.models.cinema import Cinema
 from subscity.models.screening import Screening
@@ -25,6 +26,7 @@ def update_screenings() -> None:
             for screening_dict in new_screenings_dicts:
                 screening = Screening(**screening_dict)
                 screening.save()
+            time.sleep(1.5)
 
 
 def update_cinemas() -> None:
@@ -33,6 +35,7 @@ def update_cinemas() -> None:
         for cinema in cinemas:
             cinema_obj = Cinema(**cinema)
             cinema_obj.save_or_update()
+        time.sleep(2)
 
 
 def update_test_fixtures() -> None:

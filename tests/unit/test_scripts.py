@@ -2,7 +2,7 @@ from mock import mock_open, patch, call
 
 
 def test_update_screenings(mocker):
-    import datetime
+    import datetime, time
     from subscity.models.cinema import Cinema
     from subscity.models.screening import Screening
     from subscity.scripts import update_screenings
@@ -11,6 +11,7 @@ def test_update_screenings(mocker):
     from unittest.mock import PropertyMock
 
     YandexAfishaParser.FETCH_DAYS = PropertyMock(return_value=2)
+    mock_sleep = mocker.patch.object(time, 'sleep')
     mock_get_all = mocker.patch.object(Cinema, 'get_all', return_value=[
         Cinema(api_id='api_id1', name='cinema1', city='paris'),
         Cinema(api_id='api_id2', name='cinema2', city='moscow'),
@@ -63,14 +64,17 @@ def test_update_screenings(mocker):
         call(cinema_api_id='cinema3_api', city='london',
              date_time=datetime.datetime(2017, 1, 13, 10, 10), movie_api_id='movie1')]
 
-    assert mock_save.call_args_list == [call(), call(), call()]
+    assert mock_save.call_args_list == [call()] * 3
+    assert mock_sleep.call_args_list == [call(1.5)] * 6
 
 
 def test_update_cinemas(mocker):
+    import time
     from subscity.yandex_afisha_parser import YandexAfishaParser
     from subscity.scripts import update_cinemas
     from subscity.models.cinema import Cinema
 
+    mock_sleep = mocker.patch.object(time, 'sleep')
     mock_get_cinemas = mocker.patch.object(YandexAfishaParser, 'get_cinemas',
                                            side_effect=[[{'name': '1'}, {'name': '2'}],
                                                         [{'name': '3'}, {'name': '4'}]])
@@ -80,7 +84,8 @@ def test_update_cinemas(mocker):
     assert mock_get_cinemas.call_args_list == [call('moscow'), call('saint-petersburg')]
     assert mock_cinema_init.call_args_list == [call(name='1'), call(name='2'), call(name='3'),
                                                call(name='4')]
-    assert mock_cinema_save.call_args_list == [call(), call(), call(), call()]
+    assert mock_cinema_save.call_args_list == [call()] * 4
+    assert mock_sleep.call_args_list == [call(2)] * 2
 
 
 def test_update_test_fixtures(mocker):
