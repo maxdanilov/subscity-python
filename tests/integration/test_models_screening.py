@@ -11,6 +11,18 @@ class TestModelScreening(object):
         result = dbsession.query(Screening).all()
         assert len(result) == 0
 
+    def test_delete(self, dbsession):
+        from subscity.models.screening import Screening
+        from datetime import datetime
+        screening = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
+                              ticket_api_id='fake_ticket', price_min=400.0, price_max=450,
+                              city='moscow', date_time=datetime(2017, 1, 1, 9))
+        dbsession.add(screening)
+        dbsession.commit()
+        assert (dbsession.query(Screening).all()[0] == screening)
+        screening.delete()
+        assert dbsession.query(Screening).all() == []
+
     def test_save(self, dbsession):
         from subscity.models.screening import Screening
         from datetime import datetime
@@ -34,6 +46,30 @@ class TestModelScreening(object):
             'created_at': screening.created_at,
             'updated_at': screening.updated_at
         }
+
+    def test_clean_nothing_found(self, mocker):
+        from subscity.models.screening import Screening
+        mock_get = mocker.patch.object(Screening, 'get', return_value=[])
+        mock_delete = mocker.patch.object(Screening, 'delete')
+        result = Screening.clean('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
+                                 'fake_end_day', 'fake_city')
+        assert result == 0
+        mock_get.assert_called_once_with('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
+                                         'fake_end_day', 'fake_city')
+        assert not mock_delete.called
+
+    def test_clean(self, mocker):
+        from unittest.mock import call
+        from subscity.models.screening import Screening
+        mock_get = mocker.patch.object(Screening, 'get', return_value=[Screening(),
+                                                                       Screening()])
+        mock_delete = mocker.patch.object(Screening, 'delete')
+        result = Screening.clean('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
+                                 'fake_end_day', 'fake_city')
+        assert result == 2
+        mock_get.assert_called_once_with('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
+                                         'fake_end_day', 'fake_city')
+        assert mock_delete.call_args_list == [call(), call()]
 
     def test_get(self, dbsession):
         from subscity.models.screening import Screening
@@ -67,14 +103,24 @@ class TestModelScreening(object):
         result2 = Screening.get(movie_api_id='fake_movie3')
         assert result2 == [sc3]
 
-        result3 = Screening.get(day=datetime(2017, 1, 1))
-        assert result3 == [sc1, sc3, sc4]
+        result3 = Screening.get(start_day=datetime(2017, 1, 1), end_day=datetime(2017, 1, 1))
+        assert result3 == []  # end_day is exclusive
 
-        result4 = Screening.get(day=datetime(2017, 1, 2), cinema_api_id='fake_something')
-        assert result4 == []
+        result4 = Screening.get(start_day=datetime(2017, 1, 1))
+        assert result4 == [sc1, sc3, sc4, sc2]  # ordered by time
 
-        result5 = Screening.get(city='moscow')
-        assert result5 == [sc1, sc3]
+        result5 = Screening.get(start_day=datetime(2017, 1, 1), end_day=datetime(2017, 1, 2))
+        assert result5 == [sc1, sc3, sc4]
+
+        result6 = Screening.get(start_day=datetime(2017, 1, 2), end_day=datetime(2017, 1, 3),
+                                cinema_api_id='fake_something')
+        assert result6 == []
+
+        result7 = Screening.get(city='moscow')
+        assert result7 == [sc1, sc3]
+
+        result8 = Screening.get(end_day=datetime(2017, 1, 2))
+        assert result8 == [sc1, sc3, sc4]  # ordered by time
 
     def test_parse_and_save(self, mocker, dbsession):
         from datetime import datetime

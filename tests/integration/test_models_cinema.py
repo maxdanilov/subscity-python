@@ -6,6 +6,29 @@ class TestModelCinema(object):
     def _fread(self, fname):
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+    def test_get_all_empty(self, dbsession):
+        from subscity.models.cinema import Cinema
+        assert Cinema.get_all() == []
+
+    def test_get_all(self, dbsession):
+        from subscity.models.cinema import Cinema
+        import datetime
+        c1 = Cinema(id=12, city='moscow', api_id='deadbeef', name='Cinema', url='url',
+                    phone='phone', fetch_all=True,
+                    created_at=datetime.datetime(2017, 1, 1),
+                    updated_at=datetime.datetime(2017, 1, 1))
+        c2 = Cinema(id=13, city='paris', api_id='badcode', name='Cinema Neu', url=None,
+                    phone='phone', fetch_all=False,
+                    created_at=datetime.datetime(2017, 1, 1),
+                    updated_at=datetime.datetime(2017, 1, 2))
+        dbsession.add(c1)
+        dbsession.add(c2)
+        dbsession.commit()
+        result = Cinema.get_all()
+        assert len(result) == 2
+        assert result[0] == c1
+        assert result[1] == c2
+
     def test_to_dict(self):
         import datetime
         from subscity.models.cinema import Cinema

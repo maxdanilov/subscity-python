@@ -9,6 +9,7 @@ from sqlalchemy import (
     Numeric,
     or_
 )
+from typing import List
 
 from subscity.main import DB
 from subscity.models.base import Base
@@ -30,6 +31,10 @@ class Cinema(Base):  # pylint: disable=no-init
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
+
+    @staticmethod
+    def get_all() -> List:
+        return DB.session.query(Cinema).all()
 
     def save_or_update(self) -> None:
         query = DB.session.query(Cinema)
