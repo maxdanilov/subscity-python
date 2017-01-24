@@ -38,13 +38,33 @@ def update_cinemas() -> None:
         time.sleep(2)
 
 
-def update_test_fixtures() -> None:
+def udpate_test_fixtures() -> None:
+    update_test_cinema_fixtures()
+    update_test_movie_fixtures()
+
+
+def update_test_cinema_fixtures() -> None:
     city = 'saint-petersburg'
     fixture_path = 'tests/fixtures/cinemas/{}/'.format(city)
     limit = 20
-    for offset in [0, 20, 40, 60]:
+    total_count = 70
+    for offset in range(0, total_count, limit):
         url = Yap.url_cinemas(limit=limit, offset=offset, city=city)
         filename = fixture_path + 'cinemas-offset{:02d}-limit{:02d}.json'.format(offset, limit)
+        print("Downloading {} to {}".format(url, filename))
+        parsed = json.loads(Yap.fetch(url))
+        with open(filename, "w") as fp:
+            fp.write(json.dumps(parsed, indent=4))
+
+
+def update_test_movie_fixtures() -> None:
+    city = 'saint-petersburg'
+    fixture_path = 'tests/fixtures/movies/{}/'.format(city)
+    limit = 12
+    total_count = 140
+    for offset in range(0, total_count, limit):
+        url = Yap.url_movies(limit=limit, offset=offset, city=city)
+        filename = fixture_path + 'movies-offset{:03d}-limit{:02d}.json'.format(offset, limit)
         print("Downloading {} to {}".format(url, filename))
         parsed = json.loads(Yap.fetch(url))
         with open(filename, "w") as fp:

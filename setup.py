@@ -20,7 +20,9 @@ setup(
         'console_scripts': [
             'update_cinemas=subscity.scripts:update_cinemas',
             'update_screenings=subscity.scripts:update_screenings',
-            'update_test_fixtures=subscity.scripts:update_test_fixtures'
+            'update_test_fixtures=subscity.scripts:update_test_fixtures',
+            'update_test_cinema_fixtures=subscity.scripts:update_test_cinema_fixtures',
+            'update_test_movie_fixtures=subscity.scripts:update_test_movie_fixtures'
         ]
     },
     packages=find_packages()
