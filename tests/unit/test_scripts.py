@@ -88,10 +88,10 @@ class TestScripts(object):
         assert mock_sleep.call_args_list == [call(2)] * 2
 
     def test_update_test_fixtures(self, mocker):
-        from subscity.scripts import udpate_test_fixtures
+        from subscity.scripts import update_test_fixtures
         mock_update_cinema_fixtures = mocker.patch('subscity.scripts.update_test_cinema_fixtures')
         mock_update_movie_fixtures = mocker.patch('subscity.scripts.update_test_movie_fixtures')
-        udpate_test_fixtures()
+        update_test_fixtures()
         mock_update_cinema_fixtures.assert_called_once_with()
         mock_update_movie_fixtures.assert_called_once_with()
 

@@ -38,7 +38,7 @@ def update_cinemas() -> None:
         time.sleep(2)
 
 
-def udpate_test_fixtures() -> None:
+def update_test_fixtures() -> None:
     update_test_cinema_fixtures()
     update_test_movie_fixtures()
 
