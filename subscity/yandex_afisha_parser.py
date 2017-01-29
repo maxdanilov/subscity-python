@@ -38,6 +38,22 @@ class YandexAfishaParser(object):
         return url
 
     @staticmethod
+    def get_movie_ids(city: str) -> List[str]:
+        offset = 0
+        limit = 12
+        total = limit
+        result = []
+        while offset < total:
+            url = YandexAfishaParser.url_movies(limit=limit, offset=offset, city=city)
+            contents = YandexAfishaParser.fetch(url)
+            data = json.loads(contents)
+            total = data['paging']['total']
+            for data in data['data']:
+                result.append(data['event']['id'])
+            offset += limit
+        return result
+
+    @staticmethod
     def get_cinema_screenings(api_id: str, date: datetime, city: str) -> List[Dict]:
         url = YandexAfishaParser.url_cinema_schedule(api_id, date, city)
         contents = YandexAfishaParser.fetch(url)

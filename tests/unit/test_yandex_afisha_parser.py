@@ -103,6 +103,55 @@ class TestYandexAfishaParser(object):
              'Mjg5fDUwNDMwfDQwOTR8MTQ4NDUxMjgwMDAwMA==', '2017-01-15T23:40:00', 'moscow',
              450.0, 450.0]]
 
+    def test_get_movie_ids(self, mocker):
+        fixtures_path = '../fixtures/movies/saint-petersburg/'
+        mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
+                                  side_effect=[
+                                      self._fread(fixtures_path + 'movies-offset000-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset012-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset024-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset036-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset048-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset060-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset072-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset084-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset096-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset108-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset120-limit12.json'),
+                                      self._fread(fixtures_path + 'movies-offset132-limit12.json')])
+        result = Yap.get_movie_ids('saint-petersburg')
+        assert mock_fetch.call_count == 12
+        mock_fetch.assert_has_calls(
+            [call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=0&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=12&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=24&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=36&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=48&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=60&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=72&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=84&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=96&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=108&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=120&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
+                  'offset=132&tag=cinema&hasMixed=0&city=saint-petersburg'),
+             ])
+
+        assert len(result) == 133
+        assert result[0] == '5874ea2a685ae0b186614bb5'
+        assert result[132] == '5881289fcc1c72d7ab9f3a7c'
+
     def test_get_cinemas(self, mocker):
         fixtures_path = '../fixtures/cinemas/saint-petersburg/'
         mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
