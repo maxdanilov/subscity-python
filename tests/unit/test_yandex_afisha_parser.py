@@ -58,6 +58,115 @@ class TestYandexAfishaParser(object):
         assert Yap.fetch('some-url') == 'fake-val'
         mock_url_open.assert_called_once_with('some-url')
 
+    def test_get_countries(self):
+        assert Yap._get_countries(None) is None
+        assert Yap._get_countries([]) is None
+        assert Yap._get_countries(['США', 'Франция']) == 'США, Франция'
+
+    def test_get_age_restriction(self):
+        assert Yap._get_age_restriction(None) is None
+        assert Yap._get_age_restriction('') is None
+        assert Yap._get_age_restriction('0+') == 0
+        assert Yap._get_age_restriction('6+') == 6
+        assert Yap._get_age_restriction('12+') == 12
+        assert Yap._get_age_restriction('16+') == 16
+        assert Yap._get_age_restriction('18+') == 18
+        assert Yap._get_age_restriction('17') == 17
+
+    def test_get_premiere(self):
+        from datetime import datetime
+        assert Yap._get_premiere(None) is None
+        assert Yap._get_premiere('') is None
+        assert Yap._get_premiere('2017-01-12') == datetime(2017, 1, 12)
+
+    def test_get_actors(self):
+        assert Yap._get_actors(None) is None
+        assert Yap._get_actors('') is None
+        assert Yap._get_actors([]) is None
+        assert Yap._get_actors([{'role': 'actor', 'names': []}]) is None
+        assert Yap._get_actors([{'role': 'actor', 'names': ['Чарли Чаплин']}]) == 'Чарли Чаплин'
+        data = [{'role': 'actor',
+                 'names': ['Райан Гослинг', 'Эмма Стоун', 'Финн Уиттрок', 'Дж.К. Симмонс']},
+                {'role': 'director', 'names': ['Дэмьен Шазелл']}]
+        assert Yap._get_actors(data) == 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс'
+
+    def test_get_directors(self):
+        assert Yap._get_directors(None) is None
+        assert Yap._get_directors('') is None
+        assert Yap._get_directors([]) is None
+        assert Yap._get_directors([{'role': 'director', 'names': []}]) is None
+        assert Yap._get_directors([{'role': 'director', 'names': ['Стэнли Кубрик']}]) == \
+            'Стэнли Кубрик'
+        data = [{'role': 'actor',
+                 'names': ['Райан Гослинг', 'Эмма Стоун', 'Финн Уиттрок', 'Дж.К. Симмонс']},
+                {'role': 'director', 'names': ['Дэмьен Шазелл', 'Стэнли Кубрик']}]
+        assert Yap._get_directors(data) == 'Дэмьен Шазелл, Стэнли Кубрик'
+
+    def test_get_kinopoisk_data(self):
+        empty = {'id': None, 'rating': None, 'votes': None}
+        assert Yap._get_kinopoisk_data(None) == empty
+        assert Yap._get_kinopoisk_data({}) == empty
+
+        data = {'url': 'http://kinopoisk.ru/film/841081', 'value': 8.5, 'votes': 42192}
+        assert Yap._get_kinopoisk_data(data) == {'id': 841081,
+                                                 'rating': 8.5,
+                                                 'votes': 42192}
+
+    def test_get_original_genre(self):
+        assert Yap._get_original_genre('') == ''
+        assert Yap._get_original_genre('drama') == 'Drama'
+        assert Yap._get_original_genre('musical_film') == 'Musical'
+
+    def test_get_genres(self):
+        empty = {'russian': None, 'original': None}
+        assert Yap._get_genres(None) == empty
+        assert Yap._get_genres([]) == empty
+        data = [{'id': '57272d9c10048dda13c470ba', 'code': 'musical_film', 'type': 'genre',
+                 'status': 'approved', 'name': 'музыкальный', 'plural': None,
+                 'nameCases': {'acc': None, 'gen': None}},
+                {'id': '57d2843efc8131fcefa33f9f', 'code': 'drama', 'type': 'genre',
+                 'status': 'approved', 'name': 'драма', 'plural': None,
+                 'nameCases': {'acc': None, 'gen': None}},
+                {'id': '5575d413cc1c724f5a8e10f6', 'code': 'romance', 'type': 'genre',
+                 'status': 'approved', 'name': 'мелодрама', 'plural': None,
+                 'nameCases': {'acc': None, 'gen': None}},
+                {'id': '57d28482377536932cfc4c2e', 'code': 'comedy', 'type': 'genre',
+                 'status': 'approved', 'name': 'комедия', 'plural': None,
+                 'nameCases': {'acc': None, 'gen': None}},
+                {'id': '5591526f37753645b7d7a5ed', 'code': 'cinema', 'type': 'format',
+                 'status': 'approved', 'name': 'кино', 'plural': {'one': 'кино', 'some': 'фильма',
+                                                                  'many': 'фильмов', 'none': None},
+                 'nameCases': {'acc': 'в кинотеатрах', 'gen': None}}]
+        assert Yap._get_genres(data) == {'original': 'Musical, Drama, Romance, Comedy',
+                                         'russian': 'музыкальный, драма, мелодрама, комедия'}
+
+    def test_get_movie(self, mocker):
+        from datetime import datetime
+        api_id = '5874ea2a685ae0b186614bb5'
+        city = 'moscow'
+        fixture = '../fixtures/movies/{}/{}.json'.format(city, api_id)
+        mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
+                                  return_value=self._fread(fixture))
+        result = Yap.get_movie(api_id, 'moscow')
+        mock_fetch.assert_called_once_with('https://afisha.yandex.ru/api/events/'
+                                           '{}?city={}'.format(api_id, city))
+        assert result == {
+            'title': {'russian': 'Ла-Ла Ленд',
+                      'original': 'La La Land'},
+            'genres': {'russian': 'музыкальный, драма, мелодрама, комедия',
+                       'original': 'Musical, Drama, Romance, Comedy'},
+            'countries': 'США',
+            'cast': 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс, Соноя Мидзуно',
+            'director': 'Дэмьен Шазелл',
+            'year': 2016,
+            'duration': 128,
+            'age_restriction': 16,
+            'premiere': datetime(2017, 1, 12),
+            'kinopoisk': {'id': 841081,
+                          'rating': 8.5,
+                          'votes': 42192}
+        }
+
     def test_get_cinema_screenings(self, mocker):
         from datetime import datetime
         fixture = '../fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'

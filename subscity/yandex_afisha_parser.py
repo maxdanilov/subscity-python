@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import List, Dict
+from typing import List, Dict, Union
 import json
 import urllib.request
 
@@ -58,6 +58,87 @@ class YandexAfishaParser(object):
                 result.append(data['event']['id'])
             offset += limit
         return result
+
+    @classmethod
+    def get_movie(cls, api_id: str, city: str='moscow') -> Dict:
+        url = cls.url_movie(api_id, city)
+        content = cls.fetch(url)
+        data = json.loads(content)
+        movie = data['event']['data']
+
+        return {
+            'title': {'russian': movie['title'],
+                      'original': movie['originalTitle']},
+            'genres': cls._get_genres(movie['tags']),
+            'countries': cls._get_countries(movie['countries']),
+            'cast': cls._get_actors(movie['persons']),
+            'director': cls._get_directors(movie['persons']),
+            'year': movie['year'],
+            'duration': movie['duration'],
+            'age_restriction': cls._get_age_restriction(movie['contentRating']),
+            'premiere': cls._get_premiere(movie['dateReleased']),
+            'kinopoisk': cls._get_kinopoisk_data(movie['kinopoisk'])
+        }
+
+    @staticmethod
+    def _get_original_genre(code: str) -> str:
+        map_code_genre = {'musical_film': 'musical'}
+        name = code
+        if code in map_code_genre:
+            name = map_code_genre[code]
+        return name.capitalize()
+
+    @classmethod
+    def _get_genres(cls, tags: Union[List]) -> Dict:
+        names = [t['name'] for t in (tags or []) if t['type'] == 'genre']
+        codes = [cls._get_original_genre(t['code']) for t in (tags or []) if t['type'] == 'genre']
+
+        return {'russian': ', '.join(names) or None,
+                'original': ', '.join(codes) or None}
+
+    @staticmethod
+    def _get_kinopoisk_data(data: Union[Dict]) -> Dict:
+        if not data:
+            return {'id': None, 'rating': None, 'votes': None}
+        id_ = int(data['url'].replace('http://kinopoisk.ru/film/', ''))
+        rating = data['value']
+        votes = data['votes']
+        return {'id': id_, 'rating': rating, 'votes': votes}
+
+    @staticmethod
+    def _get_actors(data: Union[List]) -> Union[str]:
+        actors = []
+        for item in data or []:
+            if item['role'] == 'actor':
+                actors.extend(item['names'])
+        actors = ', '.join(actors) or None
+        return actors
+
+    @staticmethod
+    def _get_directors(data: Union[List]) -> Union[str]:
+        directors = []
+        for item in data or []:
+            if item['role'] == 'director':
+                directors.extend(item['names'])
+        return', '.join(directors) or None
+
+    @staticmethod
+    def _get_premiere(date: Union[str]) -> Union[str]:
+        if not date:
+            return None
+        return datetime.strptime(date, '%Y-%m-%d')
+
+    @staticmethod
+    def _get_countries(countries: Union[List]) -> Union[str]:
+        if not countries:
+            return None
+        return ', '.join(countries)
+
+    @staticmethod
+    def _get_age_restriction(rating: Union[str]) -> Union[int]:
+        if not rating:
+            return None
+        return int(rating.replace('+', ''))
 
     @classmethod
     def get_cinema_screenings(cls, api_id: str, date: datetime, city: str) -> List[Dict]:
