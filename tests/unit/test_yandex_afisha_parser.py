@@ -140,14 +140,14 @@ class TestYandexAfishaParser(object):
         assert Yap._get_genres(data) == {'original': 'Musical, Drama, Romance, Comedy',
                                          'russian': 'музыкальный, драма, мелодрама, комедия'}
 
-    def test_get_movie(self, mocker):
+    @parametrize('city', ['moscow', 'saint-petersburg'])
+    def test_get_movie(self, city, mocker):
         from datetime import datetime
         api_id = '5874ea2a685ae0b186614bb5'
-        city = 'moscow'
         fixture = '../fixtures/movies/{}/{}.json'.format(city, api_id)
         mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
                                   return_value=self._fread(fixture))
-        result = Yap.get_movie(api_id, 'moscow')
+        result = Yap.get_movie(api_id, city)
         mock_fetch.assert_called_once_with('https://afisha.yandex.ru/api/events/'
                                            '{}?city={}'.format(api_id, city))
         assert result == {
