@@ -33,6 +33,14 @@ class TestYandexAfishaParser(object):
     def test_url_movies(self, limit, offset, city, expected):
         assert Yap.url_movies(limit, offset, city) == expected
 
+    def test_url_movie(self):
+        result = Yap.url_movie('mock_id', 'mock_city')
+        assert result == 'https://afisha.yandex.ru/api/events/mock_id?city=mock_city'
+
+    def test_url_movie_default_city(self):
+        result = Yap.url_movie('mock_id')
+        assert result == 'https://afisha.yandex.ru/api/events/mock_id?city=moscow'
+
     def test_url_cinema_schedule(self):
         from datetime import datetime
         result = Yap.url_cinema_schedule(api_id='fake_id', date=datetime(2016, 1, 12),
