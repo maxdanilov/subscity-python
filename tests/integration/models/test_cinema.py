@@ -141,7 +141,7 @@ class TestModelCinema(object):
                    phone='phone',
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
-        c.save_or_update()
+        c.create_or_update()
         result = dbsession.query(Cinema).all()
         assert len(result) == 1
         assert result[0].to_dict() == c.to_dict()
@@ -154,7 +154,7 @@ class TestModelCinema(object):
                    fetch_all=True,
                    created_at=datetime.datetime(2017, 2, 1),
                    updated_at=datetime.datetime(2017, 2, 3))
-        d.save_or_update()
+        d.create_or_update()
         result2 = dbsession.query(Cinema).all()
         assert len(result2) == 1
         assert result2[0].to_dict() == {'address': None,
@@ -181,7 +181,7 @@ class TestModelCinema(object):
                    phone='phone',
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
-        c.save_or_update()
+        c.create_or_update()
         result = dbsession.query(Cinema).all()
         assert len(result) == 1
         assert result[0].to_dict() == c.to_dict()
@@ -194,7 +194,7 @@ class TestModelCinema(object):
                    fetch_all=True,
                    created_at=datetime.datetime(2017, 2, 1),
                    updated_at=datetime.datetime(2017, 2, 3))
-        d.save_or_update()
+        d.create_or_update()
         result2 = dbsession.query(Cinema).all()
         assert len(result2) == 1
         assert result2[0].to_dict() == {'address': None,
@@ -221,7 +221,7 @@ class TestModelCinema(object):
                    phone='phone',
                    created_at=datetime.datetime(2017, 1, 1),
                    updated_at=datetime.datetime(2017, 1, 1))
-        c.save_or_update()
+        c.create_or_update()
         result = dbsession.query(Cinema).all()
         assert len(result) == 1
         assert result[0].to_dict() == c.to_dict()
@@ -234,7 +234,7 @@ class TestModelCinema(object):
                    fetch_all=True,
                    created_at=datetime.datetime(2017, 2, 1),
                    updated_at=datetime.datetime(2017, 2, 3))
-        d.save_or_update()
+        d.create_or_update()
         result2 = dbsession.query(Cinema).all()
         assert len(result2) == 2
         assert result2[0].to_dict() == c.to_dict()
@@ -244,7 +244,7 @@ class TestModelCinema(object):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
         from subscity.models.cinema import Cinema
 
-        fixtures_path = '../fixtures/cinemas/saint-petersburg/'
+        fixtures_path = '../../fixtures/cinemas/saint-petersburg/'
         mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
                      side_effect=[
                          self._fread(fixtures_path + 'cinemas-offset00-limit20.json'),
@@ -253,7 +253,7 @@ class TestModelCinema(object):
                          self._fread(fixtures_path + 'cinemas-offset60-limit20.json')])
         result = Yap.get_cinemas('saint-petersburg')
         cinema = Cinema(**result[37])
-        cinema.save_or_update()
+        cinema.create_or_update()
 
         dbresult = dbsession.query(Cinema).all()
         assert len(dbresult) == 1

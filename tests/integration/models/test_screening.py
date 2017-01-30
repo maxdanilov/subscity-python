@@ -127,7 +127,7 @@ class TestModelScreening(object):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
         from subscity.models.screening import Screening
 
-        fixture = '../fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
+        fixture = '../../fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
         mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
                      return_value=self._fread(fixture))
         result = Yap.get_cinema_screenings('561fdfed37753624b592f13f', datetime(2017, 1, 15),

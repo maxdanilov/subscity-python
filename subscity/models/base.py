@@ -1,7 +1,8 @@
 import datetime
-from typing import Union
+from typing import Union, List
 
 from sqlalchemy import DateTime
+from sqlalchemy import or_
 
 from subscity.main import DB
 from subscity.utils import format_datetime
@@ -32,3 +33,30 @@ class Base(DB.Model):  # pylint:disable=no-init
                 if not (self.__table__.c[key].nullable is False and not dict_[key]):
                     setattr(self, key, dict_[key])
         return self
+
+    @classmethod
+    def get_all(cls) -> List:
+        return DB.session.query(cls).all()
+
+    def create_or_update(self) -> None:
+        cls = self.__class__
+        query = DB.session.query(cls)
+        query = query.filter(or_(cls.name == self.name, cls.api_id == self.api_id))
+        obj_in_db = query.one_or_none()
+        obj = self
+
+        if obj_in_db:
+            update_dict = self.to_dict(stringify_datetime=False)
+            obj_in_db.update_from_dict(update_dict)
+            obj = obj_in_db
+
+        DB.session.add(obj)
+        DB.session.commit()
+
+    def save(self) -> None:
+        DB.session.add(self)
+        DB.session.commit()
+
+    def delete(self) -> None:
+        DB.session.delete(self)
+        DB.session.commit()

@@ -31,21 +31,3 @@ class Cinema(Base):  # pylint: disable=no-init
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
-
-    @staticmethod
-    def get_all() -> List:
-        return DB.session.query(Cinema).all()
-
-    def save_or_update(self) -> None:
-        query = DB.session.query(Cinema)
-        query = query.filter(or_(Cinema.name == self.name, Cinema.api_id == self.api_id))
-        obj_in_db = query.one_or_none()
-        obj = self
-
-        if obj_in_db:
-            update_dict = self.to_dict(stringify_datetime=False)
-            obj_in_db.update_from_dict(update_dict)
-            obj = obj_in_db
-
-        DB.session.add(obj)
-        DB.session.commit()

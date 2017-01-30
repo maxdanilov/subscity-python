@@ -79,7 +79,7 @@ class TestScripts(object):
                                                side_effect=[[{'name': '1'}, {'name': '2'}],
                                                             [{'name': '3'}, {'name': '4'}]])
         mock_cinema_init = mocker.patch.object(Cinema, '__init__', return_value=None)
-        mock_cinema_save = mocker.patch.object(Cinema, 'save_or_update')
+        mock_cinema_save = mocker.patch.object(Cinema, 'create_or_update')
         update_cinemas()
         assert mock_get_cinemas.call_args_list == [call('moscow'), call('saint-petersburg')]
         assert mock_cinema_init.call_args_list == [call(name='1'), call(name='2'), call(name='3'),

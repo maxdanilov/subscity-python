@@ -21,6 +21,7 @@ def run_migrations_online():
     from subscity.main import APP
     from subscity.models.cinema import Cinema
     from subscity.models.screening import Screening
+    from subscity.models.movie import Movie
 
     engines = {DB_NAME: {}}
     engines[DB_NAME]['engine'] = engine_from_config(

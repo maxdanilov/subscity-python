@@ -34,7 +34,7 @@ def update_cinemas() -> None:
         cinemas = Yap.get_cinemas(city)
         for cinema in cinemas:
             cinema_obj = Cinema(**cinema)
-            cinema_obj.save_or_update()
+            cinema_obj.create_or_update()
         time.sleep(2)
 
 

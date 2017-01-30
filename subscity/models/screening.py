@@ -54,11 +54,3 @@ class Screening(Base):  # pylint: disable=no-init
         for screening in screenings:
             screening.delete()
         return len(screenings)
-
-    def save(self) -> None:
-        DB.session.add(self)
-        DB.session.commit()
-
-    def delete(self) -> None:
-        DB.session.delete(self)
-        DB.session.commit()
