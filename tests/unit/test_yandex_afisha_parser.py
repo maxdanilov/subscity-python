@@ -151,20 +151,21 @@ class TestYandexAfishaParser(object):
         mock_fetch.assert_called_once_with('https://afisha.yandex.ru/api/events/'
                                            '{}?city={}'.format(api_id, city))
         assert result == {
-            'title': {'russian': 'Ла-Ла Ленд',
-                      'original': 'La La Land'},
-            'genres': {'russian': 'музыкальный, драма, мелодрама, комедия',
-                       'original': 'Musical, Drama, Romance, Comedy'},
+            'api_id': '5874ea2a685ae0b186614bb5',
+            'title': 'Ла-Ла Ленд',
+            'title_en': 'La La Land',
+            'genres': 'музыкальный, драма, мелодрама, комедия',
+            'genres_en': 'Musical, Drama, Romance, Comedy',
             'countries': 'США',
             'cast': 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс, Соноя Мидзуно',
-            'director': 'Дэмьен Шазелл',
+            'directors': 'Дэмьен Шазелл',
             'year': 2016,
             'duration': 128,
             'age_restriction': 16,
             'premiere': datetime(2017, 1, 12),
-            'kinopoisk': {'id': 841081,
-                          'rating': 8.5,
-                          'votes': 42192}
+            'kinopoisk_id': 841081,
+            'kinopoisk_rating': 8.5,
+            'kinopoisk_votes': 42192,
         }
 
     def test_get_cinema_screenings(self, mocker):

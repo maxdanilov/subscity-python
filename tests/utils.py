@@ -1,5 +1,15 @@
 import datetime
+import os
+
 from mock import mock
+
+
+def fread(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+
+def filter_dict(orig, keys):
+    return dict(zip(keys, [orig[k] for k in keys]))
 
 
 def mock_datetime(mock_value):

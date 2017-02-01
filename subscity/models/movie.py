@@ -31,8 +31,8 @@ class Movie(Base):  # pylint: disable=no-init
     languages = Column(String(255))
     languages_en = Column(String(255))
 
-    actors = Column(String(512))
-    actors_en = Column(String(512))
+    cast = Column(String(512))
+    cast_en = Column(String(512))
 
     directors = Column(String(255))
     directors_en = Column(String(255))

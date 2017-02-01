@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
+from tests.utils import fread
 
 
 class TestModelScreening(object):
-    def _fread(self, fname):
-        return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
     def test_query_empty_result(self, dbsession):
         from subscity.models.screening import Screening
         result = dbsession.query(Screening).all()
@@ -127,9 +124,9 @@ class TestModelScreening(object):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
         from subscity.models.screening import Screening
 
-        fixture = '../../fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
+        fixture = 'fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
         mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
-                     return_value=self._fread(fixture))
+                     return_value=fread(fixture))
         result = Yap.get_cinema_screenings('561fdfed37753624b592f13f', datetime(2017, 1, 15),
                                            'moscow')
         sc1 = Screening(**result[0])

@@ -65,19 +65,25 @@ class YandexAfishaParser(object):
         content = cls.fetch(url)
         data = json.loads(content)
         movie = data['event']['data']
+        kinopoisk_data = cls._get_kinopoisk_data(movie['kinopoisk'])
+        genres_data = cls._get_genres(movie['tags'])
 
         return {
-            'title': {'russian': movie['title'],
-                      'original': movie['originalTitle']},
-            'genres': cls._get_genres(movie['tags']),
+            'api_id': movie['id'],
+            'title': movie['title'],
+            'title_en': movie['originalTitle'],
+            'genres': genres_data['russian'],
+            'genres_en': genres_data['original'],
             'countries': cls._get_countries(movie['countries']),
             'cast': cls._get_actors(movie['persons']),
-            'director': cls._get_directors(movie['persons']),
+            'directors': cls._get_directors(movie['persons']),
             'year': movie['year'],
             'duration': movie['duration'],
             'age_restriction': cls._get_age_restriction(movie['contentRating']),
             'premiere': cls._get_premiere(movie['dateReleased']),
-            'kinopoisk': cls._get_kinopoisk_data(movie['kinopoisk'])
+            'kinopoisk_id': kinopoisk_data['id'],
+            'kinopoisk_votes': kinopoisk_data['votes'],
+            'kinopoisk_rating': kinopoisk_data['rating']
         }
 
     @staticmethod
