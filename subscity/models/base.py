@@ -38,21 +38,6 @@ class Base(DB.Model):  # pylint:disable=no-init
     def get_all(cls) -> List:
         return DB.session.query(cls).all()
 
-    def create_or_update(self) -> None:
-        cls = self.__class__
-        query = DB.session.query(cls)
-        query = query.filter(or_(cls.name == self.name, cls.api_id == self.api_id))
-        obj_in_db = query.one_or_none()
-        obj = self
-
-        if obj_in_db:
-            update_dict = self.to_dict(stringify_datetime=False)
-            obj_in_db.update_from_dict(update_dict)
-            obj = obj_in_db
-
-        DB.session.add(obj)
-        DB.session.commit()
-
     def save(self) -> None:
         DB.session.add(self)
         DB.session.commit()

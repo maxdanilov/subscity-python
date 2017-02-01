@@ -1,16 +1,14 @@
 import datetime
 
-from sqlalchemy import Boolean
 from sqlalchemy import (
+    Boolean,
     Column,
+    Float,
     Integer,
     String,
     DateTime,
     Text
 )
-from typing import List
-
-from sqlalchemy import Float
 
 from subscity.main import DB
 from subscity.models.base import Base
@@ -60,3 +58,18 @@ class Movie(Base):  # pylint: disable=no-init
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
+
+    def create_or_update(self) -> None:
+        cls = self.__class__
+        query = DB.session.query(cls)
+        query = query.filter(cls.api_id == self.api_id)
+        obj_in_db = query.one_or_none()
+        obj = self
+
+        if obj_in_db:
+            update_dict = self.to_dict(stringify_datetime=False)
+            obj_in_db.update_from_dict(update_dict)
+            obj = obj_in_db
+
+        DB.session.add(obj)
+        DB.session.commit()
