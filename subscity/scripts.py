@@ -40,9 +40,9 @@ def update_cinemas() -> None:
 
 
 def update_movies() -> None:
-    movie_api_ids_db = Movie.get_all_api_ids()
     for city in Yap.CITIES:
         movie_api_ids = Yap.get_movie_ids(city)
+        movie_api_ids_db = Movie.get_all_api_ids()
         new_api_ids = [i for i in movie_api_ids if i not in movie_api_ids_db]
         for ix, api_id in enumerate(new_api_ids):
             print("{} / {} Fetching {}".format(ix + 1, len(new_api_ids), api_id))
