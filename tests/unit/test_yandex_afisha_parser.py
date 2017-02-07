@@ -66,6 +66,8 @@ class TestYandexAfishaParser(object):
     def test_get_age_restriction(self):
         assert Yap._get_age_restriction(None) is None
         assert Yap._get_age_restriction('') is None
+        assert Yap._get_age_restriction('None') is None
+        assert Yap._get_age_restriction('NoNe') is None
         assert Yap._get_age_restriction('0+') == 0
         assert Yap._get_age_restriction('6+') == 6
         assert Yap._get_age_restriction('12+') == 12

@@ -143,7 +143,7 @@ class YandexAfishaParser(object):
 
     @staticmethod
     def _get_age_restriction(rating: Union[str]) -> Union[int]:
-        if not rating:
+        if not rating or rating.lower() == 'none':
             return None
         return int(rating.replace('+', ''))
 
