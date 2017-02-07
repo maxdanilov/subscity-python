@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from typing import List, Dict, Union
+import re
 import json
 import urllib.request
 
@@ -106,7 +107,7 @@ class YandexAfishaParser(object):
     def _get_kinopoisk_data(data: Union[Dict]) -> Dict:
         if not data:
             return {'id': None, 'rating': None, 'votes': None}
-        id_ = int(data['url'].replace('http://kinopoisk.ru/film/', ''))
+        id_ = int(re.sub("\D", "", data['url']))
         rating = data['value']
         votes = data['votes']
         return {'id': id_, 'rating': rating, 'votes': votes}

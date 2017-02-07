@@ -111,6 +111,10 @@ class TestYandexAfishaParser(object):
         assert Yap._get_kinopoisk_data(data) == {'id': 841081,
                                                  'rating': 8.5,
                                                  'votes': 42192}
+        data2 = {'url': '//kinopoisk.ru/film/12345', 'value': 7.0, 'votes': 0}
+        assert Yap._get_kinopoisk_data(data2) == {'id': 12345,
+                                                  'rating': 7.0,
+                                                  'votes': 0}
 
     def test_get_original_genre(self):
         assert Yap._get_original_genre('') == ''
