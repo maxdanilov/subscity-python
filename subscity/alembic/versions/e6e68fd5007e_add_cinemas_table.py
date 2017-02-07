@@ -39,7 +39,9 @@ def upgrade_subscity():
                     sa.Column('longitude', sa.DECIMAL(11, 8), nullable=True),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
-                    sa.PrimaryKeyConstraint('id', 'api_id', 'name'))
+                    sa.PrimaryKeyConstraint('id', 'api_id', 'name'),
+                    sa.UniqueConstraint('api_id')
+                    )
 
     op.create_table('screenings',
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
@@ -52,8 +54,9 @@ def upgrade_subscity():
                     sa.Column('price_max', sa.Float(), nullable=True),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
-                    sa.PrimaryKeyConstraint('id', 'cinema_api_id', 'movie_api_id')
-                    )
+                    sa.PrimaryKeyConstraint('id', 'cinema_api_id', 'movie_api_id', 'date_time'),
+                    sa.UniqueConstraint('cinema_api_id', 'movie_api_id', 'date_time')
+    )
 
     op.create_table('movies',
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
@@ -85,7 +88,8 @@ def upgrade_subscity():
                     sa.Column('hide', sa.Boolean, nullable=False),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
-                    sa.PrimaryKeyConstraint('id', 'api_id')
+                    sa.PrimaryKeyConstraint('id'),
+                    sa.UniqueConstraint('api_id')
                     )
 
     op.create_index('ix_movies', 'movies', ['api_id'], unique=False)

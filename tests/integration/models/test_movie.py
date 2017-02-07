@@ -130,6 +130,20 @@ class TestMovie(object):
             'genres': None
         }
 
+    def test_insert_duplicate_api_id(self, dbsession):
+        import pytest
+        from sqlalchemy.exc import IntegrityError
+
+        m1 = Movie(api_id='id_1', title='movie1')
+        m2 = Movie(api_id='id_1', title='movie2')
+        dbsession.add(m1)
+        dbsession.commit()
+
+        dbsession.add(m2)
+        with pytest.raises(IntegrityError) as excinfo:
+            dbsession.commit()
+        assert "Duplicate entry" in str(excinfo.value)
+
     def test_parse_and_create(self, mocker, dbsession):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 

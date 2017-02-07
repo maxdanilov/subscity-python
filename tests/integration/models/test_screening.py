@@ -20,6 +20,25 @@ class TestModelScreening(object):
         screening.delete()
         assert dbsession.query(Screening).all() == []
 
+    def test_insert_duplicate(self, dbsession):
+        from datetime import datetime
+        import pytest
+        from sqlalchemy.exc import IntegrityError
+        from subscity.models.screening import Screening
+        s1 = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
+                       ticket_api_id='fake_ticket', city='moscow',
+                       date_time=datetime(2017, 1, 1, 9))
+        s2 = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
+                       ticket_api_id='fake_ticket2', city='moscow',
+                       date_time=datetime(2017, 1, 1, 9))
+        dbsession.add(s1)
+        dbsession.commit()
+        dbsession.add(s2)
+
+        with pytest.raises(IntegrityError) as excinfo:
+            dbsession.commit()
+        assert "Duplicate entry" in str(excinfo.value)
+
     def test_save(self, dbsession):
         from subscity.models.screening import Screening
         from datetime import datetime
@@ -141,8 +160,12 @@ class TestModelScreening(object):
         dict_ = result[0].to_dict()
         created_at = dict_.pop('created_at')
         updated_at = dict_.pop('updated_at')
-        assert updated_at > created_at
-        assert result == [sc1, sc2]
+        assert updated_at >= created_at
+        # assert result == [sc1, sc2]
+        dict2_ = result[1].to_dict()
+        created_at2 = dict2_.pop('created_at')
+        updated_at2 = dict2_.pop('updated_at')
+        assert updated_at2 >= created_at2
         assert dict_ == {'cinema_api_id': '561fdfed37753624b592f13f',
                          'city': 'moscow',
                          'date_time': '2017-01-15T11:15:00',
@@ -151,3 +174,11 @@ class TestModelScreening(object):
                          'price_max': None,
                          'price_min': None,
                          'ticket_api_id': None}
+        assert dict2_ == {'cinema_api_id': '561fdfed37753624b592f13f',
+                          'city': 'moscow',
+                          'date_time': '2017-01-15T14:00:00',
+                          'id': sc2.id,
+                          'movie_api_id': '5874ea2a685ae0b186614bb5',
+                          'price_max': None,
+                          'price_min': None,
+                          'ticket_api_id': None}

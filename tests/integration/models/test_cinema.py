@@ -13,11 +13,11 @@ class TestModelCinema(object):
     def test_get_all(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c1 = Cinema(id=12, city='moscow', api_id='deadbeef', name='Cinema', url='url',
+        c1 = Cinema(city='moscow', api_id='deadbeef', name='Cinema', url='url',
                     phone='phone', fetch_all=True,
                     created_at=datetime.datetime(2017, 1, 1),
                     updated_at=datetime.datetime(2017, 1, 1))
-        c2 = Cinema(id=13, city='paris', api_id='badcode', name='Cinema Neu', url=None,
+        c2 = Cinema(city='paris', api_id='badcode', name='Cinema Neu', url=None,
                     phone='phone', fetch_all=False,
                     created_at=datetime.datetime(2017, 1, 1),
                     updated_at=datetime.datetime(2017, 1, 2))
@@ -28,6 +28,22 @@ class TestModelCinema(object):
         assert len(result) == 2
         assert result[0] == c1
         assert result[1] == c2
+
+    def test_insert_duplicate_api_id(self, dbsession):
+        from sqlalchemy.exc import IntegrityError
+        import pytest
+        from subscity.models.cinema import Cinema
+        c1 = Cinema(city='moscow', api_id='deadbeef', name='Cinema', url='url',
+                    phone='phone', fetch_all=True)
+        c2 = Cinema(city='paris', api_id='deadbeef', name='Cinema Neu', url=None,
+                    phone='phone', fetch_all=False)
+        dbsession.add(c1)
+        dbsession.commit()
+        dbsession.add(c2)
+
+        with pytest.raises(IntegrityError) as excinfo:
+            dbsession.commit()
+        assert "Duplicate entry" in str(excinfo.value)
 
     def test_to_dict(self):
         import datetime

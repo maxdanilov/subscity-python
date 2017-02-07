@@ -8,6 +8,7 @@ from sqlalchemy import (
     DateTime
 )
 from sqlalchemy import Float
+from sqlalchemy.dialects.mysql import DATETIME
 
 from subscity.main import DB
 from subscity.models.base import Base
@@ -21,12 +22,12 @@ class Screening(Base):  # pylint: disable=no-init
     movie_api_id = Column(String(64), primary_key=True)
     ticket_api_id = Column(String(128), nullable=True)
     city = Column(String(64), nullable=False)
-    date_time = Column(DateTime, default=None, nullable=False)
+    date_time = Column(DateTime, nullable=False, primary_key=True)
     price_min = Column(Float, nullable=True)
     price_max = Column(Float, nullable=True)
 
-    created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
-    updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
+    created_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, nullable=False)
+    updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
 
     # TODO: cleanup old

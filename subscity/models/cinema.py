@@ -17,7 +17,7 @@ from subscity.models.base import Base
 class Cinema(Base):  # pylint: disable=no-init
     __tablename__ = 'cinemas'
     id = Column(Integer, autoincrement=True, primary_key=True)  # pylint: disable=invalid-name
-    api_id = Column(String(64), primary_key=True)  # was cinema_id before
+    api_id = Column(String(64), primary_key=True, unique=True)  # was cinema_id before
     city = Column(String(64), nullable=False)
     name = Column(String(255), primary_key=True)
     address = Column(String(512), nullable=True)
