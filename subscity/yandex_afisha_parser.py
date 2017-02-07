@@ -89,15 +89,33 @@ class YandexAfishaParser(object):
 
     @staticmethod
     def _get_original_genre(code: str) -> str:
-        map_code_genre = {'musical_film': 'musical', 'art_film': 'indie film'}
+        map_code_genre = {'musical_film': 'musical',
+                          'art_film': 'indie',
+                          'biographic': 'biography',
+                          'family_movie': 'family',
+                          'film_noir': 'noir',
+                          'mysticism': 'mystery',
+                          'short_film': 'short'}
         name = code
         if code in map_code_genre:
             name = map_code_genre[code]
         return name.title()
 
+    @staticmethod
+    def _get_genre(name: str) -> str:
+        map_name_genre = {'авторское кино': 'артхаус',
+                          'документальное кино': 'документальный',
+                          'короткометражный фильм': 'короткометражный',
+                          'музыка народов мира': 'музыкальный',
+                          'семейное кино': 'семейный',
+                          'фильм-нуар': 'нуар'}
+        if name in map_name_genre:
+            return map_name_genre[name]
+        return name
+
     @classmethod
     def _get_genres(cls, tags: Union[List]) -> Dict:
-        names = [t['name'] for t in (tags or []) if t['type'] == 'genre']
+        names = [cls._get_genre(t['name']) for t in (tags or []) if t['type'] == 'genre']
         codes = [cls._get_original_genre(t['code']) for t in (tags or []) if t['type'] == 'genre']
 
         return {'russian': ', '.join(names) or None,

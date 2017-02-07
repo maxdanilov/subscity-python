@@ -122,7 +122,22 @@ class TestYandexAfishaParser(object):
         assert Yap._get_original_genre('') == ''
         assert Yap._get_original_genre('drama') == 'Drama'
         assert Yap._get_original_genre('musical_film') == 'Musical'
-        assert Yap._get_original_genre('art_film') == 'Indie Film'
+        assert Yap._get_original_genre('art_film') == 'Indie'
+        assert Yap._get_original_genre('biographic') == 'Biography'
+        assert Yap._get_original_genre('family_movie') == 'Family'
+        assert Yap._get_original_genre('film_noir') == 'Noir'
+        assert Yap._get_original_genre('mysticism') == 'Mystery'
+        assert Yap._get_original_genre('short_film') == 'Short'
+
+    def test_get_genre(self):
+        assert Yap._get_genre('') == ''
+        assert Yap._get_genre('драма') == 'драма'
+        assert Yap._get_genre('авторское кино') == 'артхаус'
+        assert Yap._get_genre('документальное кино') == 'документальный'
+        assert Yap._get_genre('музыка народов мира') == 'музыкальный'
+        assert Yap._get_genre('короткометражный фильм') == 'короткометражный'
+        assert Yap._get_genre('семейное кино') == 'семейный'
+        assert Yap._get_genre('фильм-нуар') == 'нуар'
 
     def test_get_genres(self):
         empty = {'russian': None, 'original': None}
@@ -134,8 +149,8 @@ class TestYandexAfishaParser(object):
                 {'id': '57d2843efc8131fcefa33f9f', 'code': 'drama', 'type': 'genre',
                  'status': 'approved', 'name': 'драма', 'plural': None,
                  'nameCases': {'acc': None, 'gen': None}},
-                {'id': '5575d413cc1c724f5a8e10f6', 'code': 'romance', 'type': 'genre',
-                 'status': 'approved', 'name': 'мелодрама', 'plural': None,
+                {'id': '5575d413cc1c724f5a8e10f6', 'code': 'family', 'type': 'genre',
+                 'status': 'approved', 'name': 'семейное кино', 'plural': None,
                  'nameCases': {'acc': None, 'gen': None}},
                 {'id': '57d28482377536932cfc4c2e', 'code': 'comedy', 'type': 'genre',
                  'status': 'approved', 'name': 'комедия', 'plural': None,
@@ -144,8 +159,8 @@ class TestYandexAfishaParser(object):
                  'status': 'approved', 'name': 'кино', 'plural': {'one': 'кино', 'some': 'фильма',
                                                                   'many': 'фильмов', 'none': None},
                  'nameCases': {'acc': 'в кинотеатрах', 'gen': None}}]
-        assert Yap._get_genres(data) == {'original': 'Musical, Drama, Romance, Comedy',
-                                         'russian': 'музыкальный, драма, мелодрама, комедия'}
+        assert Yap._get_genres(data) == {'original': 'Musical, Drama, Family, Comedy',
+                                         'russian': 'музыкальный, драма, семейный, комедия'}
 
     @parametrize('city', ['moscow', 'saint-petersburg'])
     def test_get_movie(self, city, mocker):
