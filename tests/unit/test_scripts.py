@@ -100,24 +100,25 @@ class TestScripts(object):
             YandexAfishaParser, 'get_movie',
             side_effect=[{'api_id': 'aaa', 'title': 'one'},
                          {'api_id': 'bbb', 'title': 'two'},
-                         {'api_id': 'ccc', 'title': 'three'},
                          {'api_id': 'ddd', 'title': 'four'},
                          {'api_id': 'eee', 'title': 'five'}])
         mock_movie_init = mocker.patch.object(Movie, '__init__', return_value=None)
         mock_movie_save = mocker.patch.object(Movie, 'save')
+        mock_get_movie_ids_db = mocker.patch.object(Movie, 'get_all_api_ids', return_value=['ccc'])
+
         update_movies()
+
         assert mock_get_movie_ids.call_args_list == [call('moscow'), call('saint-petersburg')]
         assert mock_get_movie.call_args_list == [call('aaa', 'moscow'), call('bbb', 'moscow'),
-                                                 call('ccc', 'saint-petersburg'),
                                                  call('ddd', 'saint-petersburg'),
                                                  call('eee', 'saint-petersburg')]
         assert mock_movie_init.call_args_list == [call(api_id='aaa', title='one'),
                                                   call(api_id='bbb', title='two'),
-                                                  call(api_id='ccc', title='three'),
                                                   call(api_id='ddd', title='four'),
                                                   call(api_id='eee', title='five')]
-        assert mock_movie_save.call_args_list == [call()] * 5
-        assert mock_sleep.call_args_list == [call(1.5)] * 5
+        assert mock_movie_save.call_args_list == [call()] * 4
+        assert mock_sleep.call_args_list == [call(1.5)] * 4
+        mock_get_movie_ids_db.assert_called_once_with()
 
     def test_update_test_fixtures(self, mocker):
         from subscity.scripts import update_test_fixtures
