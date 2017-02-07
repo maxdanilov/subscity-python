@@ -116,6 +116,7 @@ class TestYandexAfishaParser(object):
         assert Yap._get_original_genre('') == ''
         assert Yap._get_original_genre('drama') == 'Drama'
         assert Yap._get_original_genre('musical_film') == 'Musical'
+        assert Yap._get_original_genre('art_film') == 'Indie Film'
 
     def test_get_genres(self):
         empty = {'russian': None, 'original': None}

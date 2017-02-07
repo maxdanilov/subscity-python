@@ -88,11 +88,11 @@ class YandexAfishaParser(object):
 
     @staticmethod
     def _get_original_genre(code: str) -> str:
-        map_code_genre = {'musical_film': 'musical'}
+        map_code_genre = {'musical_film': 'musical', 'art_film': 'indie film'}
         name = code
         if code in map_code_genre:
             name = map_code_genre[code]
-        return name.capitalize()
+        return name.title()
 
     @classmethod
     def _get_genres(cls, tags: Union[List]) -> Dict:

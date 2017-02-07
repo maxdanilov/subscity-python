@@ -87,6 +87,38 @@ class TestScripts(object):
         assert mock_cinema_save.call_args_list == [call()] * 4
         assert mock_sleep.call_args_list == [call(2)] * 2
 
+    def test_update_movies(self, mocker):
+        import time
+        from subscity.yandex_afisha_parser import YandexAfishaParser
+        from subscity.scripts import update_movies
+        from subscity.models.movie import Movie
+        mock_sleep = mocker.patch.object(time, 'sleep')
+        mock_get_movie_ids = mocker.patch.object(
+            YandexAfishaParser, 'get_movie_ids',
+            side_effect=[['aaa', 'bbb'], ['ccc', 'ddd', 'eee']])
+        mock_get_movie = mocker.patch.object(
+            YandexAfishaParser, 'get_movie',
+            side_effect=[{'api_id': 'aaa', 'title': 'one'},
+                         {'api_id': 'bbb', 'title': 'two'},
+                         {'api_id': 'ccc', 'title': 'three'},
+                         {'api_id': 'ddd', 'title': 'four'},
+                         {'api_id': 'eee', 'title': 'five'}])
+        mock_movie_init = mocker.patch.object(Movie, '__init__', return_value=None)
+        mock_movie_save = mocker.patch.object(Movie, 'save')
+        update_movies()
+        assert mock_get_movie_ids.call_args_list == [call('moscow'), call('saint-petersburg')]
+        assert mock_get_movie.call_args_list == [call('aaa', 'moscow'), call('bbb', 'moscow'),
+                                                 call('ccc', 'saint-petersburg'),
+                                                 call('ddd', 'saint-petersburg'),
+                                                 call('eee', 'saint-petersburg')]
+        assert mock_movie_init.call_args_list == [call(api_id='aaa', title='one'),
+                                                  call(api_id='bbb', title='two'),
+                                                  call(api_id='ccc', title='three'),
+                                                  call(api_id='ddd', title='four'),
+                                                  call(api_id='eee', title='five')]
+        assert mock_movie_save.call_args_list == [call()] * 5
+        assert mock_sleep.call_args_list == [call(1.5)] * 5
+
     def test_update_test_fixtures(self, mocker):
         from subscity.scripts import update_test_fixtures
         mock_update_cinema_fixtures = mocker.patch('subscity.scripts.update_test_cinema_fixtures')

@@ -6,6 +6,24 @@ class TestMovie(object):
     def test_query_empty_result(self, dbsession):
         assert dbsession.query(Movie).all() == []
 
+    def test_get_all_api_ids_empty(self, dbsession):
+        result = Movie.get_all_api_ids()
+        assert result == []
+
+    def test_get_all_api_ids(self, dbsession):
+        import datetime
+        m1 = Movie(id=12, api_id='aaa', title='Title A',
+                   created_at=datetime.datetime(2017, 1, 1),
+                   updated_at=datetime.datetime(2017, 1, 2))
+        m2 = Movie(id=13, api_id='bbb', title='Title B',
+                   created_at=datetime.datetime(2017, 1, 1),
+                   updated_at=datetime.datetime(2017, 1, 2))
+        dbsession.add(m1)
+        dbsession.add(m2)
+        dbsession.commit()
+        result = Movie.get_all_api_ids()
+        assert result == ['aaa', 'bbb']
+
     def test_get_all_empty(self, dbsession):
         assert Movie.get_all() == []
 
@@ -129,31 +147,32 @@ class TestMovie(object):
         created_at = dict_.pop('created_at')
         updated_at = dict_.pop('updated_at')
         assert updated_at > created_at
-        assert dict_ == {'api_id': '5874ea2a685ae0b186614bb5',
-                         'age_restriction': 16,
-                         'cast': 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс, '
-                                 'Соноя Мидзуно',
-                         'cast_en': None,
-                         'countries': 'США',
-                         'countries_en': None,
-                         'description': None,
-                         'description_en': None,
-                         'directors': 'Дэмьен Шазелл',
-                         'directors_en': None,
-                         'duration': 128,
-                         'genres': 'музыкальный, драма, мелодрама, комедия',
-                         'genres_en': 'Musical, Drama, Romance, Comedy',
-                         'hide': False,
-                         'id': 1,
-                         'imdb_id': None,
-                         'imdb_rating': None,
-                         'imdb_votes': None,
-                         'kinopoisk_id': 841081,
-                         'kinopoisk_rating': 8.5,
-                         'kinopoisk_votes': 42192,
-                         'languages': None,
-                         'languages_en': None,
-                         'premiere': '2017-01-12T00:00:00',
-                         'title': 'Ла-Ла Ленд',
-                         'title_en': 'La La Land',
-                         'year': 2016}
+        expected = {'api_id': '5874ea2a685ae0b186614bb5',
+                    'age_restriction': 16,
+                    'cast': 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс, '
+                            'Соноя Мидзуно',
+                    'cast_en': None,
+                    'countries': 'США',
+                    'countries_en': None,
+                    'description': None,
+                    'description_en': None,
+                    'directors': 'Дэмьен Шазелл',
+                    'directors_en': None,
+                    'duration': 128,
+                    'genres': 'музыкальный, драма, мелодрама, комедия',
+                    'genres_en': 'Musical, Drama, Romance, Comedy',
+                    'hide': False,
+                    'id': m.id,
+                    'imdb_id': None,
+                    'imdb_rating': None,
+                    'imdb_votes': None,
+                    'kinopoisk_id': 841081,
+                    'kinopoisk_rating': 8.5,
+                    'kinopoisk_votes': 42192,
+                    'languages': None,
+                    'languages_en': None,
+                    'premiere': '2017-01-12T00:00:00',
+                    'title': 'Ла-Ла Ленд',
+                    'title_en': 'La La Land',
+                    'year': 2016}
+        assert dict_ == expected

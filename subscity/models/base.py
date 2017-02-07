@@ -38,6 +38,11 @@ class Base(DB.Model):  # pylint:disable=no-init
     def get_all(cls) -> List:
         return DB.session.query(cls).all()
 
+    @classmethod
+    def get_all_api_ids(cls) -> List:
+        rows = DB.session.query(cls.api_id).all()
+        return [r.api_id for r in rows]
+
     def save(self) -> None:
         DB.session.add(self)
         DB.session.commit()

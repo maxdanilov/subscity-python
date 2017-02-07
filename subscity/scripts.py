@@ -3,6 +3,7 @@ import json
 import time
 
 from subscity.models.cinema import Cinema
+from subscity.models.movie import Movie
 from subscity.models.screening import Screening
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
@@ -36,6 +37,18 @@ def update_cinemas() -> None:
             cinema_obj = Cinema(**cinema)
             cinema_obj.create_or_update()
         time.sleep(2)
+
+
+def update_movies() -> None:
+    for city in Yap.CITIES:
+        movie_api_ids = Yap.get_movie_ids(city)
+        movie_api_ids_db = Movie.get_all_api_ids()
+        new_api_ids = [i for i in movie_api_ids if i not in movie_api_ids_db]
+        for ix, api_id in enumerate(new_api_ids):
+            print("{} / {} Fetching {}".format(ix + 1, len(new_api_ids), api_id))
+            movie = Yap.get_movie(api_id, city)
+            Movie(**movie).save()
+            time.sleep(1.5)
 
 
 def update_test_fixtures() -> None:
