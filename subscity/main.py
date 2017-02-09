@@ -2,13 +2,14 @@
 
 import os
 
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from subscity.app import get_app
+from subscity.models.screening import Screening
+
 DB_URI = os.environ.get('DB_URI')
-APP = Flask(__name__)
-APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-APP.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
+
+APP = get_app()
 DB = SQLAlchemy(APP)
 
 
@@ -17,3 +18,7 @@ def hello_world() -> str:
     return u'Hello, World! тест'
 
 
+@APP.route('/screenings')
+def get_screenings() -> str:
+    screenings = Screening.get_all()
+    return str(len(screenings))

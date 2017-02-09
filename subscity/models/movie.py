@@ -10,8 +10,7 @@ from sqlalchemy import (
     Text
 )
 
-from subscity.main import DB
-from subscity.models.base import Base
+from subscity.models.base import Base, DB
 
 
 class Movie(Base):  # pylint: disable=no-init

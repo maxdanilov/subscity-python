@@ -10,8 +10,7 @@ from sqlalchemy import (
 from sqlalchemy import Float
 from sqlalchemy.dialects.mysql import DATETIME
 
-from subscity.main import DB
-from subscity.models.base import Base
+from subscity.models.base import Base, DB
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 

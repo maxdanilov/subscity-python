@@ -1,11 +1,14 @@
 import datetime
 from typing import Union, List
 
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import DateTime
-from sqlalchemy import or_
 
-from subscity.main import DB
+from subscity.app import get_app
 from subscity.utils import format_datetime
+
+APP = get_app()
+DB = SQLAlchemy(APP)
 
 
 class Base(DB.Model):  # pylint:disable=no-init

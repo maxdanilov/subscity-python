@@ -10,8 +10,7 @@ from sqlalchemy import (
     or_
 )
 
-from subscity.main import DB
-from subscity.models.base import Base
+from subscity.models.base import Base, DB
 
 
 class Cinema(Base):  # pylint: disable=no-init

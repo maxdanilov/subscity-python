@@ -3,8 +3,7 @@ import pytest
 
 from alembic.command import upgrade
 from alembic.config import Config
-from sqlalchemy.schema import MetaData, DropConstraint
-from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.schema import MetaData
 
 from subscity.main import APP
 
@@ -32,9 +31,9 @@ def client(app):
 @pytest.fixture(scope='session')
 def setup_clean_db(app):
     # Clear out any existing tables
-    from subscity.main import DB
+    from subscity.models.base import DB
     # db_name = os.environ.get('DN_NAME')
-    engine = DB.get_engine(APP)
+    engine = DB.get_engine(app)
     metadata = MetaData(engine)
     metadata.reflect()
     # for table in metadata.tables.values():
@@ -46,7 +45,7 @@ def setup_clean_db(app):
 
 @pytest.yield_fixture
 def dbsession(request, monkeypatch, setup_clean_db):
-    from subscity.main import DB
+    from subscity.models.base import DB
     # Prevent the dbsession from closing (make it a no-op) and
     # committing (redirect to flush() instead)
     session = DB.session
