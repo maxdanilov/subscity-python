@@ -26,6 +26,6 @@ virtualenv -p python3 .
 ## Running
 
 ```
-./run python -m flask run
+./run flask run
 ```
 

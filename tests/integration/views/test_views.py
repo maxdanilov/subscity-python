@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class TestAppViews(object):
     def test_root(self, client):
         result = client.get('/')
