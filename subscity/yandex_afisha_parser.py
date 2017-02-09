@@ -56,7 +56,9 @@ class YandexAfishaParser(object):
             data = json.loads(contents)
             total = data['paging']['total']
             for data in data['data']:
-                result.append(data['event']['id'])
+                id_ = data['event']['id']
+                if id_ not in result:
+                    result.append(id_)
             offset += limit
         return result
 
