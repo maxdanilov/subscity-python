@@ -1,6 +1,4 @@
 #!/bin/bash
 
-source bin/activate
 source .env
-
-FLASK_APP=subscity/main.py dotenv $@
+FLASK_APP=subscity/main.py pyenv exec $@

@@ -1,4 +1,6 @@
 #!/bin/sh
 
-source bin/activate
-dotenv -f .env.test py.test tests/ $@
+export DB_NAME='subscity'
+export DB_URI="mysql+pymysql://subscity:subscity@localhost:3308/${DB_NAME}?charset=utf8"
+
+pyenv exec pytest tests/ $@

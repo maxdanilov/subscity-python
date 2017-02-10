@@ -5,10 +5,22 @@
 
 ## Setup
 
+### pyenv & pyenv-alias
+
 ```
-virtualenv -p python3 .
-./run pip3 install -r requirements.txt
-./run pip3 install -e .
+brew install pyenv
+git clone https://github.com/s1341/pyenv-alias.git $(pyenv root)/plugins/pyenv-alias
+
+```
+
+### Dependencies
+
+```
+VERSION_ALIAS="subscity_3.5.2" pyenv install 3.5.2
+pyenv local subscity_3.5.2
+pyenv exec pip3 install --upgrade pip
+pyenv exec pip3 install -r requirements.txt
+pyenv exec pip3 install -e .
 ```
 
 ## Tests
