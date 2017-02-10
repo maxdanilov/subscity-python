@@ -10,7 +10,6 @@
 ```
 brew install pyenv
 git clone https://github.com/s1341/pyenv-alias.git $(pyenv root)/plugins/pyenv-alias
-
 ```
 
 ### Dependencies
