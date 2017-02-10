@@ -43,7 +43,7 @@ class Base(DB.Model):  # pylint:disable=no-init
 
     @classmethod
     def get_all_api_ids(cls) -> List:
-        rows = DB.session.query(cls.api_id).all()
+        rows = DB.session.query(cls.api_id).all()  # pylint:disable=no-member
         return [r.api_id for r in rows]
 
     def save(self) -> None:

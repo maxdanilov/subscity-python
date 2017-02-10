@@ -44,8 +44,8 @@ def update_movies() -> None:
         movie_api_ids = Yap.get_movie_ids(city)
         movie_api_ids_db = Movie.get_all_api_ids()
         new_api_ids = [i for i in movie_api_ids if i not in movie_api_ids_db]
-        for ix, api_id in enumerate(new_api_ids):
-            print("{} / {} Fetching {}".format(ix + 1, len(new_api_ids), api_id))
+        for index, api_id in enumerate(new_api_ids):
+            print("{} / {} Fetching {}".format(index + 1, len(new_api_ids), api_id))
             movie = Yap.get_movie(api_id, city)
             Movie(**movie).save()
             time.sleep(1.5)
@@ -66,8 +66,8 @@ def update_test_cinema_fixtures() -> None:
         filename = fixture_path + 'cinemas-offset{:02d}-limit{:02d}.json'.format(offset, limit)
         print("Downloading {} to {}".format(url, filename))
         parsed = json.loads(Yap.fetch(url))
-        with open(filename, "w") as fp:
-            fp.write(json.dumps(parsed, indent=4))
+        with open(filename, "w") as file:
+            file.write(json.dumps(parsed, indent=4))
 
 
 def update_test_movie_fixtures() -> None:
@@ -80,5 +80,5 @@ def update_test_movie_fixtures() -> None:
         filename = fixture_path + 'movies-offset{:03d}-limit{:02d}.json'.format(offset, limit)
         print("Downloading {} to {}".format(url, filename))
         parsed = json.loads(Yap.fetch(url))
-        with open(filename, "w") as fp:
-            fp.write(json.dumps(parsed, indent=4))
+        with open(filename, "w") as file:
+            file.write(json.dumps(parsed, indent=4))

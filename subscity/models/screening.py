@@ -26,8 +26,8 @@ class Screening(Base):  # pylint: disable=no-init
     price_max = Column(Float, nullable=True)
 
     created_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, nullable=False)
-    updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, onupdate=datetime.datetime.now,
-                        nullable=False)
+    updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now,
+                        onupdate=datetime.datetime.now, nullable=False)
 
     # TODO: cleanup old
 
@@ -48,8 +48,8 @@ class Screening(Base):  # pylint: disable=no-init
         return query.all()
 
     @staticmethod
-    def clean(cinema_api_id: str = None, movie_api_id: str = None, start_day: datetime = None,
-              end_day: datetime=None, city: str = None) -> int:
+    def clean(cinema_api_id: str=None, movie_api_id: str=None, start_day: datetime=None,
+              end_day: datetime=None, city: str=None) -> int:
         screenings = Screening.get(cinema_api_id, movie_api_id, start_day, end_day, city)
         for screening in screenings:
             screening.delete()

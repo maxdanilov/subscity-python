@@ -127,7 +127,7 @@ class YandexAfishaParser(object):
     def _get_kinopoisk_data(data: Union[Dict]) -> Dict:
         if not data:
             return {'id': None, 'rating': None, 'votes': None}
-        id_ = int(re.sub("\D", "", data['url']))
+        id_ = int(re.sub(r'\D', '', data['url']))
         rating = data['value']
         votes = data['votes']
         return {'id': id_, 'rating': rating, 'votes': votes}
