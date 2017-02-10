@@ -1,4 +1,3 @@
 #!/bin/bash
-
-source .env
-FLASK_APP=subscity/main.py pyenv exec $@
+export FLASK_APP=subscity/main.py
+dotenv -f .env pyenv exec $@
