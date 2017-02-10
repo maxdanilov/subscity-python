@@ -1,10 +1,9 @@
 #!/bin/sh
-source bin/activate
 if [ -z $1 ]; then
-    pylint --rcfile=.pylintrc subscity
-    pep8 --config=pep8.ini subscity
+    pyenv exec pylint --rcfile=.pylintrc subscity
+    pyenv exec pep8 --config=pep8.ini subscity
 else
-    pylint --rcfile=.pylintrc $@
-    pep8 --config=pep8.ini $@
+    pyenv exec pylint --rcfile=.pylintrc $@
+    pyenv exec pep8 --config=pep8.ini $@
 fi
 
