@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 
 class TestAppViews(object):
     def test_root(self, client):
         result = client.get('/')
         assert result.status_code == 200
-        assert result.get_data().decode('utf-8') == 'Hello, World! тест'
+        assert result.get_data().decode('utf-8') == 'SubsCity API'
 
-    def test_screenings_empty(self, client, dbsession):
-        result = client.get('/screenings')
-        assert result.status_code == 200
-        assert result.get_data().decode('utf-8') == '0'
+    def test_screenings_wrong_arguments(self, client):
+        result = client.get('/screenings/wrong_city/bad_date')
+        assert result.status_code == 400
+        assert sorted(json.loads(result.get_data().decode('utf-8'))['errors']) == \
+           ['city should be one of: msk, spb',
+            'date should be in this format: YYYY-MM-DD']
 
-    def test_screenings(self, client, dbsession):
-        import datetime
-        from subscity.models.screening import Screening
-        sc1 = Screening(movie_api_id='a', cinema_api_id='b', city='moscow',
-                        date_time=datetime.datetime(2016, 1, 3, 6, 20))
-        sc2 = Screening(movie_api_id='aa', cinema_api_id='bb', city='moscow',
-                        date_time=datetime.datetime(2016, 1, 3, 6, 20))
-        dbsession.add(sc1)
-        dbsession.add(sc2)
-        dbsession.commit()
-        result = client.get('/screenings')
+    def test_screenings(self, client, mocker):
+        from subscity.controllers.screenings import ScreeningsController
+        from datetime import datetime
+
+        mock_get_screenings = mocker.patch.object(ScreeningsController, 'get_for_day',
+                                                  return_value=['scr1', 'scr2'])
+        result = client.get('/screenings/msk/2017-02-28')
         assert result.status_code == 200
-        assert result.get_data().decode('utf-8') == '2'
+        assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['scr1', 'scr2']
+        mock_get_screenings.assert_called_once_with(datetime(2017, 2, 28), 'moscow')

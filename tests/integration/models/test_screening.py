@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
+
+from subscity.models.screening import Screening
 from tests.utils import fread
 
 
 class TestModelScreening(object):
     def test_query_empty_result(self, dbsession):
-        from subscity.models.screening import Screening
         result = dbsession.query(Screening).all()
         assert len(result) == 0
 
     def test_delete(self, dbsession):
-        from subscity.models.screening import Screening
         from datetime import datetime
         screening = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
                               ticket_api_id='fake_ticket', price_min=400.0, price_max=450,
@@ -24,7 +24,6 @@ class TestModelScreening(object):
         from datetime import datetime
         import pytest
         from sqlalchemy.exc import IntegrityError
-        from subscity.models.screening import Screening
         s1 = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
                        ticket_api_id='fake_ticket', city='moscow',
                        date_time=datetime(2017, 1, 1, 9))
@@ -40,7 +39,6 @@ class TestModelScreening(object):
         assert "Duplicate entry" in str(excinfo.value)
 
     def test_save(self, dbsession):
-        from subscity.models.screening import Screening
         from datetime import datetime
 
         screening = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
@@ -64,7 +62,6 @@ class TestModelScreening(object):
         }
 
     def test_clean_nothing_found(self, mocker):
-        from subscity.models.screening import Screening
         mock_get = mocker.patch.object(Screening, 'get', return_value=[])
         mock_delete = mocker.patch.object(Screening, 'delete')
         result = Screening.clean('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
@@ -76,7 +73,6 @@ class TestModelScreening(object):
 
     def test_clean(self, mocker):
         from unittest.mock import call
-        from subscity.models.screening import Screening
         mock_get = mocker.patch.object(Screening, 'get', return_value=[Screening(),
                                                                        Screening()])
         mock_delete = mocker.patch.object(Screening, 'delete')
@@ -88,7 +84,6 @@ class TestModelScreening(object):
         assert mock_delete.call_args_list == [call(), call()]
 
     def test_get(self, dbsession):
-        from subscity.models.screening import Screening
         from datetime import datetime
 
         sc1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
@@ -141,7 +136,6 @@ class TestModelScreening(object):
     def test_parse_and_save(self, mocker, dbsession):
         from datetime import datetime
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
-        from subscity.models.screening import Screening
 
         fixture = 'fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
         mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
@@ -182,3 +176,58 @@ class TestModelScreening(object):
                           'price_max': None,
                           'price_min': None,
                           'ticket_api_id': None}
+
+    def test_get_for_day_empty(self, dbsession):
+        from datetime import datetime
+        result = Screening.get_for_day(datetime(2017, 2, 15), 'moscow')
+        assert result == []
+
+    def test_get_for_day(self, dbsession):
+        from datetime import datetime
+        from subscity.models.movie import Movie
+        from subscity.models.cinema import Cinema
+
+        m1 = Movie(api_id='fake_movie1', title='fake_title1')
+        m2 = Movie(api_id='fake_movie2', title='fake_title2')
+        m3 = Movie(api_id='fake_movie3', title='fake_title3')
+        dbsession.add(m1)
+        dbsession.add(m2)
+        dbsession.add(m3)
+        dbsession.commit()
+
+        c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
+        c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
+        c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='moscow')
+        dbsession.add(c1)
+        dbsession.add(c2)
+        dbsession.add(c3)
+        dbsession.commit()
+        # different city
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='saint-petersburg', date_time=datetime(2017, 2, 15, 12, 15))
+        # our guy
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime(2017, 2, 15, 12, 15))
+        # different day
+        s3 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime(2017, 2, 16, 12, 15))
+        # doesn't have a cinema
+        s4 = Screening(cinema_api_id='fake_cinema11', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime(2017, 2, 15, 20, 0))
+        # doesn't have a movie
+        s5 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie11',
+                       city='moscow', date_time=datetime(2017, 2, 15, 21, 15))
+        # also our guy
+        s6 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
+                       city='moscow', date_time=datetime(2017, 2, 16, 1, 50))
+
+        dbsession.add(s1)
+        dbsession.add(s2)
+        dbsession.add(s3)
+        dbsession.add(s4)
+        dbsession.add(s5)
+        dbsession.add(s6)
+        dbsession.commit()
+
+        result = Screening.get_for_day(datetime(2017, 2, 15, 23, 55), 'moscow')
+        assert result == [(s2, m2, c2), (s6, m3, c3)]

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime, timedelta
 from typing import List, Dict, Union
 import re
@@ -7,7 +9,8 @@ import urllib.request
 
 class YandexAfishaParser(object):
     CITIES = ('moscow', 'saint-petersburg')
-    BASE_URL_API = 'https://afisha.yandex.ru/api/'
+    BASE_URL = 'https://afisha.yandex.ru'
+    BASE_URL_API = '{}/api/'.format(BASE_URL)
     SKIPPED_GENRES = set([x.lower() for x in ['TheatreHD']])
     HAS_SUBS_TAG = 'На языке оригинала'
     DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
@@ -17,6 +20,11 @@ class YandexAfishaParser(object):
     def fetch(url: str) -> str:
         print(url)
         return urllib.request.urlopen(url).read()
+
+    @classmethod
+    def url_tickets(cls, cinema_api_id: str, city: str, day: datetime) -> str:
+        return '{}/places/{}?city={}&place-schedule-date={}'.\
+            format(cls.BASE_URL, cinema_api_id, city, day.strftime("%Y-%m-%d"))
 
     @classmethod
     def url_movie(cls, api_id: str, city: str='moscow') -> str:
@@ -223,8 +231,3 @@ class YandexAfishaParser(object):
                                'longitude': data['coordinates']['longitude']})
             offset += limit
         return result
-
-
-# if __name__ == '__main__':
-#     CINEMAS = YandexAfishaParser.get_cinemas('moscow')
-#     CINEMAS = YandexAfishaParser.get_cinemas('saint-petersburg')

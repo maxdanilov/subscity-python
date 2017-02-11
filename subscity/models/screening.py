@@ -11,6 +11,8 @@ from sqlalchemy import Float
 from sqlalchemy.dialects.mysql import DATETIME
 
 from subscity.models.base import Base, DB
+from subscity.models.cinema import Cinema
+from subscity.models.movie import Movie
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 
@@ -29,7 +31,17 @@ class Screening(Base):  # pylint: disable=no-init
     updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now,
                         onupdate=datetime.datetime.now, nullable=False)
 
-    # TODO: cleanup old
+    @staticmethod
+    def get_for_day(day: datetime, city: str) -> List:
+        start_day = day.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_day = start_day + datetime.timedelta(days=1)
+        query = DB.session.query(Screening, Movie, Cinema)
+        query = query.filter(Screening.date_time > start_day + Yap.DAY_STARTS_AT)
+        query = query.filter(Screening.date_time <= end_day + Yap.DAY_STARTS_AT)
+        query = query.filter(Screening.city == city)
+        query = query.filter(Screening.cinema_api_id == Cinema.api_id)
+        query = query.filter(Screening.movie_api_id == Movie.api_id)
+        return query.all()
 
     @staticmethod
     def get(cinema_api_id: str=None, movie_api_id: str=None, start_day: datetime=None,
@@ -40,7 +52,7 @@ class Screening(Base):  # pylint: disable=no-init
         query = query.filter(Screening.city == city if city else True)
         if start_day:
             start_day = start_day.replace(hour=0, minute=0, second=0, microsecond=0)
-            query = query.filter(Screening.date_time >= start_day + Yap.DAY_STARTS_AT)
+            query = query.filter(Screening.date_time > start_day + Yap.DAY_STARTS_AT)
         if end_day:
             end_day = end_day.replace(hour=0, minute=0, second=0, microsecond=0)
             query = query.filter(Screening.date_time <= end_day + Yap.DAY_STARTS_AT)

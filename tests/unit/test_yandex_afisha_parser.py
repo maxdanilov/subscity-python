@@ -13,6 +13,12 @@ class TestYandexAfishaParser(object):
     def _fread(self, fname):
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+    def test_url_tickets(self):
+        import datetime
+        result = Yap.url_tickets('cinema_api_id', 'city_name', datetime.datetime(2017, 2, 28))
+        assert result == "https://afisha.yandex.ru/places/cinema_api_id?city=city_name" \
+                         "&place-schedule-date=2017-02-28"
+
     @parametrize('limit, offset, city, expected',
                  [(20, 40, 'moscow',
                    'https://afisha.yandex.ru/api/events/cinema/places?limit=20&offset=40&'
