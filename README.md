@@ -40,3 +40,9 @@ pyenv exec pip3 install -e .
 ./run flask run
 ```
 
+## Tasks
+```
+./run update_movies
+./run update_cinemas
+./run update_screenings
+```
