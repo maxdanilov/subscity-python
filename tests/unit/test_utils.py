@@ -67,3 +67,10 @@ class TestUtils(object):
         from tests.utils import mock_datetime
         with mock_datetime(mock_utcnow=utc_now):
             assert get_now('moscow') == expected
+
+    @parametrize('data, expected', [(None, None),
+                                    ('5 Звезд на Новокузнецкой', '5 Zvezd na Novokuznetskoj'),
+                                    ('Синема Lounge', 'Sinema Lounge')])
+    def test_transliterate(self, data, expected):
+        from subscity.utils import transliterate
+        assert transliterate(data) == expected

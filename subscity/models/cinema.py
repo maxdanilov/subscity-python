@@ -11,6 +11,7 @@ from sqlalchemy import (
 )
 
 from subscity.models.base import Base, DB
+from subscity.utils import transliterate
 
 
 class Cinema(Base):  # pylint: disable=no-init
@@ -29,6 +30,18 @@ class Cinema(Base):  # pylint: disable=no-init
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
+
+    @property
+    def address_en(self) -> str:
+        return transliterate(self.address)
+
+    @property
+    def name_en(self) -> str:
+        return transliterate(self.name)
+
+    @property
+    def metro_en(self) -> str:
+        return transliterate(self.metro)
 
     def create_or_update(self) -> None:
         cls = self.__class__

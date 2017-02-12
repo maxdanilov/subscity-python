@@ -21,12 +21,23 @@ class CinemasController(object):
                 {
                     'id': cinema.id,
                     'location': {
-                        'address': cinema.address,
-                        'metro': cinema.metro.split(', ') if cinema.metro else None,
+                        'address':
+                            {
+                                'ru': cinema.address,
+                                'en': cinema.address_en
+                            },
+                        'metro':
+                            {
+                                'ru': cinema.metro.split(', ') if cinema.metro else None,
+                                'en': cinema.metro_en.split(', ') if cinema.metro_en else None
+                            },
                         'latitude': float(cinema.latitude) if cinema.latitude else None,
                         'longitude': float(cinema.longitude) if cinema.longitude else None
                     },
-                    'name': cinema.name,
+                    'name': {
+                        'ru': cinema.name,
+                        'en': cinema.name_en
+                    },
                     'phones': cinema.phone.split(', ') if cinema.phone else None,
                     'urls': cinema.url.split(', ') if cinema.url else None,
                     'movies': movie_ids,

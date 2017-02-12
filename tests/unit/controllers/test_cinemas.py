@@ -56,12 +56,12 @@ class TestCinemasController(object):
                 self.cinema_id = cinema_id
                 self.movie_id = movie_id
 
-        c1 = Cinema(id=1, city='moscow', name='Nuovo Cinema Paradiso',
+        c1 = Cinema(id=1, city='moscow', name='Нуово Синема Парадизо',
                     address='ул. Тверская, 21', metro='Пушкинская, Чеховская, Тверская',
                     latitude=Decimal(55.0), longitude=Decimal(37.0),
                     phone='+7 499 123 45 67, +7 499 132 66 53',
                     url='http://nuovocinema.ru, https://cinemaworld.ru')
-        c2 = Cinema(id=2, city='moscow', name='Odeon Palace', address='ул. Тверская-Ямская, 12')
+        c2 = Cinema(id=2, city='moscow', name='Odeon Palace')
 
         cinema_movies_ids = [Row(cinema_id=1, movie_id=3),
                              Row(cinema_id=2, movie_id=4),
@@ -74,26 +74,34 @@ class TestCinemasController(object):
                 'id': 1,
                 'location':
                     {
-                        'address': 'ул. Тверская, 21',
-                        'metro': ['Пушкинская', 'Чеховская', 'Тверская'],
+                        'address': {
+                            'ru': 'ул. Тверская, 21',
+                            'en': 'ul. Tverskaja, 21'},
+                        'metro': {
+                            'ru': ['Пушкинская', 'Чеховская', 'Тверская'],
+                            'en': ['Pushkinskaja', 'Chehovskaja', 'Tverskaja']},
                         'longitude': 37.0,
                         'latitude': 55.0
                     },
-                'name': 'Nuovo Cinema Paradiso',
+                'name':
+                    {'ru': 'Нуово Синема Парадизо',
+                     'en': 'Nuovo Sinema Paradizo'},
                 'movies': [3],
+                'movies_count': 1,
                 'phones': ['+7 499 123 45 67', '+7 499 132 66 53'],
-                'urls': ['http://nuovocinema.ru', 'https://cinemaworld.ru'],
-                'movies_count': 1
+                'urls': ['http://nuovocinema.ru', 'https://cinemaworld.ru']
             },
             {
                 'id': 2,
                 'location':
                     {
-                        'address': 'ул. Тверская-Ямская, 12',
-                        'metro': None,
+                        'address': {'ru': None, 'en': None},
+                        'metro': {'ru': None, 'en': None},
                         'longitude': None,
                         'latitude': None},
-                'name': 'Odeon Palace',
+                'name':
+                    {'ru': 'Odeon Palace',
+                     'en': 'Odeon Palace'},
                 'movies': [4, 5],
                 'movies_count': 2,
                 'phones': None,

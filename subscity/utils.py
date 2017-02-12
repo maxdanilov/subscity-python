@@ -4,6 +4,7 @@ from typing import Union
 
 from flask import Response
 import pytz
+from transliterate import translit
 from voluptuous import Invalid, MultipleInvalid
 
 
@@ -41,12 +42,16 @@ def error_msg(exc: MultipleInvalid) -> dict:
     return {'errors': [e.msg for e in exc.errors]}
 
 
-def get_timezone(city):
+def get_timezone(city: str) -> str:
     mapping = {}
     return mapping.get(city, 'Europe/Moscow')
 
 
-def get_now(city):
+def get_now(city: str) -> datetime:
     # returns tz-unaware current time in the timezone of a given city
     utc = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
     return utc.astimezone(pytz.timezone(get_timezone(city))).replace(tzinfo=None)
+
+
+def transliterate(data: str) -> str:
+    return translit(data, 'ru', reversed=True) if data else None

@@ -59,13 +59,16 @@ Example:
   {
     "id": 1,
     "location": {
-        "address": "Б. Овчинниковский пер., 16",
+        "address": {
+            "ru": "Б. Овчинниковский пер., 16",
+            "en": "B. Ovchinnikovskij per., 16"
+        },
         "latitude": 55.744724,
         "longitude": 37.629882,
-        "metro": [
-            "Новокузнецкая",
-            "Третьяковская"
-        ]
+        "metro": {
+            "ru": ["Новокузнецкая", "Третьяковская"],
+            "en": ["Novokuznetskaja", "Tretjakovskaja"]
+        }
     },
     "movies": [
         74,
@@ -76,7 +79,10 @@ Example:
         23
     ],
     "movies_count": 6,
-    "name": "Пять звёзд на Новокузнецкой",
+    "name": {
+        "ru": "Пять звёзд на Новокузнецкой",
+        "en": "Pjat' zvezd na Novokuznetskoj"
+    },
     "phones": [
         "+7 (495) 916-91-69 (заказ билетов)"
     ],
