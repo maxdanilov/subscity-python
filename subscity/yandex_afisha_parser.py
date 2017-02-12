@@ -19,7 +19,7 @@ class YandexAfishaParser(object):
     @staticmethod
     def fetch(url: str) -> str:
         print(url)
-        return urllib.request.urlopen(url).read()
+        return urllib.request.urlopen(url).read().decode('utf-8')
 
     @classmethod
     def url_tickets(cls, cinema_api_id: str, city: str, day: datetime) -> str:

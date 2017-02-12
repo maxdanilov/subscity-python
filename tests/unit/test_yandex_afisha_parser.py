@@ -58,7 +58,7 @@ class TestYandexAfishaParser(object):
     def test_fetch(self, mocker):
         class UrlOpenResultFake(object):
             def read(self):
-                return 'fake-val'
+                return b'fake-val'
 
         mock_url_open = mocker.patch('urllib.request.urlopen', return_value=UrlOpenResultFake())
         assert Yap.fetch('some-url') == 'fake-val'
