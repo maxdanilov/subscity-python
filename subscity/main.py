@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
+from flask import Response
 from flask_sqlalchemy import SQLAlchemy
 from voluptuous import Schema, Required, MultipleInvalid, All, Range, Coerce
 
@@ -14,8 +15,8 @@ APP = get_app()
 DB = SQLAlchemy(APP)
 
 
-@APP.route('/screenings/<city>/movie/<movie_id>')
-def get_screenings_for_movie(city: str, movie_id: str) -> (str, int):
+@APP.route('/screenings/<city>/movie/<movie_id>', methods=['GET'])
+def get_screenings_for_movie(city: str, movie_id: str) -> (Response, int):
     validator = Schema({Required('id'): All(Coerce(int), Range(min=1),
                                             msg='movie id must be an integer'),
                         Required('city'): validator_city()})
@@ -27,8 +28,8 @@ def get_screenings_for_movie(city: str, movie_id: str) -> (str, int):
     return json_response(result), 200
 
 
-@APP.route('/screenings/<city>/cinema/<cinema_id>')
-def get_screenings_for_cinema(city: str, cinema_id: str) -> (str, int):
+@APP.route('/screenings/<city>/cinema/<cinema_id>', methods=['GET'])
+def get_screenings_for_cinema(city: str, cinema_id: str) -> (Response, int):
     validator = Schema({Required('id'): All(Coerce(int), Range(min=1),
                                             msg='cinema id must be an integer'),
                         Required('city'): validator_city()})
@@ -40,8 +41,8 @@ def get_screenings_for_cinema(city: str, cinema_id: str) -> (str, int):
     return json_response(result), 200
 
 
-@APP.route('/screenings/<city>/date/<date>')
-def get_screenings_for_day(city: str, date: str) -> (str, int):
+@APP.route('/screenings/<city>/date/<date>', methods=['GET'])
+def get_screenings_for_day(city: str, date: str) -> (Response, int):
     validator = Schema({Required('date'): validator_date(),
                         Required('city'): validator_city()})
     try:
