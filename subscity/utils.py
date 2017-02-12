@@ -3,7 +3,7 @@ import json
 from typing import Union
 
 from flask import Response
-from voluptuous import Invalid
+from voluptuous import Invalid, MultipleInvalid
 
 
 def json_response(data):
@@ -34,3 +34,7 @@ def validator_city():
             raise Invalid('city should be one of: msk, spb')
         return mapping[code]
     return city_by_code
+
+
+def error_msg(exc: MultipleInvalid) -> dict:
+    return {'errors': [e.msg for e in exc.errors]}
