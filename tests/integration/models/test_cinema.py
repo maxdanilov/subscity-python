@@ -290,3 +290,18 @@ class TestModelCinema(object):
             'longitude': 30.308878,
             'fetch_all': False
         }
+
+    def test_get_by_ids_empty(self, dbsession):
+        from subscity.models.cinema import Cinema
+        result = Cinema.get_by_ids([1,2,3])
+        assert result == []
+
+    def test_get_by_ids(self, dbsession):
+        from subscity.models.cinema import Cinema
+        c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
+        c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
+        c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='moscow')
+        [dbsession.add(x) for x in [c1, c2, c3]]
+        dbsession.commit()
+        result = Cinema.get_by_ids([c1.id, c3.id])
+        assert result == [c1, c3]

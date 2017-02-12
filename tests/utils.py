@@ -12,7 +12,7 @@ def filter_dict(orig, keys):
     return dict(zip(keys, [orig[k] for k in keys]))
 
 
-def mock_datetime(mock_value):
+def mock_datetime(mock_now=None, mock_utcnow=None):
     # taken from: https://solidgeargroup.com/mocking-the-time
 
     real_datetime_class = datetime.datetime
@@ -25,7 +25,11 @@ def mock_datetime(mock_value):
     class BaseMockedDatetime(real_datetime_class):
         @classmethod
         def now(cls):
-            return mock_value
+            return mock_now
+
+        @classmethod
+        def utcnow(cls):
+            return mock_utcnow
 
     # Python2 & Python3-compatible metaclass
     mocked_datetime = DatetimeSubclassMeta('datetime', (BaseMockedDatetime,), {})

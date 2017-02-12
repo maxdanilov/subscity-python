@@ -1,8 +1,9 @@
-from datetime import datetime
+import datetime
 import json
 from typing import Union
 
 from flask import Response
+import pytz
 from voluptuous import Invalid, MultipleInvalid
 
 
@@ -21,7 +22,7 @@ def format_datetime(date_time: datetime) -> Union[str, None]:
 def validator_date():
     def parse_date(date_str: str) -> datetime:
         try:
-            return datetime.strptime(date_str, '%Y-%m-%d')
+            return datetime.datetime.strptime(date_str, '%Y-%m-%d')
         except (ValueError, TypeError):
             raise Invalid('date should be in this format: YYYY-MM-DD')
     return parse_date
@@ -38,3 +39,14 @@ def validator_city():
 
 def error_msg(exc: MultipleInvalid) -> dict:
     return {'errors': [e.msg for e in exc.errors]}
+
+
+def get_timezone(city):
+    mapping = {}
+    return mapping.get(city, 'Europe/Moscow')
+
+
+def get_now(city):
+    # returns tz-unaware current time in the timezone of a given city
+    utc = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+    return utc.astimezone(pytz.timezone(get_timezone(city))).replace(tzinfo=None)

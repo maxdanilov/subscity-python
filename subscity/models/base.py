@@ -42,6 +42,12 @@ class Base(DB.Model):  # pylint:disable=no-init
         return DB.session.query(cls).all()
 
     @classmethod
+    def get_by_ids(cls, ids) -> List:
+        query = DB.session.query(cls)
+        query = query.filter(cls.id.in_(ids))  # pylint:disable=no-member
+        return query.all()
+
+    @classmethod
     def get_all_api_ids(cls) -> List:
         rows = DB.session.query(cls.api_id).all()  # pylint:disable=no-member
         return [r.api_id for r in rows]

@@ -100,11 +100,7 @@ class TestModelScreening(object):
         sc4 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie4',
                         ticket_api_id='fake_ticket4', price_min=400.0, price_max=450,
                         city='london', date_time=datetime(2017, 1, 2, 2, 29))
-
-        dbsession.add(sc1)
-        dbsession.add(sc2)
-        dbsession.add(sc3)
-        dbsession.add(sc4)
+        [dbsession.add(x) for x in [sc1, sc2, sc3, sc4]]
         dbsession.commit()
 
         result1 = Screening.get(cinema_api_id='fake_cinema2')
@@ -184,14 +180,9 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
-        dbsession.add(m1)
-        dbsession.add(m2)
-        dbsession.commit()
-
         c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
         c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
-        dbsession.add(c1)
-        dbsession.add(c2)
+        [dbsession.add(x) for x in [m1, m2, c1, c2]]
         dbsession.commit()
 
         # different city
@@ -206,10 +197,7 @@ class TestModelScreening(object):
         # also our guy
         s4 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie2',
                        city='moscow', date_time=datetime(2017, 2, 18, 12, 15))
-        dbsession.add(s1)
-        dbsession.add(s2)
-        dbsession.add(s3)
-        dbsession.add(s4)
+        [dbsession.add(x) for x in [s1, s2, s3, s4]]
         dbsession.commit()
 
         result = Screening.get_for_movie(m2.id, 'moscow')
@@ -224,14 +212,9 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
-        dbsession.add(m1)
-        dbsession.add(m2)
-        dbsession.commit()
-
         c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
         c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
-        dbsession.add(c1)
-        dbsession.add(c2)
+        [dbsession.add(x) for x in [m1, m2, c1, c2]]
         dbsession.commit()
 
         # different city
@@ -246,10 +229,7 @@ class TestModelScreening(object):
         # also our guy
         s4 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie1',
                        city='moscow', date_time=datetime(2017, 2, 18, 12, 15))
-        dbsession.add(s1)
-        dbsession.add(s2)
-        dbsession.add(s3)
-        dbsession.add(s4)
+        [dbsession.add(x) for x in [s1, s2, s3, s4]]
         dbsession.commit()
 
         result = Screening.get_for_cinema(c2.id, 'moscow')
@@ -266,18 +246,12 @@ class TestModelScreening(object):
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
         m3 = Movie(api_id='fake_movie3', title='fake_title3')
-        dbsession.add(m1)
-        dbsession.add(m2)
-        dbsession.add(m3)
-        dbsession.commit()
-
         c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
         c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
         c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='moscow')
-        dbsession.add(c1)
-        dbsession.add(c2)
-        dbsession.add(c3)
+        [dbsession.add(x) for x in [m1, m2, m3, c1, c2, c3]]
         dbsession.commit()
+
         # different city
         s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
                        city='saint-petersburg', date_time=datetime(2017, 2, 15, 12, 15))
@@ -297,12 +271,7 @@ class TestModelScreening(object):
         s6 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
                        city='moscow', date_time=datetime(2017, 2, 16, 1, 50))
 
-        dbsession.add(s1)
-        dbsession.add(s2)
-        dbsession.add(s3)
-        dbsession.add(s4)
-        dbsession.add(s5)
-        dbsession.add(s6)
+        [dbsession.add(x) for x in [s1, s2, s3, s4, s5, s6]]
         dbsession.commit()
 
         result = Screening.get_for_day(datetime(2017, 2, 15, 23, 55), 'moscow')
@@ -315,3 +284,54 @@ class TestModelScreening(object):
         screening = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
                               city='moscow', date_time=date_time)
         assert screening.day == day
+
+    def test_get_movies_cinemas_empty(self, dbsession):
+        result = Screening.get_movies_cinemas('moscow')
+        assert result == []
+
+    def test_get_movies_cinemas(self, dbsession):
+        import datetime
+        from tests.utils import mock_datetime
+        from subscity.models.movie import Movie
+        from subscity.models.cinema import Cinema
+        m1 = Movie(api_id='fake_movie1', title='fake_title1', hide=True)
+        m2 = Movie(api_id='fake_movie2', title='fake_title2')
+        m4 = Movie(api_id='fake_movie4', title='fake_title4')
+        c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
+        c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='moscow')
+        [dbsession.add(x) for x in [m1, m2, m4, c2, c3]]
+        dbsession.commit()
+
+        # different city
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='saint-petersburg', date_time=datetime.datetime(2017, 2, 15, 12, 15))
+        # our guy
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 13, 15))
+        # already passed
+        s3 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 12, 15))
+        # our guy
+        s4 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie4',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 13, 15))
+        # our guy (with the same combination as s4)
+        s5 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie4',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 18, 15))
+        # missing cinema
+        s6 = Screening(cinema_api_id='fake_cinema4', movie_api_id='fake_movie4',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 18, 15))
+        # missing movie
+        s7 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie5',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 18, 15))
+        # hidden movie
+        s8 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie1',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 18, 15))
+        [dbsession.add(x) for x in [s1, s2, s3, s4, s5, s6, s7, s8]]
+        dbsession.commit()
+
+        with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 10, 0)):  # utc time
+            result = Screening.get_movies_cinemas('moscow')
+
+        assert result == [(c2.id, m2.id), (c3.id, m4.id)]
+        assert result[1].cinema_id == c3.id  # test that we have a namedtuple, not just a tuple
+        assert result[1].movie_id == m4.id

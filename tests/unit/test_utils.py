@@ -51,3 +51,19 @@ class TestUtils(object):
         with pytest.raises(Invalid) as excinfo:
             validator_city()(data)
         assert 'city should be one of: msk, spb' in str(excinfo.value)
+
+    @parametrize('city, expected', [('moscow', 'Europe/Moscow'),
+                                    ('saint-petersburg', 'Europe/Moscow')])
+    def test_get_timezone(self, city, expected):
+        from subscity.utils import get_timezone
+        assert get_timezone(city) == expected
+
+    @parametrize('utc_now, expected', [(datetime.datetime(2017, 2, 15, 10, 0),   # winter time
+                                        datetime.datetime(2017, 2, 15, 13, 0)),
+                                       (datetime.datetime(2017, 6, 15, 10, 0),   # summer time
+                                        datetime.datetime(2017, 6, 15, 13, 0))])
+    def test_get_now(self, utc_now, expected):
+        from subscity.utils import get_now
+        from tests.utils import mock_datetime
+        with mock_datetime(mock_utcnow=utc_now):
+            assert get_now('moscow') == expected
