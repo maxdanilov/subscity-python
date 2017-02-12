@@ -221,9 +221,10 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
+        m3 = Movie(api_id='fake_movie3', title='fake_title3', hide=True)
         c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
         c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
-        [dbsession.add(x) for x in [m1, m2, c1, c2]]
+        [dbsession.add(x) for x in [m1, m2, m3, c1, c2]]
         dbsession.commit()
 
         # passed
@@ -241,7 +242,10 @@ class TestModelScreening(object):
         # also our guy
         s4 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie1',
                        city='moscow', date_time=datetime.datetime(2017, 2, 18, 12, 15))
-        [dbsession.add(x) for x in [s0, s1, s2, s3, s4]]
+        # hidden movie
+        s5 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 18, 13, 25))
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4, s5]]
         dbsession.commit()
 
         with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 6)):
@@ -261,10 +265,11 @@ class TestModelScreening(object):
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
         m3 = Movie(api_id='fake_movie3', title='fake_title3')
+        m4 = Movie(api_id='fake_movie4', title='fake_title4', hide=True)
         c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
         c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
         c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='moscow')
-        [dbsession.add(x) for x in [m1, m2, m3, c1, c2, c3]]
+        [dbsession.add(x) for x in [m1, m2, m3, m4, c1, c2, c3]]
         dbsession.commit()
 
         # passed
@@ -288,8 +293,11 @@ class TestModelScreening(object):
         # also our guy
         s6 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
                        city='moscow', date_time=datetime.datetime(2017, 2, 16, 1, 50))
+        # hidden movie
+        s7 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie4',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 10, 50))
 
-        [dbsession.add(x) for x in [s0, s1, s2, s3, s4, s5, s6]]
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4, s5, s6, s7]]
         dbsession.commit()
 
         with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 9)):
