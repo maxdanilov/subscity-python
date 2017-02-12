@@ -1,7 +1,15 @@
 from datetime import datetime
+import json
 from typing import Union
 
+from flask import Response
 from voluptuous import Invalid
+
+
+def json_response(data):
+    # unlike Flask's jsonify this one doesn't escape unicode characters
+    return Response(json.dumps(data, ensure_ascii=False, indent=4, sort_keys=True).
+                    encode('utf8'), mimetype='application/json')
 
 
 def format_datetime(date_time: datetime) -> Union[str, None]:
