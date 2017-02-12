@@ -25,6 +25,8 @@ GET /screenings/msk/movie/<movie_id>
 GET /screenings/spb/movie/<movie_id>
 ```
 
+Example:
+
 ```JSON
 [
   {
@@ -49,6 +51,8 @@ GET /screenings/spb/movie/<movie_id>
 GET /cinemas/msk
 GET /cinemas/spb
 ```
+
+Example:
 
 ```JSON
 [
@@ -93,6 +97,8 @@ GET /screenings/msk/cinema/<cinema_id>
 GET /screenings/spb/cinema/<cinema_id>
 ```
 
+Example:
+
 ```JSON
 [
   {
@@ -118,6 +124,8 @@ GET /screenings/msk/date/<YYYY-MM-DD>
 GET /screenings/spb/date/<YYYY-MM-DD>
 ```
 
+Example:
+
 ```JSON
 [
   {
@@ -130,6 +138,7 @@ GET /screenings/spb/date/<YYYY-MM-DD>
     "price": 100.0,
     "tickets_url": "https://afisha.yandex.ru/places/554c5ecb179b116662abdb03?city=moscow&place-schedule-date=2017-02-14"
   },
+
   ...
 
 ]
