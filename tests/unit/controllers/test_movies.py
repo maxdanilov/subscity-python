@@ -71,7 +71,7 @@ class TestMoviesController(object):
                          'Соноя Мидзуно'],
                   'en': ['Ryan Gosling', 'Emma Stone', 'J.K. Simmons']},
              'screenings':
-                 {'count': 10, 'next': datetime(2017, 2, 23, 8, 20)},
+                 {'count': 10, 'next': '2017-02-23T08:20:00'},
              'age_restriction': 16,
              'duration': 128,
              'year': 2016,
@@ -87,7 +87,7 @@ class TestMoviesController(object):
              'countries':
                  {'ru': ['США'], 'en': ['USA']},
              'id': 1,
-             'premiere': datetime(2017, 1, 12, 0, 0),
+             'premiere': "2017-01-12",
              'ratings':
                  {'kinopoisk': {'votes': 42192, 'id': 841081, 'rating': 8.5},
                   'imdb': {'votes': 126500, 'id': 123456, 'rating': 8.2}},
@@ -98,7 +98,7 @@ class TestMoviesController(object):
                  {'ru': None, 'en': None},
              'cast': {'ru': None, 'en': None},
              'screenings':
-                 {'count': 1, 'next': datetime(2017, 2, 20, 9, 15)},
+                 {'count': 1, 'next': "2017-02-20T09:15:00"},
              'age_restriction': None,
              'duration': None,
              'year': None,

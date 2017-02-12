@@ -66,7 +66,8 @@ class MoviesController(object):
                     'screenings':
                         {
                             'count': stats.screenings,
-                            'next': stats.next_screening,
+                            'next': stats.next_screening.isoformat() if stats.next_screening
+                            else None,  # pylint:disable=bad-continuation
                         },
                     'ratings':
                         {
@@ -83,7 +84,7 @@ class MoviesController(object):
                                     'votes': movie.imdb_votes
                                 }
                         },
-                    'premiere': movie.premiere
+                    'premiere': movie.premiere.strftime("%Y-%m-%d") if movie.premiere else None
                 }
             result.append(movie_dict)
         return result

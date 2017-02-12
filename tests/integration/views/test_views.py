@@ -74,3 +74,18 @@ class TestAppViews(object):
         assert result.status_code == 200
         assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['c1', 'c2']
         mock_get_cinemas.assert_called_once_with('moscow')
+
+    def test_get_movies_wrong_arguments(self, client):
+        result = client.get('/movies/bad_city')
+        assert result.status_code == 400
+        assert sorted(json.loads(result.get_data().decode('utf-8'))['errors']) == \
+           ['city should be one of: msk, spb']
+
+    def test_get_movies(self, client, mocker):
+        from subscity.controllers.movies import MoviesController
+        mock_get_movies = mocker.patch.object(MoviesController, 'get_movies',
+                                              return_value=['m1', 'm2'])
+        result = client.get('/movies/msk')
+        assert result.status_code == 200
+        assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['m1', 'm2']
+        mock_get_movies.assert_called_once_with('moscow')

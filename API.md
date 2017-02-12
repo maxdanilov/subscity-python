@@ -16,7 +16,64 @@ GET /movies/msk
 GET /movies/spb
 ```
 
-Not implemented yet.
+```JSON
+[
+    {
+        "age_restriction": 16,
+        "cast": {
+            "en": ["Ryan Gosling, Emma Stone, J.K. Simmons"],
+            "ru": ["Райан Гослинг", "Эмма Стоун", "Дж.К. Симмонс"]
+        },
+        "countries": {
+            "en": ["USA"],
+            "ru": ["США"]
+        },
+        "description": {
+            "en": "A jazz pianist falls for an aspiring actress in Los Angeles.",
+            "ru": null
+        },
+        "directors": {
+            "en": ["Damien Chazelle"],
+            "ru": ["Дэмьен Шазелл"]
+        },
+        "duration": 128,
+        "genres": {
+            "en": ["Musical", "Drama", "Romance", "Comedy"],
+            "ru": ["музыкальный", "драма", "мелодрама", "комедия"]
+        },
+        "id": 19,
+        "languages": {
+            "en": null,
+            "ru": null
+        },
+        "premiere": "2017-01-12",
+        "ratings": {
+            "imdb": {
+                "id": 3783958,
+                "rating": 8.5,
+                "votes": 157270
+            },
+            "kinopoisk": {
+                "id": 841081,
+                "rating": 8.4,
+                "votes": 54592
+            }
+        },
+        "screenings": {
+            "count": 40,
+            "next": "2017-02-13T11:25:00"
+        },
+        "title": {
+            "en": "La La Land",
+            "ru": "Ла-Ла Ленд"
+        },
+        "year": 2016
+    },
+
+    ...
+
+]
+```
 
 ## Movie Screenings List
 

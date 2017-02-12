@@ -7,6 +7,7 @@ from voluptuous import Schema, Required, MultipleInvalid, All, Range, Coerce
 
 from subscity.app import get_app
 from subscity.controllers.cinemas import CinemasController
+from subscity.controllers.movies import MoviesController
 from subscity.controllers.screenings import ScreeningsController
 from subscity.utils import validator_date, validator_city, json_response, error_msg
 
@@ -14,6 +15,17 @@ DB_URI = os.environ.get('DB_URI')
 
 APP = get_app()
 DB = SQLAlchemy(APP)
+
+
+@APP.route('/movies/<city>', methods=['GET'])
+def get_movies(city: str) -> (Response, int):
+    validator = Schema({Required('city'): validator_city()})
+    try:
+        validated = validator({'city': city})
+    except MultipleInvalid as exc:
+        return json_response(error_msg(exc)), 400
+    result = MoviesController.get_movies(validated['city'])
+    return json_response(result), 200
 
 
 @APP.route('/cinemas/<city>', methods=['GET'])
