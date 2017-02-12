@@ -339,7 +339,7 @@ class TestYandexAfishaParser(object):
                                           'limit=20&offset=40&city=saint-petersburg'),
                                      call('https://afisha.yandex.ru/api/events/cinema/places?'
                                           'limit=20&offset=60&city=saint-petersburg')])
-        assert len(result) == 62
+        assert len(result) == 63
         assert result[37] == {
             'api_id': u'580b58f18323013d82c1e980',
             'name': u'Angleterre Cinema Lounge',
