@@ -83,6 +83,7 @@ class YandexAfishaParser(object):
             'api_id': movie['id'],
             'title': movie['title'],
             'title_en': movie['originalTitle'],
+            'description': movie['description'],
             'genres': genres_data['russian'],
             'genres_en': genres_data['original'],
             'countries': cls._get_countries(movie['countries']),
