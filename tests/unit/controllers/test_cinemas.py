@@ -4,11 +4,12 @@ from subscity.controllers.cinemas import CinemasController
 class TestCinemasController(object):
     def test_get_cinemas_empty(self, mocker):
         from subscity.models.screening import Screening
+        from subscity.models.cinema import Cinema
 
         fake_cinema_movies_ids = []
         mock_get_movies_cinemas = mocker.patch.object(Screening, 'get_movies_cinemas',
                                                       return_value=fake_cinema_movies_ids)
-        mock_get_by_ids = mocker.patch.object(Screening, 'get_by_ids',
+        mock_get_by_ids = mocker.patch.object(Cinema, 'get_by_ids',
                                               return_value='cinemas')
         mock_render = mocker.patch.object(CinemasController, 'render_cinemas',
                                           return_value='rendered')
@@ -20,6 +21,7 @@ class TestCinemasController(object):
 
     def test_get_cinemas(self, mocker):
         from subscity.models.screening import Screening
+        from subscity.models.cinema import Cinema
 
         class Row(object):
             def __init__(self, cinema_id, movie_id):
@@ -31,7 +33,7 @@ class TestCinemasController(object):
                                   Row('c2', 'm1')]
         mock_get_movies_cinemas = mocker.patch.object(Screening, 'get_movies_cinemas',
                                                       return_value=fake_cinema_movies_ids)
-        mock_get_by_ids = mocker.patch.object(Screening, 'get_by_ids',
+        mock_get_by_ids = mocker.patch.object(Cinema, 'get_by_ids',
                                               return_value=['cinema1', 'cinema2'])
         mock_render = mocker.patch.object(CinemasController, 'render_cinemas',
                                           return_value=['result1', 'result2'])
@@ -47,6 +49,7 @@ class TestCinemasController(object):
 
     def test_render_cinemas(self):
         from subscity.models.cinema import Cinema
+        from decimal import Decimal
 
         class Row(object):
             def __init__(self, cinema_id, movie_id):
@@ -55,7 +58,8 @@ class TestCinemasController(object):
 
         c1 = Cinema(id=1, city='moscow', name='Nuovo Cinema Paradiso',
                     address='ул. Тверская, 21', metro='Пушкинская, Чеховская, Тверская',
-                    latitude=55, longitude=37, phone='+7 499 123 45 67, +7 499 132 66 53',
+                    latitude=Decimal(55.0), longitude=Decimal(37.0),
+                    phone='+7 499 123 45 67, +7 499 132 66 53',
                     url='http://nuovocinema.ru, https://cinemaworld.ru')
         c2 = Cinema(id=2, city='moscow', name='Odeon Palace', address='ул. Тверская-Ямская, 12')
 
@@ -72,8 +76,8 @@ class TestCinemasController(object):
                     {
                         'address': 'ул. Тверская, 21',
                         'metro': ['Пушкинская', 'Чеховская', 'Тверская'],
-                        'longitude': 37,
-                        'latitude': 55
+                        'longitude': 37.0,
+                        'latitude': 55.0
                     },
                 'name': 'Nuovo Cinema Paradiso',
                 'movies': [3],
