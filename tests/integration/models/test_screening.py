@@ -5,7 +5,6 @@ from datetime import datetime
 from subscity.models.screening import Screening
 from tests.utils import fread
 
-
 parametrize = pytest.mark.parametrize
 
 
@@ -178,6 +177,9 @@ class TestModelScreening(object):
     def test_get_for_movie(self, dbsession):
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
+        import datetime
+        from tests.utils import mock_datetime
+
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
         c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
@@ -185,22 +187,26 @@ class TestModelScreening(object):
         [dbsession.add(x) for x in [m1, m2, c1, c2]]
         dbsession.commit()
 
+        # passed
+        s0 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 14, 12, 15))
         # different city
         s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
-                       city='saint-petersburg', date_time=datetime(2017, 2, 15, 12, 15))
+                       city='saint-petersburg', date_time=datetime.datetime(2017, 2, 15, 12, 15))
         # our guy
         s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 15, 12, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 12, 15))
         # different movie
         s3 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
-                       city='moscow', date_time=datetime(2017, 2, 16, 12, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 12, 15))
         # also our guy
         s4 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 18, 12, 15))
-        [dbsession.add(x) for x in [s1, s2, s3, s4]]
+                       city='moscow', date_time=datetime.datetime(2017, 2, 18, 12, 15))
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4]]
         dbsession.commit()
 
-        result = Screening.get_for_movie(m2.id, 'moscow')
+        with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 6)):
+            result = Screening.get_for_movie(m2.id, 'moscow')
         assert result == [(s2, m2, c2), (s4, m2, c1)]
 
     def test_get_for_cinema_empty(self, dbsession):
@@ -208,6 +214,9 @@ class TestModelScreening(object):
         assert result == []
 
     def test_get_for_cinema(self, dbsession):
+        import datetime
+        from tests.utils import mock_datetime
+
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
@@ -217,22 +226,26 @@ class TestModelScreening(object):
         [dbsession.add(x) for x in [m1, m2, c1, c2]]
         dbsession.commit()
 
+        # passed
+        s0 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 14, 12, 15))
         # different city
         s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
-                       city='saint-petersburg', date_time=datetime(2017, 2, 15, 12, 15))
+                       city='saint-petersburg', date_time=datetime.datetime(2017, 2, 15, 12, 15))
         # our guy
         s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 15, 12, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 12, 15))
         # different cinema
         s3 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 16, 12, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 12, 15))
         # also our guy
         s4 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie1',
-                       city='moscow', date_time=datetime(2017, 2, 18, 12, 15))
-        [dbsession.add(x) for x in [s1, s2, s3, s4]]
+                       city='moscow', date_time=datetime.datetime(2017, 2, 18, 12, 15))
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4]]
         dbsession.commit()
 
-        result = Screening.get_for_cinema(c2.id, 'moscow')
+        with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 6)):
+            result = Screening.get_for_cinema(c2.id, 'moscow')
         assert result == [(s2, m2, c2), (s4, m1, c2)]
 
     def test_get_for_day_empty(self, dbsession):
@@ -240,6 +253,8 @@ class TestModelScreening(object):
         assert result == []
 
     def test_get_for_day(self, dbsession):
+        import datetime
+        from tests.utils import mock_datetime
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
 
@@ -252,29 +267,33 @@ class TestModelScreening(object):
         [dbsession.add(x) for x in [m1, m2, m3, c1, c2, c3]]
         dbsession.commit()
 
+        # passed
+        s0 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 9, 15))
         # different city
         s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
-                       city='saint-petersburg', date_time=datetime(2017, 2, 15, 12, 15))
+                       city='saint-petersburg', date_time=datetime.datetime(2017, 2, 15, 12, 15))
         # our guy
         s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 15, 12, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 12, 15))
         # different day
         s3 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 16, 12, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 12, 15))
         # doesn't have a cinema
         s4 = Screening(cinema_api_id='fake_cinema11', movie_api_id='fake_movie2',
-                       city='moscow', date_time=datetime(2017, 2, 15, 20, 0))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 20, 0))
         # doesn't have a movie
         s5 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie11',
-                       city='moscow', date_time=datetime(2017, 2, 15, 21, 15))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 21, 15))
         # also our guy
         s6 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
-                       city='moscow', date_time=datetime(2017, 2, 16, 1, 50))
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 1, 50))
 
-        [dbsession.add(x) for x in [s1, s2, s3, s4, s5, s6]]
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4, s5, s6]]
         dbsession.commit()
 
-        result = Screening.get_for_day(datetime(2017, 2, 15, 23, 55), 'moscow')
+        with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 9)):
+            result = Screening.get_for_day(datetime.datetime(2017, 2, 15, 23, 55), 'moscow')
         assert result == [(s2, m2, c2), (s6, m3, c3)]
 
     @parametrize('date_time, day', [(datetime(2017, 2, 16, 10, 50), datetime(2017, 2, 16)),
