@@ -8,6 +8,7 @@ from sqlalchemy import (
     DateTime
 )
 from sqlalchemy import Float
+from sqlalchemy import func
 from sqlalchemy.dialects.mysql import DATETIME
 
 from subscity.models.base import Base, DB
@@ -104,6 +105,17 @@ class Screening(Base):  # pylint: disable=no-init
         query = query.filter(Movie.hide.is_(False))
         query = query.filter(Screening.city == city)
         query = query.distinct()
+        return query.all()
+
+    @staticmethod
+    def get_movie_api_ids(city: str) -> List:
+        # NB: hidden movies are not filtered here
+        query = DB.session.query(func.min(Screening.date_time).label('next_screening'),
+                                 func.count().label('screenings'),
+                                 Screening.movie_api_id)
+        query = query.filter(Screening.city == city)
+        query = query.filter(Screening.date_time > get_now(city))
+        query = query.group_by(Screening.movie_api_id)
         return query.all()
 
     @staticmethod

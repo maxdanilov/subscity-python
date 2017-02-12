@@ -190,3 +190,15 @@ class TestMovie(object):
                     'title_en': 'La La Land',
                     'year': 2016}
         assert dict_ == expected
+
+    def test_get_by_api_ids(self, dbsession):
+        m1 = Movie(api_id='fake_movie1', title='cinema1')
+        m2 = Movie(api_id='fake_movie2', title='cinema2')
+        m3 = Movie(api_id='fake_movie3', title='cinema3')
+        [dbsession.add(x) for x in [m1, m2, m3]]
+        dbsession.commit()
+        result = Movie.get_by_api_ids([m1.api_id, m3.api_id])
+        assert result == [m1, m3]
+
+        result2 = Movie.get_by_api_ids([])
+        assert result2 == []

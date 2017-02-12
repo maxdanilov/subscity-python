@@ -362,3 +362,39 @@ class TestModelScreening(object):
         assert result == [(c2.id, m2.id), (c3.id, m4.id)]
         assert result[1].cinema_id == c3.id  # test that we have a namedtuple, not just a tuple
         assert result[1].movie_id == m4.id
+
+    def test_get_movie_api_ids_empty(self, dbsession):
+        result = Screening.get_movie_api_ids('moscow')
+        assert result == []
+
+    def test_get_movie_api_ids(self, dbsession):
+        import datetime
+        from tests.utils import mock_datetime
+        # passed
+        s0 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 10, 13, 15))
+        # different city
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='saint-petersburg', date_time=datetime.datetime(2017, 2, 15, 12, 15))
+        # our guy
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 13, 15))
+
+        # our guy
+        s3 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 15, 13, 0))
+        # our guy
+        s4 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
+                       city='moscow', date_time=datetime.datetime(2017, 2, 16, 20, 0))
+
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4]]
+        dbsession.commit()
+
+        with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 8, 10)):
+            result = Screening.get_movie_api_ids('moscow')
+        assert result == [(datetime.datetime(2017, 2, 15, 13, 0), 2, 'fake_movie2'),
+                          (datetime.datetime(2017, 2, 16, 20, 0), 1, 'fake_movie3')]
+        # test that we have a namedtuple, not just a tuple
+        assert result[0].next_screening == datetime.datetime(2017, 2, 15, 13, 0)
+        assert result[0].screenings == 2
+        assert result[0].movie_api_id == 'fake_movie2'

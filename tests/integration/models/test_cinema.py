@@ -305,3 +305,6 @@ class TestModelCinema(object):
         dbsession.commit()
         result = Cinema.get_by_ids([c1.id, c3.id])
         assert result == [c1, c3]
+
+        result2 = Cinema.get_by_ids([])
+        assert result2 == []

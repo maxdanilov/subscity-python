@@ -13,7 +13,7 @@ class CinemasController(object):
         return cls.render_cinemas(cinemas, cinema_movie_ids)
 
     @classmethod
-    def render_cinemas(cls, cinemas, cinema_movie_ids):
+    def render_cinemas(cls, cinemas: List, cinema_movie_ids: List) -> List:
         result = []
         for cinema in cinemas:
             movie_ids = [r.movie_id for r in cinema_movie_ids if r.cinema_id == cinema.id]
