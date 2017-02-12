@@ -8,11 +8,6 @@ parametrize = pytest.mark.parametrize
 
 
 class TestAppViews(object):
-    def test_root(self, client):
-        result = client.get('/')
-        assert result.status_code == 200
-        assert result.get_data().decode('utf-8') == 'SubsCity API'
-
     def test_screenings_date_wrong_arguments(self, client):
         result = client.get('/screenings/wrong_city/date/bad_date')
         assert result.status_code == 400
