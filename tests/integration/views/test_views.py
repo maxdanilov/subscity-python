@@ -47,3 +47,20 @@ class TestAppViews(object):
         assert result.status_code == 200
         assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['scr1', 'scr2']
         mock_get_screenings.assert_called_once_with(123, 'moscow')
+
+    @parametrize('city, movie_id', [('wrong_city', 'bad_movie'), ('wrong_city', '0')])
+    def test_screenings_movie_wrong_arguments(self, client, city, movie_id):
+        result = client.get('/screenings/{}/movie/{}'.format(city, movie_id))
+        assert result.status_code == 400
+        assert sorted(json.loads(result.get_data().decode('utf-8'))['errors']) == \
+           ['city should be one of: msk, spb',
+            'movie id must be an integer']
+
+    def test_screenings_movie(self, client, mocker):
+        from subscity.controllers.screenings import ScreeningsController
+        mock_get_screenings = mocker.patch.object(ScreeningsController, 'get_for_movie',
+                                                  return_value=['scr1', 'scr2'])
+        result = client.get('/screenings/msk/movie/123')
+        assert result.status_code == 200
+        assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['scr1', 'scr2']
+        mock_get_screenings.assert_called_once_with(123, 'moscow')

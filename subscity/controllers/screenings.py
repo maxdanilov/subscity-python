@@ -7,6 +7,11 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 class ScreeningsController(object):
     @classmethod
+    def get_for_movie(cls, movie_id: int, city: str) -> List:
+        rows = Screening.get_for_movie(movie_id, city)
+        return cls.render_screenings(rows)
+
+    @classmethod
     def get_for_cinema(cls, cinema_id: int, city: str) -> List:
         rows = Screening.get_for_cinema(cinema_id, city)
         return cls.render_screenings(rows)

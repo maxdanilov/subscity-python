@@ -21,6 +21,21 @@ def hello_world() -> str:
     return u'SubsCity API'
 
 
+@APP.route('/screenings/<city_code>/movie/<movie_id_str>')
+def get_screenings_for_movie(city_code: str, movie_id_str: str) -> (str, int):
+    validator = Schema({Required('id'): All(Coerce(int), Range(min=1),
+                                            msg='movie id must be an integer'),
+                        Required('city'): validator_city()})
+    try:
+        validated = validator({'id': movie_id_str, 'city': city_code})
+        city = validated['city']
+        movie_id = validated['id']
+    except MultipleInvalid as exc:
+        return jsonify({'errors': [e.msg for e in exc.errors]}), 400
+    result = ScreeningsController.get_for_movie(movie_id, city)
+    return jsonify(result), 200
+
+
 @APP.route('/screenings/<city_code>/cinema/<cinema_id_str>')
 def get_screenings_for_cinema(city_code: str, cinema_id_str: str) -> (str, int):
     validator = Schema({Required('id'): All(Coerce(int), Range(min=1),

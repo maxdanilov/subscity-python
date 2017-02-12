@@ -73,3 +73,15 @@ class TestScreeningsController(object):
 
         mock_get_for_cinema.assert_called_once_with(1234, 'moscow')
         mock_render.assert_called_once_with('screenings')
+
+    def test_get_for_movie(self, mocker):
+        from subscity.models.screening import Screening
+        mock_get_for_movie = mocker.patch.object(Screening, 'get_for_movie',
+                                                 return_value='screenings')
+        mock_render = mocker.patch.object(ScreeningsController, 'render_screenings',
+                                          return_value='rendered')
+        result = ScreeningsController.get_for_movie(1234, 'moscow')
+        assert result == 'rendered'
+
+        mock_get_for_movie.assert_called_once_with(1234, 'moscow')
+        mock_render.assert_called_once_with('screenings')

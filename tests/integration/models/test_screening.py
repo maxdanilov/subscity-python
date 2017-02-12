@@ -175,6 +175,46 @@ class TestModelScreening(object):
                           'price_min': None,
                           'ticket_api_id': None}
 
+    def test_get_for_movie_empty(self, dbsession):
+        result = Screening.get_for_movie(123456, 'moscow')
+        assert result == []
+
+    def test_get_for_movie(self, dbsession):
+        from subscity.models.movie import Movie
+        from subscity.models.cinema import Cinema
+        m1 = Movie(api_id='fake_movie1', title='fake_title1')
+        m2 = Movie(api_id='fake_movie2', title='fake_title2')
+        dbsession.add(m1)
+        dbsession.add(m2)
+        dbsession.commit()
+
+        c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
+        c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
+        dbsession.add(c1)
+        dbsession.add(c2)
+        dbsession.commit()
+
+        # different city
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='saint-petersburg', date_time=datetime(2017, 2, 15, 12, 15))
+        # our guy
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime(2017, 2, 15, 12, 15))
+        # different movie
+        s3 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='moscow', date_time=datetime(2017, 2, 16, 12, 15))
+        # also our guy
+        s4 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie2',
+                       city='moscow', date_time=datetime(2017, 2, 18, 12, 15))
+        dbsession.add(s1)
+        dbsession.add(s2)
+        dbsession.add(s3)
+        dbsession.add(s4)
+        dbsession.commit()
+
+        result = Screening.get_for_movie(m2.id, 'moscow')
+        assert result == [(s2, m2, c2), (s4, m2, c1)]
+
     def test_get_for_cinema_empty(self, dbsession):
         result = Screening.get_for_cinema(123456, 'moscow')
         assert result == []
