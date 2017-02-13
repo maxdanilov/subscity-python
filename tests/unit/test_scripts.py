@@ -159,6 +159,43 @@ class TestScripts(object):
         assert mock_sleep.call_args_list == [call(1.5)] * 3
         assert mock_get_movie_ids_db.call_args_list ==[call(), call()]
 
+    def test_update_movies_exception(self, mocker):
+        import time
+        import traceback
+        from subscity.main import DB
+        from subscity.yandex_afisha_parser import YandexAfishaParser
+        from subscity.scripts import update_movies
+        from subscity.models.movie import Movie
+        mock_sleep = mocker.patch.object(time, 'sleep')
+        mock_get_movie_ids = mocker.patch.object(
+            YandexAfishaParser, 'get_movie_ids',
+            side_effect=[['aaa', 'bbb'], ['ccc', 'ddd', 'aaa']])
+        mock_get_movie = mocker.patch.object(
+            YandexAfishaParser, 'get_movie',
+            side_effect=[{'api_id': 'aaa', 'title': 'one'},
+                         ValueError('some error'),
+                         {'api_id': 'ddd', 'title': 'four'}])
+        mock_movie_init = mocker.patch.object(Movie, '__init__', return_value=None)
+        mock_movie_save = mocker.patch.object(Movie, 'save')
+        mock_get_movie_ids_db = mocker.patch.object(Movie, 'get_all_api_ids',
+                                                    side_effect=[['ccc'],
+                                                                 ['ccc', 'aaa', 'bbb']])
+        mock_rollback = mocker.patch.object(DB.session, 'rollback')
+        mock_traceback = mocker.patch.object(traceback, 'print_exc')
+
+        update_movies()
+
+        assert mock_get_movie_ids.call_args_list == [call('moscow'), call('saint-petersburg')]
+        assert mock_get_movie.call_args_list == [call('aaa', 'moscow'), call('bbb', 'moscow'),
+                                                 call('ddd', 'saint-petersburg')]
+        assert mock_movie_init.call_args_list == [call(api_id='aaa', title='one'),
+                                                  call(api_id='ddd', title='four')]
+        assert mock_movie_save.call_args_list == [call()] * 2
+        assert mock_sleep.call_args_list == [call(1.5)] * 3
+        assert mock_get_movie_ids_db.call_args_list ==[call(), call()]
+        mock_rollback.assert_called_once_with()
+        mock_traceback.assert_called_once_with()
+
     def test_update_test_fixtures(self, mocker):
         from subscity.scripts import update_test_fixtures
         mock_update_cinema_fixtures = mocker.patch('subscity.scripts.update_test_cinema_fixtures')

@@ -55,8 +55,12 @@ def update_movies() -> None:
         new_api_ids = [i for i in movie_api_ids if i not in movie_api_ids_db]
         for index, api_id in enumerate(new_api_ids):
             print("{} / {} Fetching {}".format(index + 1, len(new_api_ids), api_id))
-            movie = Yap.get_movie(api_id, city)
-            Movie(**movie).save()
+            try:
+                movie = Yap.get_movie(api_id, city)
+                Movie(**movie).save()
+            except Exception:  # pylint:disable=broad-except
+                traceback.print_exc()
+                DB.session.rollback()
             time.sleep(1.5)
 
 
