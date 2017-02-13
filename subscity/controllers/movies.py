@@ -7,7 +7,6 @@ from subscity.models.screening import Screening
 class MoviesController(object):
     @classmethod
     def get_movies(cls, city: str) -> List:
-        # TODO test me
         movies_api_ids_stats = Screening.get_movie_api_ids(city)
         movies_api_ids = [r.movie_api_id for r in movies_api_ids_stats]
         movies = Movie.get_by_api_ids(movies_api_ids)
@@ -17,6 +16,8 @@ class MoviesController(object):
     def render_movies(cls, movies: List, movies_api_ids_stats: List) -> List:
         result = []
         for movie in movies:
+            if movie.hide:
+                continue
             stats = next((obj for obj in movies_api_ids_stats if obj.movie_api_id == movie.api_id),
                          None)
             if not stats:

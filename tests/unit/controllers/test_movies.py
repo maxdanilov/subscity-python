@@ -50,17 +50,26 @@ class TestMoviesController(object):
             'api_id': 'fishchipscupoteabadfoodworseweather'
         })
 
+        m4 = Movie(**{
+            'id': 4,
+            'title': 'Начало',
+            'api_id': 'weneedtogodeeper',
+            'hide': True,
+        })
+
         class Row(object):
             def __init__(self, next_screening, screenings, movie_api_id):
                 self.next_screening = next_screening
                 self.screenings = screenings
                 self.movie_api_id = movie_api_id
 
-        movies = [m1, m2, m3]
+        movies = [m1, m2, m3, m4]
         movies_api_ids_stats = [Row(next_screening=datetime(2017, 2, 23, 8, 20), screenings=10,
                                     movie_api_id='5874ea2a685ae0b186614bb5'),
                                 Row(next_screening=datetime(2017, 2, 20, 9, 15), screenings=1,
-                                    movie_api_id='fishchipscupoteabadfoodworseweather')]
+                                    movie_api_id='fishchipscupoteabadfoodworseweather'),
+                                Row(next_screening=datetime(2017, 2, 19, 18, 20), screenings=5,
+                                    movie_api_id='weneedtogodeeper')]
         result = MoviesController.render_movies(movies, movies_api_ids_stats)
         assert result == [
             {'languages':
