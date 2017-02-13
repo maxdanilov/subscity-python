@@ -1,7 +1,9 @@
 import datetime
 import json
 import time
+import traceback
 
+from subscity.main import DB
 from subscity.models.cinema import Cinema
 from subscity.models.movie import Movie
 from subscity.models.screening import Screening
@@ -19,15 +21,22 @@ def update_screenings() -> None:
             print(">> [{}]/[{}] Fetching screenings @ {} for {}".format(index + 1, len(cinemas),
                                                                         date.strftime("%d.%m.%Y"),
                                                                         cinema.name))
-            new_screenings_dicts = Yap.get_cinema_screenings(cinema.api_id, date, cinema.city)
-            deleted_screenings = Screening.clean(cinema_api_id=cinema.api_id, start_day=date,
-                                                 end_day=date + datetime.timedelta(days=1))
-            print("+{} -{} screenings".format(len(new_screenings_dicts), deleted_screenings))
-
-            for screening_dict in new_screenings_dicts:
-                screening = Screening(**screening_dict)
-                screening.save()
+            try:
+                update_screenings_cinema(cinema, date)
+            except Exception:  # pylint:disable=broad-except
+                traceback.print_exc()
+                DB.session.rollback()
             time.sleep(1.5)
+
+
+def update_screenings_cinema(cinema: Cinema, date: datetime) -> None:
+    new_screenings_dicts = Yap.get_cinema_screenings(cinema.api_id, date, cinema.city)
+    deleted_screenings = Screening.clean(cinema_api_id=cinema.api_id, start_day=date,
+                                         end_day=date + datetime.timedelta(days=1))
+    print("+{} -{} screenings".format(len(new_screenings_dicts), deleted_screenings))
+    for screening_dict in new_screenings_dicts:
+        screening = Screening(**screening_dict)
+        screening.save()
 
 
 def update_cinemas() -> None:
