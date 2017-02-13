@@ -1,5 +1,4 @@
 import datetime
-import json
 import time
 import traceback
 
@@ -8,6 +7,7 @@ from subscity.models.cinema import Cinema
 from subscity.models.movie import Movie
 from subscity.models.screening import Screening
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
+from tests.utils import download_to_json
 
 
 def update_screenings() -> None:
@@ -67,6 +67,7 @@ def update_movies() -> None:
 def update_test_fixtures() -> None:
     update_test_cinema_fixtures()
     update_test_movie_fixtures()
+    update_test_movie_details_fixtures()
 
 
 def update_test_cinema_fixtures() -> None:
@@ -77,10 +78,7 @@ def update_test_cinema_fixtures() -> None:
     for offset in range(0, total_count, limit):
         url = Yap.url_cinemas(limit=limit, offset=offset, city=city)
         filename = fixture_path + 'cinemas-offset{:02d}-limit{:02d}.json'.format(offset, limit)
-        print("Downloading {} to {}".format(url, filename))
-        parsed = json.loads(Yap.fetch(url))
-        with open(filename, "w") as file:
-            file.write(json.dumps(parsed, indent=4))
+        download_to_json(url, filename)
 
 
 def update_test_movie_fixtures() -> None:
@@ -91,7 +89,13 @@ def update_test_movie_fixtures() -> None:
     for offset in range(0, total_count, limit):
         url = Yap.url_movies(limit=limit, offset=offset, city=city)
         filename = fixture_path + 'movies-offset{:03d}-limit{:02d}.json'.format(offset, limit)
-        print("Downloading {} to {}".format(url, filename))
-        parsed = json.loads(Yap.fetch(url))
-        with open(filename, "w") as file:
-            file.write(json.dumps(parsed, indent=4))
+        download_to_json(url, filename)
+
+
+def update_test_movie_details_fixtures() -> None:
+    api_id = '5874ea2a685ae0b186614bb5'
+    for city in Yap.CITIES:
+        fixture_path = 'tests/fixtures/movies/{}/'.format(city)
+        url = Yap.url_movie(api_id=api_id, city=city)
+        filename = fixture_path + '{}.json'.format(api_id)
+        download_to_json(url, filename)

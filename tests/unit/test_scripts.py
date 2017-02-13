@@ -200,58 +200,42 @@ class TestScripts(object):
         from subscity.scripts import update_test_fixtures
         mock_update_cinema_fixtures = mocker.patch('subscity.scripts.update_test_cinema_fixtures')
         mock_update_movie_fixtures = mocker.patch('subscity.scripts.update_test_movie_fixtures')
+        mock_update_movie_details_fixtures = mocker.\
+            patch('subscity.scripts.update_test_movie_details_fixtures')
         update_test_fixtures()
         mock_update_cinema_fixtures.assert_called_once_with()
         mock_update_movie_fixtures.assert_called_once_with()
+        mock_update_movie_details_fixtures.assert_called_once_with()
 
     def test_update_test_cinema_fixtures(self, mocker):
         from subscity.scripts import update_test_cinema_fixtures
         from subscity.yandex_afisha_parser import YandexAfishaParser
-        mock_file_open = mock_open()
+        mock_download = mocker.patch('subscity.scripts.download_to_json')
         mock_urls = mocker.patch.object(YandexAfishaParser, 'url_cinemas',
                                         side_effect=['url1', 'url2', 'url3', 'url4'])
-        mock_fetch = mocker.patch.object(YandexAfishaParser, 'fetch',
-                                         side_effect=['{"json": 1}', '{"json": 2}', '{"json": 3}',
-                                                      '{"json": 4}'])
-        with patch('subscity.scripts.open', mock_file_open, create=True):
-            update_test_cinema_fixtures()
-        assert mock_fetch.call_args_list == [call('url1'), call('url2'), call('url3'), call('url4')]
+        update_test_cinema_fixtures()
         assert mock_urls.call_args_list == [
             call(city='saint-petersburg', limit=20, offset=0),
             call(city='saint-petersburg', limit=20, offset=20),
             call(city='saint-petersburg', limit=20, offset=40),
             call(city='saint-petersburg', limit=20, offset=60)]
-        assert mock_file_open.call_args_list == [
-            call('tests/fixtures/cinemas/saint-petersburg/cinemas-offset00-limit20.json', 'w'),
-            call('tests/fixtures/cinemas/saint-petersburg/cinemas-offset20-limit20.json', 'w'),
-            call('tests/fixtures/cinemas/saint-petersburg/cinemas-offset40-limit20.json', 'w'),
-            call('tests/fixtures/cinemas/saint-petersburg/cinemas-offset60-limit20.json', 'w')]
 
-        assert mock_file_open.mock_calls[2]  == call().write('{\n    "json": 1\n}')
-        assert mock_file_open.mock_calls[6]  == call().write('{\n    "json": 2\n}')
-        assert mock_file_open.mock_calls[10] == call().write('{\n    "json": 3\n}')
-        assert mock_file_open.mock_calls[14] == call().write('{\n    "json": 4\n}')
+        assert mock_download.call_args_list == [
+            call('url1', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset00-limit20.json'),
+            call('url2', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset20-limit20.json'),
+            call('url3', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset40-limit20.json'),
+            call('url4', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset60-limit20.json')]
 
     def test_update_test_movie_fixtures(self, mocker):
         from subscity.scripts import update_test_movie_fixtures
         from subscity.yandex_afisha_parser import YandexAfishaParser
-        mock_file_open = mock_open()
+        mock_download = mocker.patch('subscity.scripts.download_to_json')
+
         mock_urls = mocker.patch.object(YandexAfishaParser, 'url_movies',
                                         side_effect=['url1', 'url2', 'url3', 'url4',
                                                      'url5', 'url6', 'url7', 'url8',
                                                      'url9', 'url10', 'url11', 'url12'])
-        mock_fetch = mocker.patch.object(YandexAfishaParser, 'fetch',
-                                         side_effect=['{"json": 1}', '{"json": 2}', '{"json": 3}',
-                                                      '{"json": 4}', '{"json": 5}', '{"json": 6}',
-                                                      '{"json": 7}', '{"json": 8}', '{"json": 9}',
-                                                      '{"json": 10}', '{"json": 11}',
-                                                      '{"json": 12}'])
-        with patch('subscity.scripts.open', mock_file_open, create=True):
-            update_test_movie_fixtures()
-        assert mock_fetch.call_args_list == [call('url1'), call('url2'), call('url3'), call('url4'),
-                                             call('url5'), call('url6'), call('url7'), call('url8'),
-                                             call('url9'), call('url10'), call('url11'),
-                                             call('url12')]
+        update_test_movie_fixtures()
         assert mock_urls.call_args_list == [
             call(city='saint-petersburg', limit=12, offset=0),
             call(city='saint-petersburg', limit=12, offset=12),
@@ -266,30 +250,34 @@ class TestScripts(object):
             call(city='saint-petersburg', limit=12, offset=120),
             call(city='saint-petersburg', limit=12, offset=132)
         ]
-        assert mock_file_open.call_args_list == [
-            call('tests/fixtures/movies/saint-petersburg/movies-offset000-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset012-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset024-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset036-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset048-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset060-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset072-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset084-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset096-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset108-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset120-limit12.json', 'w'),
-            call('tests/fixtures/movies/saint-petersburg/movies-offset132-limit12.json', 'w')
+        assert mock_download.call_args_list == [
+            call('url1', 'tests/fixtures/movies/saint-petersburg/movies-offset000-limit12.json'),
+            call('url2', 'tests/fixtures/movies/saint-petersburg/movies-offset012-limit12.json'),
+            call('url3', 'tests/fixtures/movies/saint-petersburg/movies-offset024-limit12.json'),
+            call('url4', 'tests/fixtures/movies/saint-petersburg/movies-offset036-limit12.json'),
+            call('url5', 'tests/fixtures/movies/saint-petersburg/movies-offset048-limit12.json'),
+            call('url6', 'tests/fixtures/movies/saint-petersburg/movies-offset060-limit12.json'),
+            call('url7', 'tests/fixtures/movies/saint-petersburg/movies-offset072-limit12.json'),
+            call('url8', 'tests/fixtures/movies/saint-petersburg/movies-offset084-limit12.json'),
+            call('url9', 'tests/fixtures/movies/saint-petersburg/movies-offset096-limit12.json'),
+            call('url10', 'tests/fixtures/movies/saint-petersburg/movies-offset108-limit12.json'),
+            call('url11', 'tests/fixtures/movies/saint-petersburg/movies-offset120-limit12.json'),
+            call('url12', 'tests/fixtures/movies/saint-petersburg/movies-offset132-limit12.json')
         ]
 
-        assert mock_file_open.mock_calls[2]  == call().write('{\n    "json": 1\n}')
-        assert mock_file_open.mock_calls[6]  == call().write('{\n    "json": 2\n}')
-        assert mock_file_open.mock_calls[10] == call().write('{\n    "json": 3\n}')
-        assert mock_file_open.mock_calls[14] == call().write('{\n    "json": 4\n}')
-        assert mock_file_open.mock_calls[18] == call().write('{\n    "json": 5\n}')
-        assert mock_file_open.mock_calls[22] == call().write('{\n    "json": 6\n}')
-        assert mock_file_open.mock_calls[26] == call().write('{\n    "json": 7\n}')
-        assert mock_file_open.mock_calls[30] == call().write('{\n    "json": 8\n}')
-        assert mock_file_open.mock_calls[34] == call().write('{\n    "json": 9\n}')
-        assert mock_file_open.mock_calls[38] == call().write('{\n    "json": 10\n}')
-        assert mock_file_open.mock_calls[42] == call().write('{\n    "json": 11\n}')
-        assert mock_file_open.mock_calls[46] == call().write('{\n    "json": 12\n}')
+    def test_update_test_movie_details_fixtures(self, mocker):
+        from subscity.scripts import update_test_movie_details_fixtures
+        from subscity.yandex_afisha_parser import YandexAfishaParser
+        mock_download = mocker.patch('subscity.scripts.download_to_json')
+
+        mock_urls = mocker.patch.object(YandexAfishaParser, 'url_movie',
+                                        side_effect=['url1', 'url2'])
+        update_test_movie_details_fixtures()
+        assert mock_urls.call_args_list == [
+            call(api_id='5874ea2a685ae0b186614bb5', city='moscow'),
+            call(api_id='5874ea2a685ae0b186614bb5', city='saint-petersburg')
+        ]
+        assert mock_download.call_args_list == [
+            call('url1', 'tests/fixtures/movies/moscow/5874ea2a685ae0b186614bb5.json'),
+            call('url2', 'tests/fixtures/movies/saint-petersburg/5874ea2a685ae0b186614bb5.json'),
+        ]

@@ -74,3 +74,18 @@ class TestUtils(object):
     def test_transliterate(self, data, expected):
         from subscity.utils import transliterate
         assert transliterate(data) == expected
+
+    def test_download_to_json(self, mocker):
+        from tests.utils import download_to_json
+        from mock import mock_open, patch, call
+        from subscity.yandex_afisha_parser import YandexAfishaParser
+
+        mock_file_open = mock_open()
+        mock_fetch = mocker.patch.object(YandexAfishaParser, 'fetch', return_value='{"json": 1}')
+
+        with patch('tests.utils.open', mock_file_open, create=True):
+            download_to_json('url', 'filename')
+
+        mock_fetch.assert_called_once_with('url')
+        mock_file_open.assert_called_once_with('filename', 'w')
+        assert mock_file_open.mock_calls[2] == call().write('{\n    "json": 1\n}')

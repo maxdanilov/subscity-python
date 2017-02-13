@@ -1,7 +1,9 @@
 import datetime
+import json
 import os
 
 from mock import mock
+from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 
 def fread(fname):
@@ -10,6 +12,13 @@ def fread(fname):
 
 def filter_dict(orig, keys):
     return dict(zip(keys, [orig[k] for k in keys]))
+
+
+def download_to_json(url, filename):
+    print("Downloading {} to {}".format(url, filename))
+    parsed = json.loads(Yap.fetch(url))
+    with open(filename, "w") as file:
+        file.write(json.dumps(parsed, indent=4))
 
 
 def mock_datetime(mock_now=None, mock_utcnow=None):
