@@ -178,7 +178,8 @@ class TestYandexAfishaParser(object):
         result = Yap.get_movie(api_id, city)
         mock_fetch.assert_called_once_with('https://afisha.yandex.ru/api/events/'
                                            '{}?city={}'.format(api_id, city))
-        assert result == {
+
+        expected = {
             'api_id': '5874ea2a685ae0b186614bb5',
             'title': 'Ла-Ла Ленд',
             'title_en': 'La La Land',
@@ -192,21 +193,26 @@ class TestYandexAfishaParser(object):
                            'музыканта, вынужденного подрабатывать в заштатных барах. Но '
                            'пришедший к влюблённым успех начинает подтачивать их '
                            'отношения.\n'
-                           '\n'
                            'Семь наград «Золотой глобус» (2017): за лучший фильм (комедия '
                            'или мюзикл), режиссуру, сценарий, лучшему актёру и актрисе '
-                           '(комедия или мюзикл), музыку к фильму, а также песню. Кубок '
-                           'Вольпи Венецианского кинофестиваля (2016) за лучшую женскую '
-                           'роль, номинация на «Золотого льва». Приз зрительских симпатий '
-                           'международного кинофестиваля в Торонто (2016).',
+                           '(комедия или мюзикл), музыку к фильму, а также песню\n'
+                           'Кубок Вольпи Венецианского кинофестиваля (2016) за лучшую '
+                           'женскую роль, номинация на «Золотого льва»\n'
+                           'Приз зрительских симпатий '
+                           'международного кинофестиваля в Торонто (2016)\n'
+                           'Приз Гильдии режиссёров США (2017) за выдающиеся режиссёрские '
+                           'достижения в художественном фильме\n'
+                           'Приз Гильдии продюсеров США.\n'
+                           '14 номинаций на премию «Оскар» (2017)',
             'year': 2016,
             'duration': 128,
             'age_restriction': 16,
             'premiere': datetime(2017, 1, 12),
             'kinopoisk_id': 841081,
-            'kinopoisk_rating': 8.5,
-            'kinopoisk_votes': 42192,
+            'kinopoisk_rating': 8.4,  # is most likely to change when updating test fixtures
+            'kinopoisk_votes': 57447,  # is most likely to change when updating test fixtures
         }
+        assert result == expected
 
     def test_get_cinema_screenings(self, mocker):
         from datetime import datetime

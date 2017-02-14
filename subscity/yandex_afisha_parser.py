@@ -6,6 +6,8 @@ import re
 import json
 import urllib.request
 
+from subscity.utils import html_to_text
+
 
 class YandexAfishaParser(object):
     CITIES = ('moscow', 'saint-petersburg')
@@ -80,19 +82,19 @@ class YandexAfishaParser(object):
         genres_data = cls._get_genres(movie['tags'])
 
         return {
-            'api_id': movie['id'],
-            'title': movie['title'],
-            'title_en': movie['originalTitle'],
-            'description': movie['description'],
-            'genres': genres_data['russian'],
-            'genres_en': genres_data['original'],
-            'countries': cls._get_countries(movie['countries']),
-            'cast': cls._get_actors(movie['persons']),
-            'directors': cls._get_directors(movie['persons']),
-            'year': movie['year'],
-            'duration': movie['duration'],
-            'age_restriction': cls._get_age_restriction(movie['contentRating']),
-            'premiere': cls._get_premiere(movie['dateReleased']),
+            'api_id': movie.get('id'),
+            'title': movie.get('title'),
+            'title_en': movie.get('originalTitle'),
+            'description': movie.get('description') or html_to_text(movie.get('descriptionHtml')),
+            'genres': genres_data.get('russian'),
+            'genres_en': genres_data.get('original'),
+            'countries': cls._get_countries(movie.get('countries')),
+            'cast': cls._get_actors(movie.get('persons')),
+            'directors': cls._get_directors(movie.get('persons')),
+            'year': movie.get('year'),
+            'duration': movie.get('duration'),
+            'age_restriction': cls._get_age_restriction(movie.get('contentRating')),
+            'premiere': cls._get_premiere(movie.get('dateReleased')),
             'kinopoisk_id': kinopoisk_data['id'],
             'kinopoisk_votes': kinopoisk_data['votes'],
             'kinopoisk_rating': kinopoisk_data['rating']
