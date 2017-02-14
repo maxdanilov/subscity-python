@@ -277,7 +277,6 @@ class TestYandexAfishaParser(object):
               'date_time': '2017-01-15T23:40:00'}]
         assert result == expected
 
-
     def test_get_movie_ids(self, mocker):
         fixtures_path = '../fixtures/movies/saint-petersburg/'
         mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
@@ -323,9 +322,9 @@ class TestYandexAfishaParser(object):
                   'offset=132&tag=cinema&hasMixed=0&city=saint-petersburg'),
              ])
 
-        assert len(result) == 133
-        assert result[0] == '5874ea2a685ae0b186614bb5'
-        assert result[132] == '5881289fcc1c72d7ab9f3a7c'
+        assert len(result) == 143
+        assert result[0] == '568649999c183f73c002830c'
+        assert result[132] == '58a06162cc1c7216b30c992a'
 
     def test_get_cinemas(self, mocker):
         fixtures_path = '../fixtures/cinemas/saint-petersburg/'

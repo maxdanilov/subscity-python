@@ -1,166 +1,1995 @@
 {
+    "paging": {
+        "limit": 12,
+        "offset": 132,
+        "total": 143
+    },
     "data": [
         {
+            "distance": null,
             "scheduleInfo": {
-                "dateReleased": null,
                 "dates": [
-                    "2017-01-24",
-                    "2017-01-25",
-                    "2017-01-26",
-                    "2017-01-27",
-                    "2017-01-28",
-                    "2017-01-29",
-                    "2017-01-30",
-                    "2017-01-31"
+                    "2017-02-17"
                 ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-17T20:00:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-17",
+                "permanent": false,
                 "onlyPlace": {
-                    "city": {
-                        "id": 2,
-                        "timezone": "Europe/Moscow",
-                        "geoid": 2,
-                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
-                        "slug": "saint-petersburg"
+                    "address": "\u0443\u043b. \u0421\u0430\u0434\u043e\u0432\u0430\u044f, 12, \u0442\u0430\u0439\u043c-\u0445\u043e\u043b\u043b Work & Play",
+                    "title": "\u041a\u0438\u043d\u043e \u0431\u0435\u0437 \u043f\u043e\u043f\u043a\u043e\u0440\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
                     },
-                    "metro": [],
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#ff7f00"
+                            ],
+                            "name": "\u0414\u043e\u0441\u0442\u043e\u0435\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.935534,
+                        "longitude": 30.336116
+                    },
                     "tags": [
                         {
                             "status": "approved",
-                            "code": "cinema_theater",
                             "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
                             "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
                             "id": "5575d418cc1c724f5a8e111e"
                         }
                     ],
-                    "logoColor": "#384e78",
-                    "id": "578c14a07a10ffe901d46875",
-                    "bgColor": "#5c80c5",
-                    "location": {
-                        "type": "Point",
-                        "coordinates": [
-                            29.921012,
-                            59.878821
-                        ]
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
                     },
-                    "address": "\u0433. \u041f\u0435\u0442\u0435\u0440\u0433\u043e\u0444, \u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f., 17",
-                    "title": "\u0410\u0432\u0440\u043e\u0440\u0430 (\u041f\u0435\u0442\u0435\u0440\u0433\u043e\u0444)",
-                    "slug": "avrora",
-                    "mainImage": null
+                    "id": "578c15008dabaf9ff14b9048"
                 },
-                "regularity": {
-                    "singleShowtime": null,
-                    "isRegular": true,
-                    "daily": [
-                        "18:00",
-                        "20:00"
-                    ],
-                    "weekly": []
+                "dateReleased": "2003-02-27",
+                "preview": {
+                    "regularity": null
                 },
-                "permanent": false,
-                "dateEnd": "2017-01-31",
-                "placesTotal": 1,
-                "dateStarted": "2017-01-23"
+                "dateStarted": "2017-02-17"
             },
-            "rank": 0.0031547776,
-            "isSignificant": false,
             "event": {
-                "id": "5881289fcc1c72d7ab9f3a7c",
-                "title": "\u0423\u0431\u0435\u0433\u0430\u044e\u0449\u0438\u0439 \u0430\u0432\u0433\u0443\u0441\u0442",
                 "originalTitle": null,
-                "dateReleased": null,
-                "permanent": false,
-                "contentRating": null,
-                "tags": [
-                    {
-                        "id": "5575d413cc1c724f5a8e10f6",
-                        "code": "romance",
-                        "type": "genre",
-                        "status": "approved",
-                        "name": "\u043c\u0435\u043b\u043e\u0434\u0440\u0430\u043c\u0430",
-                        "nameCases": {}
-                    },
-                    {
-                        "id": "5591526f37753645b7d7a5ed",
-                        "code": "cinema",
-                        "type": "format",
-                        "status": "approved",
-                        "name": "\u043a\u0438\u043d\u043e",
-                        "plural": {
-                            "one": "\u043a\u0438\u043d\u043e",
-                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
-                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432"
-                        },
-                        "nameCases": {
-                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
-                        }
-                    }
-                ],
+                "tickets": [],
                 "type": {
-                    "id": "5591526f37753645b7d7a5ed",
-                    "code": "cinema",
-                    "type": "format",
                     "status": "approved",
-                    "name": "\u043a\u0438\u043d\u043e",
+                    "type": "format",
                     "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
                         "one": "\u043a\u0438\u043d\u043e",
                         "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
-                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432"
+                        "none": null
                     },
                     "nameCases": {
+                        "gen": null,
                         "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
                     }
                 },
+                "permanent": false,
+                "dateReleased": "2003-02-27",
                 "image": {
                     "type": "image",
                     "subType": "still",
-                    "source": {
-                        "id": "kinoplatform",
-                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
-                        "url": "http://www.kinopoisk.ru/film/42483"
-                    },
                     "sizes": {
-                        "eventCover": {
-                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/f03580a6913b6102bd06e236dc3de7aa/s270x135",
-                            "width": 270,
-                            "height": 135,
-                            "precision": 1
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/be4fd807a829176cd2357cb5596fb523/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/be4fd807a829176cd2357cb5596fb523/s390x150",
+                            "width": 390
                         },
                         "eventCoverS": {
-                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/f03580a6913b6102bd06e236dc3de7aa/100x60",
-                            "width": 100,
+                            "precision": 1,
                             "height": 60,
-                            "precision": 1
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/be4fd807a829176cd2357cb5596fb523/100x60",
+                            "width": 100
                         },
-                        "touchEventCover": {
-                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/f03580a6913b6102bd06e236dc3de7aa/s420x280",
-                            "width": 416,
-                            "height": 280,
-                            "precision": 0.9904761904761905
-                        },
-                        "touchEventCoverM": {
-                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/f03580a6913b6102bd06e236dc3de7aa/s270x180",
-                            "width": 270,
-                            "height": 180,
-                            "precision": 1
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/be4fd807a829176cd2357cb5596fb523/s270x135",
+                            "width": 270
                         }
                     },
-                    "bgColor": "#4d4d4d",
-                    "isPoster": true
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/309",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": "#9c3f30"
                 },
-                "poster": null,
-                "reviews": [],
+                "title": "\u042d\u043a\u0432\u0438\u043b\u0438\u0431\u0440\u0438\u0443\u043c",
+                "contentRating": null,
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "fiction",
+                        "name": "\u0444\u0430\u043d\u0442\u0430\u0441\u0442\u0438\u043a\u0430",
+                        "id": "5575d412cc1c724f5a8e10be"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "action",
+                        "name": "\u0431\u043e\u0435\u0432\u0438\u043a",
+                        "id": "55d5a948f7b4b53cbe1dd8b6"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "thriller",
+                        "name": "\u0442\u0440\u0438\u043b\u043b\u0435\u0440",
+                        "id": "57ac81f96ee3daf0ed0e10e7"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "58a06162cc1c7216b30c992a"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-15"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-15T18:10:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-15",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041a\u0430\u0440\u0430\u0432\u0430\u043d\u043d\u0430\u044f, 12",
+                    "title": "\u0420\u043e\u0434\u0438\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u041c\u0430\u044f\u043a\u043e\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.936274,
+                        "longitude": 30.342225
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "56376b593775360687d4de8e"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-15"
+            },
+            "event": {
+                "originalTitle": null,
                 "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
                 "userRating": {
                     "overall": {
-                        "value": "0.0",
-                        "count": 0
+                        "count": 0,
+                        "value": 0
                     }
-                }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "title": "\u0424\u0438\u043b\u044c\u043c\u044b \u0441\u0442\u0443\u0434\u0438\u0438 \\\"\u0421\u0435\u0432\u0417\u0430\u043f\u041a\u0438\u043d\u043e\\\"",
+                "contentRating": null,
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "58a142ddcc1c72a74b0c9866"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-17"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-17T19:30:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-17",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041a\u0430\u0440\u0430\u0432\u0430\u043d\u043d\u0430\u044f, 12",
+                    "title": "\u0420\u043e\u0434\u0438\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u041c\u0430\u044f\u043a\u043e\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.936274,
+                        "longitude": 30.342225
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "56376b593775360687d4de8e"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-17"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "title": "\u0412\u044b\u0441\u043e\u0445\u0448\u0430\u044f \u043a\u0440\u043e\u0432\u044c",
+                "contentRating": "18+",
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "drama",
+                        "name": "\u0434\u0440\u0430\u043c\u0430",
+                        "id": "57d2843efc8131fcefa33f9f"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "589f0f777abde95509e4f529"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-19"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-19T16:00:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-19",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u0421\u0430\u0434\u043e\u0432\u0430\u044f, 12, \u0442\u0430\u0439\u043c-\u0445\u043e\u043b\u043b Work & Play",
+                    "title": "\u041a\u0438\u043d\u043e \u0431\u0435\u0437 \u043f\u043e\u043f\u043a\u043e\u0440\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#ff7f00"
+                            ],
+                            "name": "\u0414\u043e\u0441\u0442\u043e\u0435\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.935534,
+                        "longitude": 30.336116
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "578c15008dabaf9ff14b9048"
+                },
+                "dateReleased": "2003-02-13",
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-19"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": "2003-02-13",
+                "image": {
+                    "type": "image",
+                    "subType": "cover",
+                    "sizes": {
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/21422/4b330e7c96d2502a50fbe3b18c79aec5/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/21422/4b330e7c96d2502a50fbe3b18c79aec5/s390x150",
+                            "width": 390
+                        },
+                        "eventCoverS": {
+                            "precision": 1,
+                            "height": 60,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/21422/4b330e7c96d2502a50fbe3b18c79aec5/100x60",
+                            "width": 100
+                        },
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/21422/4b330e7c96d2502a50fbe3b18c79aec5/s270x135",
+                            "width": 270
+                        }
+                    },
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/324",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": "#4b4b4d"
+                },
+                "title": "\u041f\u043e\u0439\u043c\u0430\u0439 \u043c\u0435\u043d\u044f, \u0435\u0441\u043b\u0438 \u0441\u043c\u043e\u0436\u0435\u0448\u044c",
+                "contentRating": null,
+                "kinopoisk": {
+                    "value": 8.5,
+                    "url": "//kinopoisk.ru/film/324",
+                    "votes": 0
+                },
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "drama",
+                        "name": "\u0434\u0440\u0430\u043c\u0430",
+                        "id": "57d2843efc8131fcefa33f9f"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "criminal",
+                        "name": "\u043a\u0440\u0438\u043c\u0438\u043d\u0430\u043b\u044c\u043d\u044b\u0439",
+                        "id": "5582da8e100c0a0e984da18c"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "biographic",
+                        "name": "\u0431\u0438\u043e\u0433\u0440\u0430\u0444\u0438\u044f",
+                        "id": "55ddab6b100c0a24a87bac4c"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "55cda0b1cc1c723cb7f0c1ea"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-16"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-16T19:00:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-16",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041a\u0430\u0440\u0430\u0432\u0430\u043d\u043d\u0430\u044f, 12",
+                    "title": "\u0420\u043e\u0434\u0438\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u041c\u0430\u044f\u043a\u043e\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.936274,
+                        "longitude": 30.342225
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "56376b593775360687d4de8e"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-16"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "title": "\u041d\u0438\u043a\u0447\u0435\u043c\u043d\u044b\u0439 \u0447\u0435\u043b\u043e\u0432\u0435\u043a",
+                "contentRating": "12+",
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "drama",
+                        "name": "\u0434\u0440\u0430\u043c\u0430",
+                        "id": "57d2843efc8131fcefa33f9f"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "58a14404cc1c72a74b0c987b"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-18"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-18T19:00:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-18",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041a\u0430\u0440\u0430\u0432\u0430\u043d\u043d\u0430\u044f, 12",
+                    "title": "\u0420\u043e\u0434\u0438\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u041c\u0430\u044f\u043a\u043e\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.936274,
+                        "longitude": 30.342225
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "56376b593775360687d4de8e"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-18"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "image": {
+                    "type": "image",
+                    "subType": "still",
+                    "sizes": {
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/91a0e7be0ecb59fad0dcb4addbe34107/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/91a0e7be0ecb59fad0dcb4addbe34107/s390x150",
+                            "width": 390
+                        },
+                        "eventCoverS": {
+                            "precision": 1,
+                            "height": 60,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/91a0e7be0ecb59fad0dcb4addbe34107/100x60",
+                            "width": 100
+                        },
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/91a0e7be0ecb59fad0dcb4addbe34107/s270x135",
+                            "width": 270
+                        }
+                    },
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/92177",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": "#4d4d4d"
+                },
+                "title": "\u0413\u043e\u0440\u044f\u0447\u0438\u0439 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u0410\u043a\u0438\u0446\u0443",
+                "contentRating": "12+",
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "drama",
+                        "name": "\u0434\u0440\u0430\u043c\u0430",
+                        "id": "57d2843efc8131fcefa33f9f"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "romance",
+                        "name": "\u043c\u0435\u043b\u043e\u0434\u0440\u0430\u043c\u0430",
+                        "id": "5575d413cc1c724f5a8e10f6"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "58a0247fcc1c729e3b0c981c"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-19"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-19T13:30:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-19",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u0421\u0430\u0434\u043e\u0432\u0430\u044f, 12, \u0442\u0430\u0439\u043c-\u0445\u043e\u043b\u043b Work & Play",
+                    "title": "\u041a\u0438\u043d\u043e \u0431\u0435\u0437 \u043f\u043e\u043f\u043a\u043e\u0440\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#ff7f00"
+                            ],
+                            "name": "\u0414\u043e\u0441\u0442\u043e\u0435\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.935534,
+                        "longitude": 30.336116
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "578c15008dabaf9ff14b9048"
+                },
+                "dateReleased": "2013-04-04",
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-19"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": "2013-04-04",
+                "image": {
+                    "type": "image",
+                    "subType": "still",
+                    "sizes": {
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/5f7f3db184b9a5bb878d0f173c5c9af4/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/5f7f3db184b9a5bb878d0f173c5c9af4/s390x150",
+                            "width": 390
+                        },
+                        "eventCoverS": {
+                            "precision": 1,
+                            "height": 60,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/5f7f3db184b9a5bb878d0f173c5c9af4/100x60",
+                            "width": 100
+                        },
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/23222/5f7f3db184b9a5bb878d0f173c5c9af4/s270x135",
+                            "width": 270
+                        }
+                    },
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/7121",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": "#9c3f30"
+                },
+                "title": "\u041f\u0430\u0440\u043a \u042e\u0440\u0441\u043a\u043e\u0433\u043e \u043f\u0435\u0440\u0438\u043e\u0434\u0430",
+                "contentRating": null,
+                "kinopoisk": {
+                    "value": 7.8,
+                    "url": "//kinopoisk.ru/film/7121",
+                    "votes": 0
+                },
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "adventure",
+                        "name": "\u043f\u0440\u0438\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f",
+                        "id": "5575d411cc1c724f5a8e1086"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "fiction",
+                        "name": "\u0444\u0430\u043d\u0442\u0430\u0441\u0442\u0438\u043a\u0430",
+                        "id": "5575d412cc1c724f5a8e10be"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "family_movie",
+                        "name": "\u0441\u0435\u043c\u0435\u0439\u043d\u043e\u0435 \u043a\u0438\u043d\u043e",
+                        "id": "55e5614e8dabaf3d6c15847b"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "558cd2ae7abde95f6b6f2809"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-19"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": "2017-02-19T19:00:00",
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-19",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041a\u0430\u0440\u0430\u0432\u0430\u043d\u043d\u0430\u044f, 12",
+                    "title": "\u0420\u043e\u0434\u0438\u043d\u0430",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u044b\u0439 \u0434\u0432\u043e\u0440"
+                        },
+                        {
+                            "colors": [
+                                "#0099cc"
+                            ],
+                            "name": "\u041d\u0435\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442"
+                        },
+                        {
+                            "colors": [
+                                "#038f53"
+                            ],
+                            "name": "\u041c\u0430\u044f\u043a\u043e\u0432\u0441\u043a\u0430\u044f"
+                        }
+                    ],
+                    "coordinates": {
+                        "latitude": 59.936274,
+                        "longitude": 30.342225
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "56376b593775360687d4de8e"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-19"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "image": {
+                    "type": "image",
+                    "subType": "still",
+                    "sizes": {
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/c271ce110d38aa7ae6c8083a4473d990/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/c271ce110d38aa7ae6c8083a4473d990/s390x150",
+                            "width": 390
+                        },
+                        "eventCoverS": {
+                            "precision": 1,
+                            "height": 60,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/c271ce110d38aa7ae6c8083a4473d990/100x60",
+                            "width": 100
+                        },
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/c271ce110d38aa7ae6c8083a4473d990/s270x135",
+                            "width": 270
+                        }
+                    },
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/469388",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": "#4c4d4c"
+                },
+                "title": "\u0412\u043e\u0441\u0435\u043c\u043d\u0430\u0434\u0446\u0430\u0442\u044c \u043c\u043e\u043b\u043e\u0434\u044b\u0445 \u043b\u044e\u0434\u0435\u0439, \u0432\u044b\u0437\u044b\u0432\u0430\u044e\u0449\u0438\u0445 \u0431\u0443\u0440\u044e",
+                "contentRating": "12+",
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "drama",
+                        "name": "\u0434\u0440\u0430\u043c\u0430",
+                        "id": "57d2843efc8131fcefa33f9f"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "58a14371cc1c72a74b0c9874"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-15",
+                    "2017-02-16",
+                    "2017-02-17",
+                    "2017-02-18",
+                    "2017-02-19"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": null,
+                    "isRegular": true,
+                    "weekly": [],
+                    "daily": [
+                        "12:30",
+                        "14:30"
+                    ]
+                },
+                "dateEnd": "2017-02-19",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041f\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u043d\u0438\u043a\u0430 \u0413\u0430\u0440\u044c\u043a\u0430\u0432\u043e\u0433\u043e, 22/1",
+                    "title": "\u0412\u043e\u0441\u0445\u043e\u0434",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [],
+                    "coordinates": {
+                        "latitude": 59.838791,
+                        "longitude": 30.147807
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "551797ee1f7d154a12ddf06f"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": "\u0415\u0436\u0435\u0434\u043d\u0435\u0432\u043d\u043e"
+                },
+                "dateStarted": "2016-06-20"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "image": {
+                    "type": "image",
+                    "subType": "still",
+                    "sizes": {
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/83a984a303169a28b7f06c6e75751d7b/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/83a984a303169a28b7f06c6e75751d7b/s390x150",
+                            "width": 390
+                        },
+                        "eventCoverS": {
+                            "precision": 1,
+                            "height": 60,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/83a984a303169a28b7f06c6e75751d7b/100x60",
+                            "width": 100
+                        },
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/36842/83a984a303169a28b7f06c6e75751d7b/s270x135",
+                            "width": 270
+                        }
+                    },
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/43041",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": null
+                },
+                "title": "\u041f\u043e\u0434\u0430\u0440\u043e\u043a \u0447\u0435\u0440\u043d\u043e\u0433\u043e \u043a\u043e\u043b\u0434\u0443\u043d\u0430",
+                "contentRating": null,
+                "kinopoisk": {
+                    "value": 6.9,
+                    "url": "//kinopoisk.ru/film/43041",
+                    "votes": 0
+                },
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "fantasy",
+                        "name": "\u0444\u044d\u043d\u0442\u0435\u0437\u0438",
+                        "id": "57d2864a685ae0a485d06ce1"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "adventure",
+                        "name": "\u043f\u0440\u0438\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f",
+                        "id": "5575d411cc1c724f5a8e1086"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "family_movie",
+                        "name": "\u0441\u0435\u043c\u0435\u0439\u043d\u043e\u0435 \u043a\u0438\u043d\u043e",
+                        "id": "55e5614e8dabaf3d6c15847b"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "575e366a7abde997dad5516b"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-20",
+                    "2017-02-21"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": null,
+                    "isRegular": false,
+                    "weekly": [],
+                    "daily": []
+                },
+                "dateEnd": "2017-02-21",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041f\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u043d\u0438\u043a\u0430 \u0413\u0430\u0440\u044c\u043a\u0430\u0432\u043e\u0433\u043e, 22/1",
+                    "title": "\u0412\u043e\u0441\u0445\u043e\u0434",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [],
+                    "coordinates": {
+                        "latitude": 59.838791,
+                        "longitude": 30.147807
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "551797ee1f7d154a12ddf06f"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": null
+                },
+                "dateStarted": "2017-02-20"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "image": {
+                    "type": "image",
+                    "subType": "screenshot",
+                    "sizes": {
+                        "featuredSelection": {
+                            "precision": 1,
+                            "height": 140,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/e29e22e7d3dcdfdb5ef31bee37aad6ab/s420x140",
+                            "width": 420
+                        },
+                        "featured": {
+                            "precision": 1,
+                            "height": 150,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/e29e22e7d3dcdfdb5ef31bee37aad6ab/s390x150",
+                            "width": 390
+                        },
+                        "eventCoverS": {
+                            "precision": 1,
+                            "height": 60,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/e29e22e7d3dcdfdb5ef31bee37aad6ab/100x60",
+                            "width": 100
+                        },
+                        "eventCover": {
+                            "precision": 1,
+                            "height": 135,
+                            "url": "https://avatars.mds.yandex.net/get-afishanew/29022/e29e22e7d3dcdfdb5ef31bee37aad6ab/s270x135",
+                            "width": 270
+                        }
+                    },
+                    "source": {
+                        "title": "\u041a\u0438\u043d\u043e\u041f\u043e\u0438\u0441\u043a",
+                        "url": "http://www.kinopoisk.ru/film/45612",
+                        "id": "kinoplatform"
+                    },
+                    "bgColor": "#657a25"
+                },
+                "title": "\u0412 \u043d\u0435\u0431\u0435 \u00ab\u043d\u043e\u0447\u043d\u044b\u0435 \u0432\u0435\u0434\u044c\u043c\u044b\u00bb",
+                "contentRating": null,
+                "kinopoisk": {
+                    "value": 7.4,
+                    "url": "//kinopoisk.ru/film/45612",
+                    "votes": 0
+                },
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "war",
+                        "name": "\u0432\u043e\u0435\u043d\u043d\u044b\u0439",
+                        "id": "55d5a95e100c0a65ffb236da"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "5575fc497abde93d84195c53"
+            }
+        },
+        {
+            "distance": null,
+            "scheduleInfo": {
+                "dates": [
+                    "2017-02-15",
+                    "2017-02-16",
+                    "2017-02-17",
+                    "2017-02-18",
+                    "2017-02-19"
+                ],
+                "placesTotal": 1,
+                "regularity": {
+                    "singleShowtime": null,
+                    "isRegular": true,
+                    "weekly": [],
+                    "daily": [
+                        "16:30",
+                        "18:30",
+                        "20:30"
+                    ]
+                },
+                "dateEnd": "2017-02-19",
+                "permanent": false,
+                "onlyPlace": {
+                    "address": "\u0443\u043b. \u041f\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u043d\u0438\u043a\u0430 \u0413\u0430\u0440\u044c\u043a\u0430\u0432\u043e\u0433\u043e, 22/1",
+                    "title": "\u0412\u043e\u0441\u0445\u043e\u0434",
+                    "distance": null,
+                    "type": {
+                        "status": "approved",
+                        "type": "place",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                        },
+                        "code": "cinema_theater",
+                        "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                        "id": "5575d418cc1c724f5a8e111e"
+                    },
+                    "metro": [],
+                    "coordinates": {
+                        "latitude": 59.838791,
+                        "longitude": 30.147807
+                    },
+                    "tags": [
+                        {
+                            "status": "approved",
+                            "type": "place",
+                            "plural": null,
+                            "nameCases": {
+                                "gen": null,
+                                "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440"
+                            },
+                            "code": "cinema_theater",
+                            "name": "\u041a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440",
+                            "id": "5575d418cc1c724f5a8e111e"
+                        }
+                    ],
+                    "city": {
+                        "geoid": 2,
+                        "timezone": "Europe/Moscow",
+                        "name": "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+                        "id": "saint-petersburg"
+                    },
+                    "id": "551797ee1f7d154a12ddf06f"
+                },
+                "dateReleased": null,
+                "preview": {
+                    "regularity": "\u0415\u0436\u0435\u0434\u043d\u0435\u0432\u043d\u043e"
+                },
+                "dateStarted": "2017-02-13"
+            },
+            "event": {
+                "originalTitle": null,
+                "tickets": [],
+                "type": {
+                    "status": "approved",
+                    "type": "format",
+                    "plural": {
+                        "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                        "one": "\u043a\u0438\u043d\u043e",
+                        "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                        "none": null
+                    },
+                    "nameCases": {
+                        "gen": null,
+                        "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                    },
+                    "code": "cinema",
+                    "name": "\u043a\u0438\u043d\u043e",
+                    "id": "5591526f37753645b7d7a5ed"
+                },
+                "userRating": {
+                    "overall": {
+                        "count": 0,
+                        "value": 0
+                    }
+                },
+                "permanent": false,
+                "dateReleased": null,
+                "title": "\u0421\u0438\u0440\u0430\u043d\u043e \u0434\u0435 \u0411\u0435\u0440\u0436\u0435\u0440\u0430\u043a",
+                "contentRating": null,
+                "kinopoisk": null,
+                "argument": null,
+                "tags": [
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "drama",
+                        "name": "\u0434\u0440\u0430\u043c\u0430",
+                        "id": "57d2843efc8131fcefa33f9f"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "romance",
+                        "name": "\u043c\u0435\u043b\u043e\u0434\u0440\u0430\u043c\u0430",
+                        "id": "5575d413cc1c724f5a8e10f6"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "genre",
+                        "plural": null,
+                        "nameCases": {
+                            "gen": null,
+                            "acc": null
+                        },
+                        "code": "comedy",
+                        "name": "\u043a\u043e\u043c\u0435\u0434\u0438\u044f",
+                        "id": "57d28482377536932cfc4c2e"
+                    },
+                    {
+                        "status": "approved",
+                        "type": "format",
+                        "plural": {
+                            "many": "\u0444\u0438\u043b\u044c\u043c\u043e\u0432",
+                            "one": "\u043a\u0438\u043d\u043e",
+                            "some": "\u0444\u0438\u043b\u044c\u043c\u0430",
+                            "none": null
+                        },
+                        "nameCases": {
+                            "gen": null,
+                            "acc": "\u0432 \u043a\u0438\u043d\u043e\u0442\u0435\u0430\u0442\u0440\u0430\u0445"
+                        },
+                        "code": "cinema",
+                        "name": "\u043a\u0438\u043d\u043e",
+                        "id": "5591526f37753645b7d7a5ed"
+                    }
+                ],
+                "id": "5888e3459c183f3a4e0279c7"
             }
         }
-    ],
-    "paging": {
-        "total": 133,
-        "limit": 12,
-        "offset": 132
-    }
+    ]
 }
