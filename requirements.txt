@@ -1,7 +1,7 @@
 alembic==0.8.10
 appnope==0.1.0
 astroid==1.4.9
-beautifulsoup4=4.5.3
+beautifulsoup4==4.5.3
 click==6.7
 codeclimate-test-reporter==0.2.0
 coverage==4.3.4
