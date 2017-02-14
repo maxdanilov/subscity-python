@@ -89,3 +89,12 @@ class TestUtils(object):
         mock_fetch.assert_called_once_with('url')
         mock_file_open.assert_called_once_with('filename', 'w')
         assert mock_file_open.mock_calls[2] == call().write('{\n    "json": 1\n}')
+
+    @parametrize('data, expected', [(None, None),
+                                    ("", None),
+                                    ("<p>some &amp; <b>mar&lt;k&gt;up</b></p>", "some & mar<k>up"),
+                                    ("<p>new<br/>line</p>", "new\nline"),
+                                    ("<p>par1</p><p>par2</p>", "par1\npar2")])
+    def test_html_to_text(self, data, expected):
+        from subscity.utils import html_to_text
+        assert html_to_text(data) == expected

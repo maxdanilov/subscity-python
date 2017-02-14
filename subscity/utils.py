@@ -2,6 +2,7 @@ import datetime
 import json
 from typing import Union
 
+from bs4 import BeautifulSoup
 from flask import Response
 import pytz
 from transliterate import translit
@@ -55,3 +56,11 @@ def get_now(city: str) -> datetime:
 
 def transliterate(data: str) -> str:
     return translit(data, 'ru', reversed=True) if data else None
+
+
+def html_to_text(data: str) -> str:
+    if data:
+        soup = BeautifulSoup(data, "html.parser")
+        text = soup.get_text(separator='\n')
+        text = text.replace('& \n', '& ')  # for some reason, BS adds a line break after &amp;
+        return text
