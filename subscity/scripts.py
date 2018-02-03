@@ -1,6 +1,12 @@
 import datetime
+import os
+import shutil
+import tarfile
 import time
 import traceback
+import urllib
+
+import requests
 
 from subscity.main import DB
 from subscity.models.cinema import Cinema
@@ -99,3 +105,29 @@ def update_test_movie_details_fixtures() -> None:
         url = Yap.url_movie(api_id=api_id, city=city)
         filename = fixture_path + '{}.json'.format(api_id)
         download_to_json(url, filename)
+
+
+def download_base() -> None:
+    base_download_url = 'https://afisha.yandex.ru/export/legacy'
+    auth_token = os.environ.get('YANDEX_AUTH_TOKEN')
+    headers = {'Authorization': 'token {0}'.format(auth_token)}
+    req = requests.get(base_download_url, headers=headers)
+    if req.status_code != 200:
+        print('Error code during API call: {}'.format(req.status_code))
+        exit(1)
+
+    url = req.json()['data'][0]['url']
+    print('Downloading {}'.format(url))
+    file_name = "archive.tar.gz"
+    urllib.request.urlretrieve(url, file_name)
+
+    print('Cleaning old data')
+    shutil.rmtree(Yap.LOCAL_BASE_STORAGE, ignore_errors=True)
+
+    print('Extracting archive')
+    tar = tarfile.open(file_name, 'r:gz')
+    tar.extractall(Yap.LOCAL_BASE_STORAGE)
+    tar.close()
+
+    print('Removing archive')
+    os.remove(file_name)

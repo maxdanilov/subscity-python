@@ -18,6 +18,7 @@ setup(
     package_dir={'subscity': 'subscity'},
     entry_points={
         'console_scripts': [
+            'download_base=subscity.scripts:download_base',
             'update_movies=subscity.scripts:update_movies',
             'update_cinemas=subscity.scripts:update_cinemas',
             'update_screenings=subscity.scripts:update_screenings',

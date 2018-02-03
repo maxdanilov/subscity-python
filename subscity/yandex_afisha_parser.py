@@ -2,14 +2,15 @@
 
 from datetime import datetime, timedelta
 from typing import List, Dict, Union
-import re
 import json
+import re
 import urllib.request
 
 from subscity.utils import html_to_text
 
 
 class YandexAfishaParser(object):
+    LOCAL_BASE_STORAGE = '/tmp/subscity_afisha_files'
     CITIES = ('moscow', 'saint-petersburg')
     BASE_URL = 'https://afisha.yandex.ru'
     BASE_URL_API = '{}/api/'.format(BASE_URL)
@@ -158,7 +159,7 @@ class YandexAfishaParser(object):
         for item in data or []:
             if item['role'] == 'director':
                 directors.extend(item['names'])
-        return', '.join(directors) or None
+        return ', '.join(directors) or None
 
     @staticmethod
     def _get_premiere(date: Union[str]) -> Union[str]:
