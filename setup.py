@@ -25,6 +25,7 @@ setup(
             'update_test_fixtures=subscity.scripts:update_test_fixtures',
             'update_test_cinema_fixtures=subscity.scripts:update_test_cinema_fixtures',
             'update_test_movie_fixtures=subscity.scripts:update_test_movie_fixtures',
+            'update_test_screening_fixtures=subscity.scripts:update_test_screening_fixtures',
             'update_test_movie_details_fixtures=subscity.scripts:update_test_movie_details_fixtures'
         ]
     },

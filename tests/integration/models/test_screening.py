@@ -145,11 +145,12 @@ class TestModelScreening(object):
     def test_parse_and_save(self, mocker, dbsession):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
-        fixture = 'fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
-        mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
+        fixture = 'fixtures/screenings/spb/bilet.xml'
+        mocker.patch('subscity.yandex_afisha_parser.read_file',
                      return_value=fread(fixture))
-        result = Yap.get_cinema_screenings('561fdfed37753624b592f13f', datetime(2017, 1, 15),
-                                           'moscow')
+        result = Yap.get_screenings('spb')
+        assert len(result) == 162
+
         sc1 = Screening(**result[0])
         sc1.save()
 
@@ -168,21 +169,21 @@ class TestModelScreening(object):
         created_at2 = dict2_.pop('created_at')
         updated_at2 = dict2_.pop('updated_at')
         assert updated_at2 >= created_at2
-        assert dict_ == {'cinema_api_id': '561fdfed37753624b592f13f',
-                         'city': 'moscow',
-                         'date_time': '2017-01-15T11:15:00',
+        assert dict_ == {'cinema_api_id': '578c15008dabaf9ff14b9048',
+                         'city': 'spb',
+                         'date_time': '2018-02-04T17:40:00',
                          'id': sc1.id,
-                         'movie_api_id': '5874ea2a685ae0b186614bb5',
+                         'movie_api_id': '5575ec34cc1c72361ee31384',
                          'price_min': None,
-                         'source': None,
+                         'source': 'yandex',
                          'ticket_api_id': None}
-        assert dict2_ == {'cinema_api_id': '561fdfed37753624b592f13f',
-                          'city': 'moscow',
-                          'date_time': '2017-01-15T14:00:00',
+        assert dict2_ == {'cinema_api_id': '578c15008dabaf9ff14b9048',
+                          'city': 'spb',
+                          'date_time': '2018-02-04T15:00:00',
                           'id': sc2.id,
-                          'movie_api_id': '5874ea2a685ae0b186614bb5',
+                          'movie_api_id': '55762ad4cc1c725c189884be',
                           'price_min': None,
-                          'source': None,
+                          'source': 'yandex',
                           'ticket_api_id': None}
 
     def test_get_for_movie_empty(self, dbsession):

@@ -114,9 +114,14 @@ class TestScripts(object):
         from subscity.scripts import update_test_fixtures
         mock_update_cinema_fixtures = mocker.patch('subscity.scripts.update_test_cinema_fixtures')
         mock_update_movie_fixtures = mocker.patch('subscity.scripts.update_test_movie_fixtures')
+        mock_update_screening_fixtures = mocker.patch('subscity.scripts.'
+                                                      'update_test_screening_fixtures')
+
         update_test_fixtures()
+
         mock_update_cinema_fixtures.assert_called_once_with()
         mock_update_movie_fixtures.assert_called_once_with()
+        mock_update_screening_fixtures.assert_called_once_with()
 
     def test_update_test_cinema_fixtures(self, mocker):
         from subscity.scripts import update_test_cinema_fixtures
@@ -134,4 +139,13 @@ class TestScripts(object):
         mock_move.assert_called_once_with(
             '/tmp/subscity_afisha_files/afisha_files/spb/cinema/events.xml',
             'tests/fixtures/movies/spb/events.xml'
+        )
+
+    def test_update_test_screening_fixtures(self, mocker):
+        from subscity.scripts import update_test_screening_fixtures
+        mock_move = mocker.patch('shutil.copy2', return_value=None)
+        update_test_screening_fixtures()
+        mock_move.assert_called_once_with(
+            '/tmp/subscity_afisha_files/afisha_files/spb/cinema/bilet.xml',
+            'tests/fixtures/screenings/spb/bilet.xml'
         )

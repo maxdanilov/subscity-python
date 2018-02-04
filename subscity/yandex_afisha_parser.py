@@ -2,7 +2,6 @@
 
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
-import json
 import urllib.request
 
 import xmltodict
@@ -12,15 +11,10 @@ from subscity.utils import read_file
 
 class YandexAfishaParser(object):
     LOCAL_BASE_STORAGE = '/tmp/subscity_afisha_files'
-    CITIES = ('moscow', 'saint-petersburg')
-    CITIES_ABBR = ('msk', 'spb')
+    CITIES = ('msk', 'spb')
     BASE_URL = 'https://afisha.yandex.ru'
-    BASE_URL_API = '{}/api/'.format(BASE_URL)
-    SKIPPED_GENRES = set([x.lower() for x in ['TheatreHD']])
-    HAS_SUBS_TAG = 'На языке оригинала'
-    HAS_SUBS_NOTES = 'На языке оригинала, с русскими субтитрами'
+    HAS_SUBS_TAG = 'На языке оригинала, с русскими субтитрами'
     DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
-    FETCH_DAYS = 10
 
     @staticmethod
     def fetch(url: str) -> str:
@@ -31,13 +25,6 @@ class YandexAfishaParser(object):
     def url_tickets(cls, cinema_api_id: str, city: str, day: datetime) -> str:
         return '{}/places/{}?city={}&place-schedule-date={}'.\
             format(cls.BASE_URL, cinema_api_id, city, day.strftime("%Y-%m-%d"))
-
-    @classmethod
-    def url_cinema_schedule(cls, api_id: str, date: datetime, city: str) -> str:
-        url = cls.BASE_URL_API
-        date = date.strftime("%Y-%m-%d")
-        url += 'places/{}/schedule_cinema?date={}&city={}'.format(api_id, date, city)
-        return url
 
     @classmethod
     def get_movies(cls, city_abbr: str) -> List[Dict]:
@@ -142,9 +129,8 @@ class YandexAfishaParser(object):
 
     @classmethod
     def _is_screening_with_subs(cls, item: dict) -> bool:
-        return item.get('@language_notes') == cls.HAS_SUBS_NOTES
+        return item.get('@language_notes') == cls.HAS_SUBS_TAG
 
-    # TODO test me
     @classmethod
     def get_screenings(cls, city: str) -> List[Dict]:
         result = []
@@ -163,36 +149,6 @@ class YandexAfishaParser(object):
                             'price_min': cls._get_screening_price(screening),
                             'date_time': cls._get_screening_time(screening),
                             'source': 'yandex'})
-        return result
-
-    # TODO replace me
-    @classmethod
-    def get_cinema_screenings(cls, api_id: str, date: datetime, city: str) -> List[Dict]:
-        url = cls.url_cinema_schedule(api_id, date, city)
-        contents = cls.fetch(url)
-        data = json.loads(contents)
-        movies = data['schedule']['items']
-        result = []
-        for movie in movies:
-            tag_codes = set([x['code'].lower() for x in movie['event']['tags']])
-            if cls.SKIPPED_GENRES.intersection(tag_codes):
-                continue
-            for schedule in movie['schedule']:
-                if cls.HAS_SUBS_TAG.lower() \
-                        in [x['name'].lower() for x in schedule['tags']]:
-                    for session in schedule['sessions']:
-                        min_price = ticket_id = None
-                        if session['ticket']:
-                            ticket_id = session['ticket']['id']
-                            min_price = (session['ticket']['price']['min'] or 0) / 100 or None
-                        screening = {
-                            'cinema_api_id': api_id,
-                            'movie_api_id': movie['event']['id'],
-                            'ticket_api_id': ticket_id,
-                            'date_time': session['datetime'],
-                            'city': city,
-                            'price_min': min_price}
-                        result.append(screening)
         return result
 
     @staticmethod

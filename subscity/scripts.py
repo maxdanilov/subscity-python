@@ -14,7 +14,7 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 
 def update_screenings() -> None:
-    for city in Yap.CITIES_ABBR:
+    for city in Yap.CITIES:
         print('{city} Parsing new screenings'.format(city=city))
         screenings = Yap.get_screenings(city)
 
@@ -28,7 +28,7 @@ def update_screenings() -> None:
 
 
 def update_cinemas() -> None:
-    for city in Yap.CITIES_ABBR:
+    for city in Yap.CITIES:
         cinemas = Yap.get_cinemas(city)
         for cinema in cinemas:
             try:
@@ -41,7 +41,7 @@ def update_cinemas() -> None:
 
 
 def update_movies() -> None:
-    for city in Yap.CITIES_ABBR:
+    for city in Yap.CITIES:
         movies = Yap.get_movies(city)
         movie_api_ids = [m['api_id'] for m in movies]
         movie_api_ids_db = Movie.get_all_api_ids()
@@ -59,6 +59,7 @@ def update_movies() -> None:
 def update_test_fixtures() -> None:
     update_test_cinema_fixtures()
     update_test_movie_fixtures()
+    update_test_screening_fixtures()
 
 
 def _update_test_fixture(city: str, entity: str, fixture_name: str) -> None:
@@ -73,6 +74,10 @@ def update_test_cinema_fixtures() -> None:
 
 def update_test_movie_fixtures() -> None:
     _update_test_fixture('spb', 'movies', 'events.xml')
+
+
+def update_test_screening_fixtures() -> None:
+    _update_test_fixture('spb', 'screenings', 'bilet.xml')
 
 
 def download_base() -> None:

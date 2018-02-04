@@ -19,14 +19,6 @@ class TestYandexAfishaParser(object):
         assert result == "https://afisha.yandex.ru/places/cinema_api_id?city=city_name" \
                          "&place-schedule-date=2017-02-28"
 
-    def test_url_cinema_schedule(self):
-        from datetime import datetime
-        result = Yap.url_cinema_schedule(api_id='fake_id', date=datetime(2016, 1, 12),
-                                         city='fake_city')
-        expected = "https://afisha.yandex.ru/api/places/fake_id/schedule_cinema?date=2016-01-12&" \
-                   "city=fake_city"
-        assert result == expected
-
     def test_fetch(self, mocker):
         class UrlOpenResultFake(object):
             def read(self):
@@ -150,69 +142,6 @@ class TestYandexAfishaParser(object):
             'year': 2017
         }
         assert result[11] == expected
-
-    def test_get_cinema_screenings(self, mocker):
-        from datetime import datetime
-        fixture = '../fixtures/cinemas/moscow/schedule-561fdfed37753624b592f13f-2017-01-15.json'
-        mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
-                                  return_value=self._fread(fixture))
-        result = Yap.get_cinema_screenings('561fdfed37753624b592f13f', datetime(2017, 1, 15),
-                                           'moscow')
-        mock_fetch.assert_called_once_with('https://afisha.yandex.ru/api/places/'
-                                           '561fdfed37753624b592f13f/schedule_cinema?'
-                                           'date=2017-01-15&city=moscow')
-        assert len(result) == 12
-        assert set([r['cinema_api_id'] for r in result]) == {'561fdfed37753624b592f13f'}
-        assert set([r['city'] for r in result]) == {'moscow'}
-        assert set([r['date_time'][0:10] for r in result]) == {'2017-01-15'}
-
-        expected = \
-            [{'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': None, 'ticket_api_id': None,
-              'date_time': '2017-01-15T11:15:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': None, 'ticket_api_id': None,
-              'date_time': '2017-01-15T14:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': None, 'ticket_api_id': None,
-              'date_time': '2017-01-15T16:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
-              'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTR8MTQ4NDQ5NDIwMDAwMA==',
-              'date_time': '2017-01-15T18:30:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
-              'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTV8MTQ4NDQ5NjAwMDAwMA==',
-              'date_time': '2017-01-15T19:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
-              'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTR8MTQ4NDUwMzIwMDAwMA==',
-              'date_time': '2017-01-15T21:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
-              'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTV8MTQ4NDUwNTAwMDAwMA==',
-              'date_time': '2017-01-15T21:30:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 450.0,
-              'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTV8MTQ4NDUxMzcwMDAwMA==',
-              'date_time': '2017-01-15T23:55:00'},
-             {'movie_api_id': '581aa06f9c183f11f21b5e13', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 200.0,
-              'ticket_api_id': 'Mjg5fDUxNzk2fDQwOTV8MTQ4NDQ2MTIwMDAwMA==',
-              'date_time': '2017-01-15T09:20:00'},
-             {'movie_api_id': '5852bab76ee3daff5c975610', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 200.0,
-              'ticket_api_id': 'Mjg5fDQ4OTY2fDQwOTR8MTQ4NDQ2MDYwMDAwMA==',
-              'date_time': '2017-01-15T09:10:00'},
-             {'movie_api_id': '5575facfcc1c725c1b9865ee', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 350.0,
-              'ticket_api_id': 'Mjg5fDUwNDMwfDQwOTR8MTQ4NDQ3NTYwMDAwMA==',
-              'date_time': '2017-01-15T13:20:00'},
-             {'movie_api_id': '5575facfcc1c725c1b9865ee', 'city': 'moscow',
-              'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 450.0,
-              'ticket_api_id': 'Mjg5fDUwNDMwfDQwOTR8MTQ4NDUxMjgwMDAwMA==',
-              'date_time': '2017-01-15T23:40:00'}]
-        assert result == expected
 
     def test_get_cinemas(self, mocker):
         with open('tests/fixtures/cinemas/spb/places.xml', 'r') as file:
