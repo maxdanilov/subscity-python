@@ -61,7 +61,6 @@ class YandexAfishaParser(object):
             })
         return result
 
-    # TODO test me
     @staticmethod
     def _get_duration(item: dict) -> Optional[int]:
         duration = item.get('du', [None])[0]
@@ -69,7 +68,6 @@ class YandexAfishaParser(object):
             return None
         return int(duration)
 
-    # TODO test me
     @staticmethod
     def _get_year(item: dict) -> Optional[int]:
         year = item.get('y')
@@ -77,7 +75,6 @@ class YandexAfishaParser(object):
             return None
         return int(year)
 
-    # TODO test me
     @staticmethod
     def _get_kinopoisk_id(item: dict) -> Optional[int]:
         kp_id = item.get('coid', [None])
@@ -146,7 +143,6 @@ class YandexAfishaParser(object):
                         result.append(screening)
         return result
 
-    # TODO test me
     @staticmethod
     def _get_metro(item: dict) -> Optional[str]:
         metro_stations = item.get('mm', {}).get('s', [])

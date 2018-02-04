@@ -43,6 +43,32 @@ class TestYandexAfishaParser(object):
     def test_get_premiere(self, input_, output):
         assert Yap._get_premiere(input_) == output
 
+    @parametrize('input_, output', [({}, None),
+                                    ({'du': [115, 115]}, 115),
+                                    ({'du': [116]}, 116)])
+    def test_get_duration(self, input_, output):
+        assert Yap._get_duration(input_) == output
+
+    @parametrize('input_, output', [({}, None),
+                                    ({'y': '2017'}, 2017),
+                                    ({'y': 2016}, 2016)])
+    def test_get_year(self, input_, output):
+        assert Yap._get_year(input_) == output
+
+    @parametrize('input_, output', [({}, None),
+                                    ({'coid': '5555'}, 5555),
+                                    ({'coid': ['7777', '7777']}, 7777)])
+    def test_get_kinopoisk_id(self, input_, output):
+        assert Yap._get_kinopoisk_id(input_) == output
+
+    @parametrize('input_, output', [
+        ({}, None),
+        ({'mm': {'s': {'#text': 'Арбатская'}}}, 'Арбатская'),
+        ({'mm': {'s': [{'#text': 'Смоленская'}, {'#text': 'Кропоткинская'}]}},
+         'Смоленская, Кропоткинская')])
+    def test_get_metro(self, input_, output):
+        assert Yap._get_metro(input_) == output
+
     def test_get_genre(self):
         assert Yap._get_genre('') == ''
         assert Yap._get_genre('драма') == 'драма'
