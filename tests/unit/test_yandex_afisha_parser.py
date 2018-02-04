@@ -55,6 +55,23 @@ class TestYandexAfishaParser(object):
 
     @parametrize('input_, output', [
         ({}, None),
+        ({'cast': ', '.join(["a{}".format(x) for x in range(20)])},
+         'a0, a1, a2, a3, a4, a5, a6, a7, a8, a9'),
+        ({'cast': 'a1'}, 'a1')
+    ])
+    def test_get_cast(self, input_, output):
+        assert Yap._get_cast(input_) == output
+
+    @parametrize('input_, output', [
+        ({}, None),
+        ({'d': ', '.join(["d{}".format(x) for x in range(20)])}, 'd0, d1, d2, d3, d4'),
+        ({'d': 'd1'}, 'd1')
+    ])
+    def test_get_directors(self, input_, output):
+        assert Yap._get_directors(input_) == output
+
+    @parametrize('input_, output', [
+        ({}, None),
         ({'mm': {'s': {'#text': 'Арбатская'}}}, 'Арбатская'),
         ({'mm': {'s': [{'#text': 'Смоленская'}, {'#text': 'Кропоткинская'}]}},
          'Смоленская, Кропоткинская')])

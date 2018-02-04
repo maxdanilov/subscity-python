@@ -49,7 +49,6 @@ class YandexAfishaParser(object):
             })
         return result
 
-    # TODO test me
     @staticmethod
     def _get_cast(item: dict) -> Optional[str]:
         directors = item.get('cast')
