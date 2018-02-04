@@ -78,6 +78,7 @@ def upgrade_subscity():
                     sa.Column('genres_en', sa.String(length=255), nullable=True),
                     sa.Column('description', sa.Text(), nullable=True),
                     sa.Column('description_en', sa.Text(), nullable=True),
+                    sa.Column('poster_url', sa.String(length=512), nullable=True),
                     sa.Column('premiere', sa.DateTime(), nullable=True),
                     sa.Column('kinopoisk_id', sa.Integer, nullable=True),
                     sa.Column('kinopoisk_rating', sa.Float, nullable=True),

@@ -125,19 +125,16 @@ class TestScripts(object):
         assert mock_cinema_save.call_args_list == [call()] * 4
 
     def test_update_movies(self, mocker):
-        import time
         from subscity.yandex_afisha_parser import YandexAfishaParser
         from subscity.scripts import update_movies
         from subscity.models.movie import Movie
-        mock_sleep = mocker.patch.object(time, 'sleep')
-        mock_get_movie_ids = mocker.patch.object(
-            YandexAfishaParser, 'get_movie_ids',
-            side_effect=[['aaa', 'bbb'], ['ccc', 'ddd', 'aaa']])
-        mock_get_movie = mocker.patch.object(
-            YandexAfishaParser, 'get_movie',
-            side_effect=[{'api_id': 'aaa', 'title': 'one'},
-                         {'api_id': 'bbb', 'title': 'two'},
-                         {'api_id': 'ddd', 'title': 'four'}])
+
+        mock_get_movies = mocker.patch.object(
+            YandexAfishaParser, 'get_movies',
+            side_effect=[[{'api_id': 'aaa', 'title': 'one'}, {'api_id': 'bbb', 'title': 'two'}],
+                         [{'api_id': 'ccc', 'title': 'five'}, {'api_id': 'ddd', 'title': 'four'},
+                          {'api_id': 'aaa', 'title': 'one'}]])
+
         mock_movie_init = mocker.patch.object(Movie, '__init__', return_value=None)
         mock_movie_save = mocker.patch.object(Movie, 'save')
         mock_get_movie_ids_db = mocker.patch.object(Movie, 'get_all_api_ids',
@@ -146,34 +143,29 @@ class TestScripts(object):
 
         update_movies()
 
-        assert mock_get_movie_ids.call_args_list == [call('moscow'), call('saint-petersburg')]
-        assert mock_get_movie.call_args_list == [call('aaa', 'moscow'), call('bbb', 'moscow'),
-                                                 call('ddd', 'saint-petersburg')]
+        assert mock_get_movies.call_args_list == [call('msk'), call('spb')]
         assert mock_movie_init.call_args_list == [call(api_id='aaa', title='one'),
                                                   call(api_id='bbb', title='two'),
                                                   call(api_id='ddd', title='four')]
         assert mock_movie_save.call_args_list == [call()] * 3
-        assert mock_sleep.call_args_list == [call(1.5)] * 3
-        assert mock_get_movie_ids_db.call_args_list ==[call(), call()]
+        assert mock_get_movie_ids_db.call_args_list == [call(), call()]
 
     def test_update_movies_exception(self, mocker):
-        import time
         import traceback
         from subscity.main import DB
         from subscity.yandex_afisha_parser import YandexAfishaParser
         from subscity.scripts import update_movies
         from subscity.models.movie import Movie
-        mock_sleep = mocker.patch.object(time, 'sleep')
-        mock_get_movie_ids = mocker.patch.object(
-            YandexAfishaParser, 'get_movie_ids',
-            side_effect=[['aaa', 'bbb'], ['ccc', 'ddd', 'aaa']])
-        mock_get_movie = mocker.patch.object(
-            YandexAfishaParser, 'get_movie',
-            side_effect=[{'api_id': 'aaa', 'title': 'one'},
-                         ValueError('some error'),
-                         {'api_id': 'ddd', 'title': 'four'}])
+
+        mock_get_movies = mocker.patch.object(
+            YandexAfishaParser, 'get_movies',
+            side_effect=[[{'api_id': 'aaa', 'title': 'one'}, {'api_id': 'bbb', 'title': 'two'}],
+                         [{'api_id': 'ccc', 'title': 'five'}, {'api_id': 'ddd', 'title': 'four'},
+                          {'api_id': 'aaa', 'title': 'one'}]])
+
         mock_movie_init = mocker.patch.object(Movie, '__init__', return_value=None)
-        mock_movie_save = mocker.patch.object(Movie, 'save')
+        mock_movie_save = mocker.patch.object(Movie, 'save',
+                                              side_effect=[None, ValueError('save error'), None])
         mock_get_movie_ids_db = mocker.patch.object(Movie, 'get_all_api_ids',
                                                     side_effect=[['ccc'],
                                                                  ['ccc', 'aaa', 'bbb']])
@@ -182,14 +174,12 @@ class TestScripts(object):
 
         update_movies()
 
-        assert mock_get_movie_ids.call_args_list == [call('moscow'), call('saint-petersburg')]
-        assert mock_get_movie.call_args_list == [call('aaa', 'moscow'), call('bbb', 'moscow'),
-                                                 call('ddd', 'saint-petersburg')]
+        assert mock_get_movies.call_args_list == [call('msk'), call('spb')]
         assert mock_movie_init.call_args_list == [call(api_id='aaa', title='one'),
+                                                  call(api_id='bbb', title='two'),
                                                   call(api_id='ddd', title='four')]
-        assert mock_movie_save.call_args_list == [call()] * 2
-        assert mock_sleep.call_args_list == [call(1.5)] * 3
-        assert mock_get_movie_ids_db.call_args_list ==[call(), call()]
+        assert mock_movie_save.call_args_list == [call()] * 3
+        assert mock_get_movie_ids_db.call_args_list == [call(), call()]
         mock_rollback.assert_called_once_with()
         mock_traceback.assert_called_once_with()
 
@@ -197,12 +187,9 @@ class TestScripts(object):
         from subscity.scripts import update_test_fixtures
         mock_update_cinema_fixtures = mocker.patch('subscity.scripts.update_test_cinema_fixtures')
         mock_update_movie_fixtures = mocker.patch('subscity.scripts.update_test_movie_fixtures')
-        mock_update_movie_details_fixtures = mocker.\
-            patch('subscity.scripts.update_test_movie_details_fixtures')
         update_test_fixtures()
         mock_update_cinema_fixtures.assert_called_once_with()
         mock_update_movie_fixtures.assert_called_once_with()
-        mock_update_movie_details_fixtures.assert_called_once_with()
 
     def test_update_test_cinema_fixtures(self, mocker):
         from subscity.scripts import update_test_cinema_fixtures
@@ -215,56 +202,9 @@ class TestScripts(object):
 
     def test_update_test_movie_fixtures(self, mocker):
         from subscity.scripts import update_test_movie_fixtures
-        from subscity.yandex_afisha_parser import YandexAfishaParser
-        mock_download = mocker.patch('subscity.scripts.download_to_json')
-
-        mock_urls = mocker.patch.object(YandexAfishaParser, 'url_movies',
-                                        side_effect=['url1', 'url2', 'url3', 'url4',
-                                                     'url5', 'url6', 'url7', 'url8',
-                                                     'url9', 'url10', 'url11', 'url12'])
+        mock_move = mocker.patch('shutil.copy2', return_value=None)
         update_test_movie_fixtures()
-        assert mock_urls.call_args_list == [
-            call(city='saint-petersburg', limit=12, offset=0),
-            call(city='saint-petersburg', limit=12, offset=12),
-            call(city='saint-petersburg', limit=12, offset=24),
-            call(city='saint-petersburg', limit=12, offset=36),
-            call(city='saint-petersburg', limit=12, offset=48),
-            call(city='saint-petersburg', limit=12, offset=60),
-            call(city='saint-petersburg', limit=12, offset=72),
-            call(city='saint-petersburg', limit=12, offset=84),
-            call(city='saint-petersburg', limit=12, offset=96),
-            call(city='saint-petersburg', limit=12, offset=108),
-            call(city='saint-petersburg', limit=12, offset=120),
-            call(city='saint-petersburg', limit=12, offset=132)
-        ]
-        assert mock_download.call_args_list == [
-            call('url1', 'tests/fixtures/movies/saint-petersburg/movies-offset000-limit12.json'),
-            call('url2', 'tests/fixtures/movies/saint-petersburg/movies-offset012-limit12.json'),
-            call('url3', 'tests/fixtures/movies/saint-petersburg/movies-offset024-limit12.json'),
-            call('url4', 'tests/fixtures/movies/saint-petersburg/movies-offset036-limit12.json'),
-            call('url5', 'tests/fixtures/movies/saint-petersburg/movies-offset048-limit12.json'),
-            call('url6', 'tests/fixtures/movies/saint-petersburg/movies-offset060-limit12.json'),
-            call('url7', 'tests/fixtures/movies/saint-petersburg/movies-offset072-limit12.json'),
-            call('url8', 'tests/fixtures/movies/saint-petersburg/movies-offset084-limit12.json'),
-            call('url9', 'tests/fixtures/movies/saint-petersburg/movies-offset096-limit12.json'),
-            call('url10', 'tests/fixtures/movies/saint-petersburg/movies-offset108-limit12.json'),
-            call('url11', 'tests/fixtures/movies/saint-petersburg/movies-offset120-limit12.json'),
-            call('url12', 'tests/fixtures/movies/saint-petersburg/movies-offset132-limit12.json')
-        ]
-
-    def test_update_test_movie_details_fixtures(self, mocker):
-        from subscity.scripts import update_test_movie_details_fixtures
-        from subscity.yandex_afisha_parser import YandexAfishaParser
-        mock_download = mocker.patch('subscity.scripts.download_to_json')
-
-        mock_urls = mocker.patch.object(YandexAfishaParser, 'url_movie',
-                                        side_effect=['url1', 'url2'])
-        update_test_movie_details_fixtures()
-        assert mock_urls.call_args_list == [
-            call(api_id='5874ea2a685ae0b186614bb5', city='moscow'),
-            call(api_id='5874ea2a685ae0b186614bb5', city='saint-petersburg')
-        ]
-        assert mock_download.call_args_list == [
-            call('url1', 'tests/fixtures/movies/moscow/5874ea2a685ae0b186614bb5.json'),
-            call('url2', 'tests/fixtures/movies/saint-petersburg/5874ea2a685ae0b186614bb5.json'),
-        ]
+        mock_move.assert_called_once_with(
+            '/tmp/subscity_afisha_files/afisha_files/spb/cinema/events.xml',
+            'tests/fixtures/movies/spb/events.xml'
+        )

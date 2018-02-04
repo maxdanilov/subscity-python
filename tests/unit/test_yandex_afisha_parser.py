@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import os
 
 import pytest
-from mock import call
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 parametrize = pytest.mark.parametrize
@@ -18,24 +18,6 @@ class TestYandexAfishaParser(object):
         result = Yap.url_tickets('cinema_api_id', 'city_name', datetime.datetime(2017, 2, 28))
         assert result == "https://afisha.yandex.ru/places/cinema_api_id?city=city_name" \
                          "&place-schedule-date=2017-02-28"
-
-    @parametrize('limit, offset, city, expected',
-                 [(20, 40, 'moscow',
-                   'https://afisha.yandex.ru/api/events/actual?limit=20&offset=40&'
-                   'tag=cinema&hasMixed=0&city=moscow'),
-                  (11, '42', 'saint-petersburg',
-                   'https://afisha.yandex.ru/api/events/actual?limit=11&offset=42&'
-                   'tag=cinema&hasMixed=0&city=saint-petersburg')])
-    def test_url_movies(self, limit, offset, city, expected):
-        assert Yap.url_movies(limit, offset, city) == expected
-
-    def test_url_movie(self):
-        result = Yap.url_movie('mock_id', 'mock_city')
-        assert result == 'https://afisha.yandex.ru/api/events/mock_id?city=mock_city'
-
-    def test_url_movie_default_city(self):
-        result = Yap.url_movie('mock_id')
-        assert result == 'https://afisha.yandex.ru/api/events/mock_id?city=moscow'
 
     def test_url_cinema_schedule(self):
         from datetime import datetime
@@ -54,76 +36,12 @@ class TestYandexAfishaParser(object):
         assert Yap.fetch('some-url') == 'fake-val'
         mock_url_open.assert_called_once_with('some-url')
 
-    def test_get_countries(self):
-        assert Yap._get_countries(None) is None
-        assert Yap._get_countries([]) is None
-        assert Yap._get_countries(['США', 'Франция']) == 'США, Франция'
-
-    def test_get_age_restriction(self):
-        assert Yap._get_age_restriction(None) is None
-        assert Yap._get_age_restriction('') is None
-        assert Yap._get_age_restriction('None') is None
-        assert Yap._get_age_restriction('NoNe') is None
-        assert Yap._get_age_restriction('0+') == 0
-        assert Yap._get_age_restriction('6+') == 6
-        assert Yap._get_age_restriction('12+') == 12
-        assert Yap._get_age_restriction('16+') == 16
-        assert Yap._get_age_restriction('18+') == 18
-        assert Yap._get_age_restriction('17') == 17
-
-    def test_get_premiere(self):
-        from datetime import datetime
-        assert Yap._get_premiere(None) is None
-        assert Yap._get_premiere('') is None
-        assert Yap._get_premiere('2017-01-12') == datetime(2017, 1, 12)
-
-    def test_get_actors(self):
-        assert Yap._get_actors(None) is None
-        assert Yap._get_actors('') is None
-        assert Yap._get_actors([]) is None
-        assert Yap._get_actors([{'role': 'actor', 'names': []}]) is None
-        assert Yap._get_actors([{'role': 'actor', 'names': ['Чарли Чаплин']}]) == 'Чарли Чаплин'
-        data = [{'role': 'actor',
-                 'names': ['Райан Гослинг', 'Эмма Стоун', 'Финн Уиттрок', 'Дж.К. Симмонс']},
-                {'role': 'director', 'names': ['Дэмьен Шазелл']}]
-        assert Yap._get_actors(data) == 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс'
-
-    def test_get_directors(self):
-        assert Yap._get_directors(None) is None
-        assert Yap._get_directors('') is None
-        assert Yap._get_directors([]) is None
-        assert Yap._get_directors([{'role': 'director', 'names': []}]) is None
-        assert Yap._get_directors([{'role': 'director', 'names': ['Стэнли Кубрик']}]) == \
-            'Стэнли Кубрик'
-        data = [{'role': 'actor',
-                 'names': ['Райан Гослинг', 'Эмма Стоун', 'Финн Уиттрок', 'Дж.К. Симмонс']},
-                {'role': 'director', 'names': ['Дэмьен Шазелл', 'Стэнли Кубрик']}]
-        assert Yap._get_directors(data) == 'Дэмьен Шазелл, Стэнли Кубрик'
-
-    def test_get_kinopoisk_data(self):
-        empty = {'id': None, 'rating': None, 'votes': None}
-        assert Yap._get_kinopoisk_data(None) == empty
-        assert Yap._get_kinopoisk_data({}) == empty
-
-        data = {'url': 'http://kinopoisk.ru/film/841081', 'value': 8.5, 'votes': 42192}
-        assert Yap._get_kinopoisk_data(data) == {'id': 841081,
-                                                 'rating': 8.5,
-                                                 'votes': 42192}
-        data2 = {'url': '//kinopoisk.ru/film/12345', 'value': 7.0, 'votes': 0}
-        assert Yap._get_kinopoisk_data(data2) == {'id': 12345,
-                                                  'rating': 7.0,
-                                                  'votes': 0}
-
-    def test_get_original_genre(self):
-        assert Yap._get_original_genre('') == ''
-        assert Yap._get_original_genre('drama') == 'Drama'
-        assert Yap._get_original_genre('musical_film') == 'Musical'
-        assert Yap._get_original_genre('art_film') == 'Indie'
-        assert Yap._get_original_genre('biographic') == 'Biography'
-        assert Yap._get_original_genre('family_movie') == 'Family'
-        assert Yap._get_original_genre('film_noir') == 'Noir'
-        assert Yap._get_original_genre('mysticism') == 'Mystery'
-        assert Yap._get_original_genre('short_film') == 'Short'
+    @parametrize('input_, output', [({}, None),
+                                    ({'release_date': ''}, None),
+                                    ({'release_date': '2018-01-12 00:00:00'},
+                                     datetime(2018, 1, 12))])
+    def test_get_premiere(self, input_, output):
+        assert Yap._get_premiere(input_) == output
 
     def test_get_genre(self):
         assert Yap._get_genre('') == ''
@@ -135,74 +53,60 @@ class TestYandexAfishaParser(object):
         assert Yap._get_genre('семейное кино') == 'семейный'
         assert Yap._get_genre('фильм-нуар') == 'нуар'
 
-    def test_get_genres(self):
-        empty = {'russian': None, 'original': None}
-        assert Yap._get_genres(None) == empty
-        assert Yap._get_genres([]) == empty
-        data = [{'id': '57272d9c10048dda13c470ba', 'code': 'musical_film', 'type': 'genre',
-                 'status': 'approved', 'name': 'музыкальный', 'plural': None,
-                 'nameCases': {'acc': None, 'gen': None}},
-                {'id': '57d2843efc8131fcefa33f9f', 'code': 'drama', 'type': 'genre',
-                 'status': 'approved', 'name': 'драма', 'plural': None,
-                 'nameCases': {'acc': None, 'gen': None}},
-                {'id': '5575d413cc1c724f5a8e10f6', 'code': 'family', 'type': 'genre',
-                 'status': 'approved', 'name': 'семейное кино', 'plural': None,
-                 'nameCases': {'acc': None, 'gen': None}},
-                {'id': '57d28482377536932cfc4c2e', 'code': 'comedy', 'type': 'genre',
-                 'status': 'approved', 'name': 'комедия', 'plural': None,
-                 'nameCases': {'acc': None, 'gen': None}},
-                {'id': '5591526f37753645b7d7a5ed', 'code': 'cinema', 'type': 'format',
-                 'status': 'approved', 'name': 'кино', 'plural': {'one': 'кино', 'some': 'фильма',
-                                                                  'many': 'фильмов', 'none': None},
-                 'nameCases': {'acc': 'в кинотеатрах', 'gen': None}}]
-        assert Yap._get_genres(data) == {'original': 'Musical, Drama, Family, Comedy',
-                                         'russian': 'музыкальный, драма, семейный, комедия'}
+    @parametrize('input_, output',
+                 [({}, None),
+                  ({'g': None}, None),
+                  ({'g': 'авторское кино, драма, фильм-нуар'}, 'артхаус, драма, нуар')])
+    def test_get_genres(self, input_, output):
+        assert Yap._get_genres(input_) == output
 
-    @parametrize('city', ['moscow', 'saint-petersburg'])
-    def test_get_movie(self, city, mocker):
+    @parametrize('city', ['spb'])
+    def test_get_movies(self, city, mocker):
         from datetime import datetime
-        api_id = '5874ea2a685ae0b186614bb5'
-        fixture = '../fixtures/movies/{}/{}.json'.format(city, api_id)
-        mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
-                                  return_value=self._fread(fixture))
-        result = Yap.get_movie(api_id, city)
-        mock_fetch.assert_called_once_with('https://afisha.yandex.ru/api/events/'
-                                           '{}?city={}'.format(api_id, city))
+        fixture = '../../tests/fixtures/movies/{city}/events.xml'.format(city=city)
+        mock_read = mocker.patch('subscity.yandex_afisha_parser.read_file',
+                                 return_value=self._fread(fixture))
+        result = Yap.get_movies(city)
+        mock_read.assert_called_once_with('/tmp/subscity_afisha_files/afisha_files/'
+                                          '{city}/cinema/events.xml'.format(city=city))
 
+        assert len(result) == 151
         expected = {
-            'api_id': '5874ea2a685ae0b186614bb5',
-            'title': 'Ла-Ла Ленд',
-            'title_en': 'La La Land',
-            'genres': 'музыкальный, драма, мелодрама, комедия',
-            'genres_en': 'Musical, Drama, Romance, Comedy',
-            'countries': 'США',
-            'cast': 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс, Соноя Мидзуно',
-            'directors': 'Дэмьен Шазелл',
-            'description': 'Это история любви старлетки, которая между прослушиваниями '
-                           'подаёт кофе состоявшимся кинозвёздам, и фанатичного джазового '
-                           'музыканта, вынужденного подрабатывать в заштатных барах. Но '
-                           'пришедший к влюблённым успех начинает подтачивать их '
-                           'отношения.\n'
-                           'Семь наград «Золотой глобус» (2017): за лучший фильм (комедия '
-                           'или мюзикл), режиссуру, сценарий, лучшему актёру и актрисе '
-                           '(комедия или мюзикл), музыку к фильму, а также песню\n'
-                           'Кубок Вольпи Венецианского кинофестиваля (2016) за лучшую '
-                           'женскую роль, номинация на «Золотого льва»\n'
-                           'Приз зрительских симпатий '
-                           'международного кинофестиваля в Торонто (2016)\n'
-                           'Приз Гильдии режиссёров США (2017) за выдающиеся режиссёрские '
-                           'достижения в художественном фильме\n'
-                           'Приз Гильдии продюсеров США.\n'
-                           '14 номинаций на премию «Оскар» (2017)',
-            'year': 2016,
-            'duration': 128,
-            'age_restriction': 16,
-            'premiere': datetime(2017, 1, 12),
-            'kinopoisk_id': 841081,
-            'kinopoisk_rating': 8.4,  # is most likely to change when updating test fixtures
-            'kinopoisk_votes': 57447,  # is most likely to change when updating test fixtures
+            'api_id': '56f38372cc1c7224437a4ecc',
+            'cast': 'Фрэнсис МакДорманд, Вуди Харрельсон, Сэм Рокуэлл, Джон Хоукс, Питер '
+                    'Динклэйдж, Калеб Лэндри Джонс, Лукас Хеджес, Эбби Корниш, Керри '
+                    'Кондон, Даррел Бритт-Гибсон',
+            'countries': 'Великобритания, США',
+            'description': 'Спустя несколько месяцев после убийства дочери Милдред Хейс '
+                           'преступники так и не найдены. Отчаявшаяся женщина решается на '
+                           'смелый шаг, арендуя на въезде в город три биллборда с '
+                           'посланием к авторитетному главе полиции Уильяму Уиллоуби. '
+                           'Когда в ситуацию оказывается втянут еще и заместитель шерифа, '
+                           'инфантильный маменькин сынок со склонностью к насилию, офицер '
+                           'Диксон, борьба между Милдред и властями города только '
+                           'усугубляется.\n'
+                           '\n'
+                           'Премия Голливудской ассоциации иностранной прессы «Золотой '
+                           'глобус» (2017) в категориях «Лучший фильм — драма», «Лучшая '
+                           'актриса в драматическом фильме» (Фрэнсис Макдорманд), «Лучший '
+                           'актёр второго плана» (Сэм Рокуэлл), «Лучший сценарий» (Мартин '
+                           'Макдона), номинация на премию за режиссуру и музыку. Премия '
+                           'Ассоциации кинокритиков США (2018) в категории «Лучшая '
+                           'актриса» (Фрэнсис Макдорманд), актёру второго плана (Сэм '
+                           'Рокуэлл) и за актёрский ансамбль. Номинация на премию Гильдии '
+                           'продюсеров США (2018) в категории «Лучший фильм».',
+            'directors': 'Мартин МакДона',
+            'duration': 115,
+            'genres': 'драма, комедия, артхаус',
+            'kinopoisk_id': 944098,
+            'poster_url': 'https://avatars.mds.yandex.net/get-afishanew/28638/'
+                          'b2823c79fe50ed1ca28cff7abea46f46/orig',
+            'premiere': datetime(2018, 2, 1, 0, 0),
+            'title': 'Три билборда на границе Эббинга, Миссури',
+            'title_en': 'Three Billboards Outside Ebbing, Missouri',
+            'year': 2017
         }
-        assert result == expected
+        assert result[11] == expected
 
     def test_get_cinema_screenings(self, mocker):
         from datetime import datetime
@@ -266,55 +170,6 @@ class TestYandexAfishaParser(object):
               'ticket_api_id': 'Mjg5fDUwNDMwfDQwOTR8MTQ4NDUxMjgwMDAwMA==',
               'date_time': '2017-01-15T23:40:00'}]
         assert result == expected
-
-    def test_get_movie_ids(self, mocker):
-        fixtures_path = '../fixtures/movies/saint-petersburg/'
-        mock_fetch = mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
-                                  side_effect=[
-                                      self._fread(fixtures_path + 'movies-offset000-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset012-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset024-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset036-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset048-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset060-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset072-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset084-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset096-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset108-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset120-limit12.json'),
-                                      self._fread(fixtures_path + 'movies-offset132-limit12.json')])
-        result = Yap.get_movie_ids('saint-petersburg')
-        assert mock_fetch.call_count == 12
-        mock_fetch.assert_has_calls(
-            [call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=0&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=12&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=24&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=36&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=48&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=60&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=72&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=84&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=96&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=108&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=120&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             call('https://afisha.yandex.ru/api/events/actual?limit=12&'
-                  'offset=132&tag=cinema&hasMixed=0&city=saint-petersburg'),
-             ])
-
-        assert len(result) == 143
-        assert result[0] == '568649999c183f73c002830c'
-        assert result[132] == '58a06162cc1c7216b30c992a'
 
     def test_get_cinemas(self, mocker):
         with open('tests/fixtures/cinemas/spb/places.xml', 'r') as file:

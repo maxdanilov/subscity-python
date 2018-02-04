@@ -55,7 +55,6 @@ class TestMovie(object):
                   updated_at=datetime.datetime(2017, 1, 1))
         assert m.to_dict() == {'api_id': 'deadbeef',
                                'age_restriction': None,
-                               'api_id': 'deadbeef',
                                'cast': None,
                                'cast_en': None,
                                'countries': 'Франция',
@@ -78,6 +77,7 @@ class TestMovie(object):
                                'kinopoisk_votes': None,
                                'languages': None,
                                'languages_en': None,
+                               'poster_url': None,
                                'premiere': None,
                                'title': 'Название',
                                'title_en': 'Title',
@@ -147,10 +147,10 @@ class TestMovie(object):
     def test_parse_and_create(self, mocker, dbsession):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
-        fixture = 'fixtures/movies/moscow/5874ea2a685ae0b186614bb5.json'
-        mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
-                     return_value=fread(fixture))
-        result = Yap.get_movie('561fdfed37753624b592f13f', 'moscow')
+        fixture = 'fixtures/movies/spb/events.xml'
+        mock_read_file = mocker.patch('subscity.yandex_afisha_parser.read_file',
+                                      return_value=fread(fixture))
+        result = Yap.get_movies('spb')[11]
         m = Movie(**result)
         m.save()
 
@@ -161,50 +161,59 @@ class TestMovie(object):
         created_at = dict_.pop('created_at')
         updated_at = dict_.pop('updated_at')
         assert updated_at > created_at
-        expected = {'api_id': '5874ea2a685ae0b186614bb5',
-                    'age_restriction': 16,
-                    'cast': 'Райан Гослинг, Эмма Стоун, Финн Уиттрок, Дж.К. Симмонс, '
-                            'Соноя Мидзуно',
-                    'cast_en': None,
-                    'countries': 'США',
-                    'countries_en': None,
-                    'description': 'Это история любви старлетки, которая между прослушиваниями '
-                                   'подаёт кофе состоявшимся кинозвёздам, и фанатичного джазового '
-                                   'музыканта, вынужденного подрабатывать в заштатных барах. Но '
-                                   'пришедший к влюблённым успех начинает подтачивать их '
-                                   'отношения.\n'
-                                   'Семь наград «Золотой глобус» (2017): за лучший фильм (комедия '
-                                   'или мюзикл), режиссуру, сценарий, лучшему актёру и актрисе '
-                                   '(комедия или мюзикл), музыку к фильму, а также песню\n'
-                                   'Кубок Вольпи Венецианского кинофестиваля (2016) за лучшую '
-                                   'женскую роль, номинация на «Золотого льва»\n'
-                                   'Приз зрительских симпатий '
-                                   'международного кинофестиваля в Торонто (2016)\n'
-                                   'Приз Гильдии режиссёров США (2017) за выдающиеся режиссёрские '
-                                   'достижения в художественном фильме\n'
-                                   'Приз Гильдии продюсеров США.\n'
-                                   '14 номинаций на премию «Оскар» (2017)',
-                    'description_en': None,
-                    'directors': 'Дэмьен Шазелл',
-                    'directors_en': None,
-                    'duration': 128,
-                    'genres': 'музыкальный, драма, мелодрама, комедия',
-                    'genres_en': 'Musical, Drama, Romance, Comedy',
-                    'hide': False,
-                    'id': m.id,
-                    'imdb_id': None,
-                    'imdb_rating': None,
-                    'imdb_votes': None,
-                    'kinopoisk_id': 841081,
-                    'kinopoisk_rating': 8.4,   # most likely to change when updating test fixtures
-                    'kinopoisk_votes': 57447,  # most likely to change when updating test fixtures
-                    'languages': None,
-                    'languages_en': None,
-                    'premiere': '2017-01-12T00:00:00',
-                    'title': 'Ла-Ла Ленд',
-                    'title_en': 'La La Land',
-                    'year': 2016}
+        expected = {
+            'api_id': '56f38372cc1c7224437a4ecc',
+            'age_restriction': None,
+            'cast': 'Фрэнсис МакДорманд, Вуди Харрельсон, Сэм Рокуэлл, Джон Хоукс, Питер '
+                    'Динклэйдж, Калеб Лэндри Джонс, Лукас Хеджес, Эбби Корниш, Керри '
+                    'Кондон, Даррел Бритт-Гибсон',
+            'cast_en': None,
+            'countries': 'Великобритания, США',
+            'countries_en': None,
+            'description': 'Спустя несколько месяцев после убийства дочери Милдред Хейс '
+                           'преступники так и не найдены. Отчаявшаяся женщина решается на '
+                           'смелый шаг, арендуя на въезде в город три биллборда с '
+                           'посланием к авторитетному главе полиции Уильяму Уиллоуби. '
+                           'Когда в ситуацию оказывается втянут еще и заместитель шерифа, '
+                           'инфантильный маменькин сынок со склонностью к насилию, офицер '
+                           'Диксон, борьба между Милдред и властями города только '
+                           'усугубляется.\n'
+                           '\n'
+                           'Премия Голливудской ассоциации иностранной прессы «Золотой '
+                           'глобус» (2017) в категориях «Лучший фильм — драма», «Лучшая '
+                           'актриса в драматическом фильме» (Фрэнсис Макдорманд), «Лучший '
+                           'актёр второго плана» (Сэм Рокуэлл), «Лучший сценарий» (Мартин '
+                           'Макдона), номинация на премию за режиссуру и музыку. Премия '
+                           'Ассоциации кинокритиков США (2018) в категории «Лучшая '
+                           'актриса» (Фрэнсис Макдорманд), актёру второго плана (Сэм '
+                           'Рокуэлл) и за актёрский ансамбль. Номинация на премию Гильдии '
+                           'продюсеров США (2018) в категории «Лучший фильм».',
+            'description_en': None,
+            'directors': 'Мартин МакДона',
+            'directors_en': None,
+            'duration': 115,
+            'genres': 'драма, комедия, артхаус',
+            'genres_en': None,
+            'hide': False,
+            'id': m.id,
+            'imdb_id': None,
+            'imdb_rating': None,
+            'imdb_votes': None,
+            'kinopoisk_id': 944098,
+            'kinopoisk_rating': None,
+            'kinopoisk_votes': None,
+            'languages': None,
+            'languages_en': None,
+            'poster_url': 'https://avatars.mds.yandex.net/get-afishanew/28638/'
+                          'b2823c79fe50ed1ca28cff7abea46f46/orig',
+            'premiere': '2018-02-01T00:00:00',
+            'title': 'Три билборда на границе Эббинга, Миссури',
+            'title_en': 'Three Billboards Outside Ebbing, Missouri',
+            'year': 2017
+        }
         assert dict_ == expected
+        mock_read_file.assert_called_once_with('/tmp/subscity_afisha_files/'
+                                               'afisha_files/spb/cinema/events.xml')
 
     def test_get_by_api_ids(self, dbsession):
         m1 = Movie(api_id='fake_movie1', title='cinema1')

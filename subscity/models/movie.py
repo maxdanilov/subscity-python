@@ -42,6 +42,7 @@ class Movie(Base):  # pylint: disable=no-init
     description = Column(Text())
     description_en = Column(Text())
 
+    poster_url = Column(String(512))
     premiere = Column(DateTime)
 
     kinopoisk_id = Column(Integer)

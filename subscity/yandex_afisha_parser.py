@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
-from typing import List, Dict, Union
+from typing import List, Dict, Optional
 import json
-import re
 import urllib.request
 
 import xmltodict
 
-from subscity.utils import html_to_text, read_file
+from subscity.utils import read_file
 
 
 class YandexAfishaParser(object):
@@ -33,86 +32,60 @@ class YandexAfishaParser(object):
             format(cls.BASE_URL, cinema_api_id, city, day.strftime("%Y-%m-%d"))
 
     @classmethod
-    def url_movie(cls, api_id: str, city: str = 'moscow') -> str:
-        url = cls.BASE_URL_API
-        url += 'events/{}?city={}'.format(api_id, city)
-        return url
-
-    @classmethod
-    def url_movies(cls, limit: int, offset: int, city: str) -> str:
-        url = cls.BASE_URL_API
-        url += 'events/actual?limit={}&offset={}&tag=cinema&hasMixed=0&city={}'. \
-            format(limit, offset, city)
-        return url
-
-    @classmethod
     def url_cinema_schedule(cls, api_id: str, date: datetime, city: str) -> str:
         url = cls.BASE_URL_API
         date = date.strftime("%Y-%m-%d")
         url += 'places/{}/schedule_cinema?date={}&city={}'.format(api_id, date, city)
         return url
 
-    # TODO replace me with get_movies
     @classmethod
-    def get_movie_ids(cls, city: str) -> List[str]:
-        offset = 0
-        limit = 12
-        total = limit
+    def get_movies(cls, city_abbr: str) -> List[Dict]:
         result = []
-        while offset < total:
-            url = cls.url_movies(limit=limit, offset=offset, city=city)
-            contents = cls.fetch(url)
-            data = json.loads(contents)
-            total = data['paging']['total']
-            for data in data['data']:
-                id_ = data['event']['id']
-                if id_ not in result:
-                    result.append(id_)
-            offset += limit
+        file = '{}/afisha_files/{}/cinema/events.xml'.format(cls.LOCAL_BASE_STORAGE, city_abbr)
+        parsed = xmltodict.parse(read_file(file))
+        for item in parsed['events']['event']:
+            result.append({
+                'api_id': item['e'],
+                'cast': item.get('cast'),
+                'countries': item.get('ct'),
+                'description': item.get('description'),
+                'directors': item.get('d'),
+                'duration': cls._get_duration(item),
+                'genres': cls._get_genres(item),
+                'kinopoisk_id': cls._get_kinopoisk_id(item),
+                'poster_url': item.get('cover'),
+                'premiere': cls._get_premiere(item),
+                'title': item.get('t'),
+                'title_en': item.get('or'),
+                'year': cls._get_year(item)
+            })
         return result
 
-    # TODO replace me with get_movies
-    @classmethod
-    def get_movie(cls, api_id: str, city: str = 'moscow') -> Dict:
-        url = cls.url_movie(api_id, city)
-        content = cls.fetch(url)
-        data = json.loads(content)
-        movie = data['event']['data']
-        kinopoisk_data = cls._get_kinopoisk_data(movie['kinopoisk'])
-        genres_data = cls._get_genres(movie['tags'])
-
-        return {
-            'api_id': movie.get('id'),
-            'title': movie.get('title'),
-            'title_en': movie.get('originalTitle'),
-            'description': movie.get('description') or html_to_text(movie.get('descriptionHtml')),
-            'genres': genres_data.get('russian'),
-            'genres_en': genres_data.get('original'),
-            'countries': cls._get_countries(movie.get('countries')),
-            'cast': cls._get_actors(movie.get('persons')),
-            'directors': cls._get_directors(movie.get('persons')),
-            'year': movie.get('year'),
-            'duration': movie.get('duration'),
-            'age_restriction': cls._get_age_restriction(movie.get('contentRating')),
-            'premiere': cls._get_premiere(movie.get('dateReleased')),
-            'kinopoisk_id': kinopoisk_data['id'],
-            'kinopoisk_votes': kinopoisk_data['votes'],
-            'kinopoisk_rating': kinopoisk_data['rating']
-        }
-
+    # TODO test me
     @staticmethod
-    def _get_original_genre(code: str) -> str:
-        map_code_genre = {'musical_film': 'musical',
-                          'art_film': 'indie',
-                          'biographic': 'biography',
-                          'family_movie': 'family',
-                          'film_noir': 'noir',
-                          'mysticism': 'mystery',
-                          'short_film': 'short'}
-        name = code
-        if code in map_code_genre:
-            name = map_code_genre[code]
-        return name.title()
+    def _get_duration(item: dict) -> Optional[int]:
+        duration = item.get('du', [None])[0]
+        if not duration:
+            return None
+        return int(duration)
+
+    # TODO test me
+    @staticmethod
+    def _get_year(item: dict) -> Optional[int]:
+        year = item.get('y')
+        if not year:
+            return None
+        return int(year)
+
+    # TODO test me
+    @staticmethod
+    def _get_kinopoisk_id(item: dict) -> Optional[int]:
+        kp_id = item.get('coid', [None])
+        if not isinstance(kp_id, list):
+            kp_id = [kp_id]
+        if kp_id == [None]:
+            return None
+        return int(kp_id[0])
 
     @staticmethod
     def _get_genre(name: str) -> str:
@@ -127,56 +100,19 @@ class YandexAfishaParser(object):
         return name
 
     @classmethod
-    def _get_genres(cls, tags: Union[List]) -> Dict:
-        names = [cls._get_genre(t['name']) for t in (tags or []) if t['type'] == 'genre']
-        codes = [cls._get_original_genre(t['code']) for t in (tags or []) if t['type'] == 'genre']
-
-        return {'russian': ', '.join(names) or None,
-                'original': ', '.join(codes) or None}
-
-    @staticmethod
-    def _get_kinopoisk_data(data: Union[Dict]) -> Dict:
-        if not data:
-            return {'id': None, 'rating': None, 'votes': None}
-        id_ = int(re.sub(r'\D', '', data['url']))
-        rating = data['value']
-        votes = data['votes']
-        return {'id': id_, 'rating': rating, 'votes': votes}
+    def _get_genres(cls, item: dict) -> Optional[str]:
+        genres_str = item.get('g')
+        if not genres_str:
+            return None
+        genres = genres_str.split(', ')
+        return ', '.join([cls._get_genre(g) for g in genres])
 
     @staticmethod
-    def _get_actors(data: Union[List]) -> Union[str]:
-        actors = []
-        for item in data or []:
-            if item['role'] == 'actor':
-                actors.extend(item['names'])
-        actors = ', '.join(actors) or None
-        return actors
-
-    @staticmethod
-    def _get_directors(data: Union[List]) -> Union[str]:
-        directors = []
-        for item in data or []:
-            if item['role'] == 'director':
-                directors.extend(item['names'])
-        return ', '.join(directors) or None
-
-    @staticmethod
-    def _get_premiere(date: Union[str]) -> Union[str]:
+    def _get_premiere(item: dict) -> Optional[datetime]:
+        date = item.get('release_date')
         if not date:
             return None
-        return datetime.strptime(date, '%Y-%m-%d')
-
-    @staticmethod
-    def _get_countries(countries: Union[List]) -> Union[str]:
-        if not countries:
-            return None
-        return ', '.join(countries)
-
-    @staticmethod
-    def _get_age_restriction(rating: Union[str]) -> Union[int]:
-        if not rating or rating.lower() == 'none':
-            return None
-        return int(rating.replace('+', ''))
+        return datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
 
     # TODO replace me
     @classmethod
@@ -210,23 +146,28 @@ class YandexAfishaParser(object):
                         result.append(screening)
         return result
 
+    # TODO test me
+    @staticmethod
+    def _get_metro(item: dict) -> Optional[str]:
+        metro_stations = item.get('mm', {}).get('s', [])
+        if not isinstance(metro_stations, list):
+            metro_stations = [metro_stations]
+        metro = ', '.join([x['#text'] for x in metro_stations])
+        metro = metro if metro else None
+        return metro
+
     @classmethod
     def get_cinemas(cls, city_abbr: str) -> List[Dict]:
         result = []
         file = '{}/afisha_files/{}/cinema/places.xml'.format(cls.LOCAL_BASE_STORAGE, city_abbr)
         parsed = xmltodict.parse(read_file(file))
         for item in parsed['places']['place']:
-            metro_stations = item.get('mm', {}).get('s', [])
-            if not isinstance(metro_stations, list):
-                metro_stations = [metro_stations]
-            metro = ', '.join([x['#text'] for x in metro_stations])
-            metro = metro if metro else None
             result.append({'api_id': item['p'],
                            'name': item['t'],
-                           'address': item['a'],
-                           'phone': item['is'],
+                           'address': item.get('a'),
+                           'phone': item.get('is'),
                            'url': item.get('w'),
-                           'metro': metro,
+                           'metro': cls._get_metro(item),
                            'city': city_abbr,
                            'latitude': float(item['lat']),
                            'longitude': float(item['lon'])})
