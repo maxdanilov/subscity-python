@@ -145,7 +145,8 @@ class YandexAfishaParser(object):
                             'ticket_api_id': screening.get('@bilet_id'),
                             'city': city,
                             'price_min': cls._get_screening_price(screening),
-                            'date_time': cls._get_screening_time(screening)})
+                            'date_time': cls._get_screening_time(screening),
+                            'source': 'yandex'})
         return result
 
     # TODO replace me

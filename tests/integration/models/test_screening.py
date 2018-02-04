@@ -56,6 +56,7 @@ class TestModelScreening(object):
             'city': 'moscow',
             'date_time':  datetime(2017, 1, 1, 9, 0),
             'price_min': 400,
+            'source': None,
             'created_at': screening.created_at,
             'updated_at': screening.updated_at
         }
@@ -158,6 +159,7 @@ class TestModelScreening(object):
                          'id': sc1.id,
                          'movie_api_id': '5874ea2a685ae0b186614bb5',
                          'price_min': None,
+                         'source': None,
                          'ticket_api_id': None}
         assert dict2_ == {'cinema_api_id': '561fdfed37753624b592f13f',
                           'city': 'moscow',
@@ -165,6 +167,7 @@ class TestModelScreening(object):
                           'id': sc2.id,
                           'movie_api_id': '5874ea2a685ae0b186614bb5',
                           'price_min': None,
+                          'source': None,
                           'ticket_api_id': None}
 
     def test_get_for_movie_empty(self, dbsession):
