@@ -64,3 +64,8 @@ def html_to_text(data: str) -> str:
         text = soup.get_text(separator='\n')
         text = text.replace('& \n', '& ')  # for some reason, BS adds a line break after &amp;
         return text
+
+
+def read_file(filename: str) -> str:
+    with open(filename, 'r') as file:
+        return file.read()

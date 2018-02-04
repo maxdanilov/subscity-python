@@ -6,12 +6,15 @@ import json
 import re
 import urllib.request
 
-from subscity.utils import html_to_text
+import xmltodict
+
+from subscity.utils import html_to_text, read_file
 
 
 class YandexAfishaParser(object):
     LOCAL_BASE_STORAGE = '/tmp/subscity_afisha_files'
     CITIES = ('moscow', 'saint-petersburg')
+    CITIES_ABBR = ('msk', 'spb')
     BASE_URL = 'https://afisha.yandex.ru'
     BASE_URL_API = '{}/api/'.format(BASE_URL)
     SKIPPED_GENRES = set([x.lower() for x in ['TheatreHD']])
@@ -210,6 +213,30 @@ class YandexAfishaParser(object):
                         result.append(screening)
         return result
 
+    # TODO test me
+    @classmethod
+    def get_cinemas2(cls, city_abbr: str) -> List[Dict]:
+        result = []
+        file = '{}/afisha_files/{}/cinema/places.xml'.format(cls.LOCAL_BASE_STORAGE, city_abbr)
+        parsed = xmltodict.parse(read_file(file))
+        for item in parsed['places']['place']:
+            metro_stations = item.get('mm', {}).get('s', [])
+            if not isinstance(metro_stations, list):
+                metro_stations = [metro_stations]
+            metro = ', '.join([x['#text'] for x in metro_stations])
+            metro = metro if metro else None
+            result.append({'api_id': item['p'],
+                           'name': item['t'],
+                           'address': item['a'],
+                           'phone': item['is'],
+                           'url': item.get('w'),
+                           'metro': metro,
+                           'city': city_abbr,
+                           'latitude': float(item['lat']),
+                           'longitude': float(item['lon'])})
+        return result
+
+    # TODO remove me
     @classmethod
     def get_cinemas(cls, city: str) -> List[Dict]:
         result = []
