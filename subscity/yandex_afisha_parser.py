@@ -33,7 +33,7 @@ class YandexAfishaParser(object):
             format(cls.BASE_URL, cinema_api_id, city, day.strftime("%Y-%m-%d"))
 
     @classmethod
-    def url_movie(cls, api_id: str, city: str='moscow') -> str:
+    def url_movie(cls, api_id: str, city: str = 'moscow') -> str:
         url = cls.BASE_URL_API
         url += 'events/{}?city={}'.format(api_id, city)
         return url
@@ -43,12 +43,6 @@ class YandexAfishaParser(object):
         url = cls.BASE_URL_API
         url += 'events/actual?limit={}&offset={}&tag=cinema&hasMixed=0&city={}'. \
             format(limit, offset, city)
-        return url
-
-    @classmethod
-    def url_cinemas(cls, limit: int, offset: int, city: str) -> str:
-        url = cls.BASE_URL_API
-        url += 'events/cinema/places?limit={}&offset={}&city={}'.format(limit, offset, city)
         return url
 
     @classmethod
@@ -77,7 +71,7 @@ class YandexAfishaParser(object):
         return result
 
     @classmethod
-    def get_movie(cls, api_id: str, city: str='moscow') -> Dict:
+    def get_movie(cls, api_id: str, city: str = 'moscow') -> Dict:
         url = cls.url_movie(api_id, city)
         content = cls.fetch(url)
         data = json.loads(content)
@@ -215,7 +209,7 @@ class YandexAfishaParser(object):
 
     # TODO test me
     @classmethod
-    def get_cinemas2(cls, city_abbr: str) -> List[Dict]:
+    def get_cinemas(cls, city_abbr: str) -> List[Dict]:
         result = []
         file = '{}/afisha_files/{}/cinema/places.xml'.format(cls.LOCAL_BASE_STORAGE, city_abbr)
         parsed = xmltodict.parse(read_file(file))
@@ -234,31 +228,4 @@ class YandexAfishaParser(object):
                            'city': city_abbr,
                            'latitude': float(item['lat']),
                            'longitude': float(item['lon'])})
-        return result
-
-    # TODO remove me
-    @classmethod
-    def get_cinemas(cls, city: str) -> List[Dict]:
-        result = []
-        offset = 0
-        limit = 20
-        total = limit
-
-        while offset < total:
-            url = cls.url_cinemas(limit=limit, offset=offset, city=city)
-            contents = cls.fetch(url)
-            data = json.loads(contents)
-            total = data['paging']['total']
-            for data in data['items']:
-                metro = ', '.join([station['name'] for station in data['metro']])
-                result.append({'api_id': data['id'],
-                               'name': data['title'],
-                               'address': data['address'],
-                               'phone': ', '.join(sum([x['numbers'] for x in data['phones']], [])),
-                               'url': ', '.join(data['links']),
-                               'metro': metro,
-                               'city': city,
-                               'latitude': data['coordinates']['latitude'],
-                               'longitude': data['coordinates']['longitude']})
-            offset += limit
         return result

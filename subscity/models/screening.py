@@ -80,8 +80,8 @@ class Screening(Base):  # pylint: disable=no-init
         return query.all()
 
     @staticmethod
-    def get(cinema_api_id: str=None, movie_api_id: str=None, start_day: datetime=None,
-            end_day: datetime=None, city: str=None) -> List:
+    def get(cinema_api_id: str = None, movie_api_id: str = None, start_day: datetime = None,
+            end_day: datetime = None, city: str = None) -> List:
         query = DB.session.query(Screening)
         query = query.filter(Screening.cinema_api_id == cinema_api_id if cinema_api_id else True)
         query = query.filter(Screening.movie_api_id == movie_api_id if movie_api_id else True)
@@ -119,8 +119,8 @@ class Screening(Base):  # pylint: disable=no-init
         return query.all()
 
     @staticmethod
-    def clean(cinema_api_id: str=None, movie_api_id: str=None, start_day: datetime=None,
-              end_day: datetime=None, city: str=None) -> int:
+    def clean(cinema_api_id: str = None, movie_api_id: str = None, start_day: datetime = None,
+              end_day: datetime = None, city: str = None) -> int:
         screenings = Screening.get(cinema_api_id, movie_api_id, start_day, end_day, city)
         for screening in screenings:
             screening.delete()

@@ -260,16 +260,18 @@ class TestModelCinema(object):
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
         from subscity.models.cinema import Cinema
 
-        fixtures_path = '../../fixtures/cinemas/saint-petersburg/'
-        mocker.patch('subscity.yandex_afisha_parser.YandexAfishaParser.fetch',
-                     side_effect=[
-                         self._fread(fixtures_path + 'cinemas-offset00-limit20.json'),
-                         self._fread(fixtures_path + 'cinemas-offset20-limit20.json'),
-                         self._fread(fixtures_path + 'cinemas-offset40-limit20.json'),
-                         self._fread(fixtures_path + 'cinemas-offset60-limit20.json')])
-        result = Yap.get_cinemas('saint-petersburg')
-        cinema = Cinema(**result[37])
+        with open('tests/fixtures/cinemas/spb/places.xml', 'r') as file:
+            fixture_contents = file.read()
+
+        mock_read_file = mocker.patch('subscity.yandex_afisha_parser.read_file')
+        mock_read_file.return_value = fixture_contents
+
+        result = Yap.get_cinemas('spb')
+        cinema = Cinema(**result[57])
         cinema.create_or_update()
+
+        mock_read_file.assert_called_once_with('/tmp/subscity_afisha_files/afisha_files'
+                                               '/spb/cinema/places.xml')
 
         dbresult = dbsession.query(Cinema).all()
         assert len(dbresult) == 1
@@ -285,7 +287,7 @@ class TestModelCinema(object):
             'phone': u'+7 (812) 494-59-90, +7 (981) 870-77-57',
             'url': u'http://www.angleterrecinema.ru',
             'metro': u'Адмиралтейская, Садовая, Сенная площадь',
-            'city': u'saint-petersburg',
+            'city': u'spb',
             'latitude': 59.933946,
             'longitude': 30.308878,
             'fetch_all': False

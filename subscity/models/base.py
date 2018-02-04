@@ -14,7 +14,7 @@ DB = SQLAlchemy(APP)
 class Base(DB.Model):  # pylint:disable=no-init
     __abstract__ = True
 
-    def to_dict(self, stringify_datetime: bool=True) -> dict:
+    def to_dict(self, stringify_datetime: bool = True) -> dict:
         result = {}
         for column in self.__table__.columns:
             name = column.name
@@ -29,7 +29,7 @@ class Base(DB.Model):  # pylint:disable=no-init
                     result[column_name] = format_datetime(value)
         return result
 
-    def update_from_dict(self, dict_: dict, skip_keys: Union[None]=None):
+    def update_from_dict(self, dict_: dict, skip_keys: Union[None] = None):
         skip_keys = skip_keys or ['id']
         for key in dict_.keys():
             if key in self.__table__.columns and key not in skip_keys:

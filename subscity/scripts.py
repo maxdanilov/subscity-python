@@ -46,7 +46,7 @@ def update_screenings_cinema(cinema: Cinema, date: datetime) -> None:
 
 
 def update_cinemas() -> None:
-    for city in Yap.CITIES:
+    for city in Yap.CITIES_ABBR:
         cinemas = Yap.get_cinemas(city)
         for cinema in cinemas:
             cinema_obj = Cinema(**cinema)
@@ -77,14 +77,10 @@ def update_test_fixtures() -> None:
 
 
 def update_test_cinema_fixtures() -> None:
-    city = 'saint-petersburg'
+    city = 'spb'
     fixture_path = 'tests/fixtures/cinemas/{}/'.format(city)
-    limit = 20
-    total_count = 70
-    for offset in range(0, total_count, limit):
-        url = Yap.url_cinemas(limit=limit, offset=offset, city=city)
-        filename = fixture_path + 'cinemas-offset{:02d}-limit{:02d}.json'.format(offset, limit)
-        download_to_json(url, filename)
+    shutil.copy2('{}/afisha_files/{}/cinema/places.xml'.format(Yap.LOCAL_BASE_STORAGE, city),
+                 fixture_path + 'places.xml')
 
 
 def update_test_movie_fixtures() -> None:

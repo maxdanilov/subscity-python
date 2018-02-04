@@ -121,7 +121,7 @@ class TestScripts(object):
 
         update_cinemas()
 
-        assert mock_get_cinemas.call_args_list == [call('moscow'), call('saint-petersburg')]
+        assert mock_get_cinemas.call_args_list == [call('msk'), call('spb')]
         assert mock_cinema_init.call_args_list == [call(name='1'), call(name='2'), call(name='3'),
                                                    call(name='4')]
         assert mock_cinema_save.call_args_list == [call()] * 4
@@ -209,22 +209,12 @@ class TestScripts(object):
 
     def test_update_test_cinema_fixtures(self, mocker):
         from subscity.scripts import update_test_cinema_fixtures
-        from subscity.yandex_afisha_parser import YandexAfishaParser
-        mock_download = mocker.patch('subscity.scripts.download_to_json')
-        mock_urls = mocker.patch.object(YandexAfishaParser, 'url_cinemas',
-                                        side_effect=['url1', 'url2', 'url3', 'url4'])
+        mock_move = mocker.patch('shutil.copy2', return_value=None)
         update_test_cinema_fixtures()
-        assert mock_urls.call_args_list == [
-            call(city='saint-petersburg', limit=20, offset=0),
-            call(city='saint-petersburg', limit=20, offset=20),
-            call(city='saint-petersburg', limit=20, offset=40),
-            call(city='saint-petersburg', limit=20, offset=60)]
-
-        assert mock_download.call_args_list == [
-            call('url1', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset00-limit20.json'),
-            call('url2', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset20-limit20.json'),
-            call('url3', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset40-limit20.json'),
-            call('url4', 'tests/fixtures/cinemas/saint-petersburg/cinemas-offset60-limit20.json')]
+        mock_move.assert_called_once_with(
+            '/tmp/subscity_afisha_files/afisha_files/spb/cinema/places.xml',
+            'tests/fixtures/cinemas/spb/places.xml'
+        )
 
     def test_update_test_movie_fixtures(self, mocker):
         from subscity.scripts import update_test_movie_fixtures
