@@ -1,8 +1,6 @@
-import datetime
 import os
 import shutil
 import tarfile
-import time
 import traceback
 import urllib
 
@@ -16,40 +14,30 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 
 def update_screenings() -> None:
-    cinemas = Cinema.get_all()
-    start_date = datetime.datetime.now()
-    cleaned_count = Screening.clean(end_day=start_date)
-    print("Cleaned {} screenings".format(cleaned_count))
-    print("> Found {} cinemas in the database".format(len(cinemas)))
-    for index, cinema in enumerate(cinemas):
-        for date in (start_date + datetime.timedelta(days=n) for n in range(Yap.FETCH_DAYS)):
-            print(">> [{}]/[{}] Fetching screenings @ {} for {}".format(index + 1, len(cinemas),
-                                                                        date.strftime("%d.%m.%Y"),
-                                                                        cinema.name))
-            try:
-                update_screenings_cinema(cinema, date)
-            except Exception:  # pylint:disable=broad-except
-                traceback.print_exc()
-                DB.session.rollback()
-            time.sleep(1.5)
+    for city in Yap.CITIES_ABBR:
+        print('{city} Parsing new screenings'.format(city=city))
+        screenings = Yap.get_screenings(city)
 
+        print('{city} Dropping screenings'.format(city=city))
+        Screening.clean(city=city)
 
-def update_screenings_cinema(cinema: Cinema, date: datetime) -> None:
-    new_screenings_dicts = Yap.get_cinema_screenings(cinema.api_id, date, cinema.city)
-    deleted_screenings = Screening.clean(cinema_api_id=cinema.api_id, start_day=date,
-                                         end_day=date + datetime.timedelta(days=1))
-    print("+{} -{} screenings".format(len(new_screenings_dicts), deleted_screenings))
-    for screening_dict in new_screenings_dicts:
-        screening = Screening(**screening_dict)
-        screening.save()
+        print('{city} Saving screenings'.format(city=city))
+        DB.session.bulk_save_objects([Screening(**screening_dict) for screening_dict in screenings])
+        DB.session.commit()
+        # TODO cleanup (if first scr. is > 5d in the future
 
 
 def update_cinemas() -> None:
     for city in Yap.CITIES_ABBR:
         cinemas = Yap.get_cinemas(city)
         for cinema in cinemas:
-            cinema_obj = Cinema(**cinema)
-            cinema_obj.create_or_update()
+            try:
+                print("{} Updating cinema {} ({})".format(city, cinema['name'], cinema['api_id']))
+                cinema_obj = Cinema(**cinema)
+                cinema_obj.create_or_update()
+            except Exception:  # pylint:disable=broad-except
+                traceback.print_exc()
+                DB.session.rollback()
 
 
 def update_movies() -> None:

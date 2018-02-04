@@ -47,10 +47,10 @@ class YandexAfishaParser(object):
         for item in parsed['events']['event']:
             result.append({
                 'api_id': item['e'],
-                'cast': item.get('cast'),
+                'cast': cls._get_cast(item),
                 'countries': item.get('ct'),
                 'description': item.get('description'),
-                'directors': item.get('d'),
+                'directors': cls._get_directors(item),
                 'duration': cls._get_duration(item),
                 'genres': cls._get_genres(item),
                 'kinopoisk_id': cls._get_kinopoisk_id(item),
@@ -61,6 +61,22 @@ class YandexAfishaParser(object):
                 'year': cls._get_year(item)
             })
         return result
+
+    # TODO test me
+    @staticmethod
+    def _get_cast(item: dict) -> Optional[str]:
+        directors = item.get('cast')
+        if not directors:
+            return None
+        return ', '.join(directors.split(', ')[:10])
+
+    # TODO test me
+    @staticmethod
+    def _get_directors(item: dict) -> Optional[str]:
+        directors = item.get('d')
+        if not directors:
+            return None
+        return ', '.join(directors.split(', ')[:5])
 
     @staticmethod
     def _get_duration(item: dict) -> Optional[int]:

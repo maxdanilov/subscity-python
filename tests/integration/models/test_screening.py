@@ -71,17 +71,32 @@ class TestModelScreening(object):
                                          'fake_end_day', 'fake_city')
         assert not mock_delete.called
 
-    def test_clean(self, mocker):
-        from unittest.mock import call
-        mock_get = mocker.patch.object(Screening, 'get', return_value=[Screening(),
-                                                                       Screening()])
-        mock_delete = mocker.patch.object(Screening, 'delete')
+    def test_clean(self, mocker, dbsession):
+        s1 = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
+                       ticket_api_id='fake_ticket', city='moscow',
+                       date_time=datetime(2017, 1, 1, 9))
+        s2 = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
+                       ticket_api_id='fake_ticket2', city='moscow',
+                       date_time=datetime(2017, 1, 1, 10))
+        s3 = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
+                       ticket_api_id='fake_ticket2', city='moscow',
+                       date_time=datetime(2017, 1, 1, 11))
+        dbsession.add(s1)
+        dbsession.add(s2)
+        dbsession.add(s3)
+        dbsession.commit()
+
+        mock_get = mocker.patch.object(Screening, 'get', return_value=[s1, s3])
+
         result = Screening.clean('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
                                  'fake_end_day', 'fake_city')
+
         assert result == 2
         mock_get.assert_called_once_with('fake_cinema_id', 'fake_movie_id', 'fake_start_day',
                                          'fake_end_day', 'fake_city')
-        assert mock_delete.call_args_list == [call(), call()]
+
+        result = dbsession.query(Screening).all()
+        assert result == [s2]
 
     def test_get(self, dbsession):
         sc1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',

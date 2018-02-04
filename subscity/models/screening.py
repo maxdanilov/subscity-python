@@ -123,5 +123,6 @@ class Screening(Base):  # pylint: disable=no-init
               end_day: datetime = None, city: str = None) -> int:
         screenings = Screening.get(cinema_api_id, movie_api_id, start_day, end_day, city)
         for screening in screenings:
-            screening.delete()
+            DB.session.delete(screening)
+        DB.session.commit()
         return len(screenings)
