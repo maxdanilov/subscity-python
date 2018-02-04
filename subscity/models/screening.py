@@ -27,7 +27,6 @@ class Screening(Base):  # pylint: disable=no-init
     city = Column(String(64), nullable=False)
     date_time = Column(DateTime, nullable=False, primary_key=True)
     price_min = Column(Float, nullable=True)
-    price_max = Column(Float, nullable=True)
 
     created_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, nullable=False)
     updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now,

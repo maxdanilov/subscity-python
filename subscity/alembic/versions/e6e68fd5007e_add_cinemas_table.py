@@ -51,7 +51,6 @@ def upgrade_subscity():
                     sa.Column('city', sa.String(length=64), nullable=False),
                     sa.Column('date_time', sa.DateTime(), nullable=False),
                     sa.Column('price_min', sa.Float(), nullable=True),
-                    sa.Column('price_max', sa.Float(), nullable=True),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
                     sa.PrimaryKeyConstraint('id', 'cinema_api_id', 'movie_api_id', 'date_time'),

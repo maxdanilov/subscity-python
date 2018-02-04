@@ -86,6 +86,23 @@ class TestYandexAfishaParser(object):
     def test_get_genres(self, input_, output):
         assert Yap._get_genres(input_) == output
 
+    def test_get_screening_time(self):
+        from datetime import datetime
+        item = {'@time': '2018-12-31T23:00'}
+        assert Yap._get_screening_time(item) == datetime(2018, 12, 31, 23, 0)
+
+    @parametrize('input_, output', [({}, None),
+                                    ({'@min_price': '27000'}, 270.0)])
+    def test_get_screening_price(self, input_, output):
+        assert Yap._get_screening_price(input_) == output
+
+    @parametrize('input_, output', [
+        ({}, False),
+        ({'@language_notes': 'some notes'}, False),
+        ({'@language_notes': 'На языке оригинала, с русскими субтитрами'}, True)])
+    def test_is_screening_with_subs(self, input_, output):
+        assert Yap._is_screening_with_subs(input_) == output
+
     @parametrize('city', ['spb'])
     def test_get_movies(self, city, mocker):
         from datetime import datetime
@@ -150,48 +167,48 @@ class TestYandexAfishaParser(object):
         assert set([r['date_time'][0:10] for r in result]) == {'2017-01-15'}
 
         expected = \
-            [{'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': None, 'city': 'moscow',
+            [{'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': None, 'ticket_api_id': None,
               'date_time': '2017-01-15T11:15:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': None, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': None, 'ticket_api_id': None,
               'date_time': '2017-01-15T14:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': None, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': None, 'ticket_api_id': None,
               'date_time': '2017-01-15T16:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': 800.0, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
               'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTR8MTQ4NDQ5NDIwMDAwMA==',
               'date_time': '2017-01-15T18:30:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': 700.0, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
               'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTV8MTQ4NDQ5NjAwMDAwMA==',
               'date_time': '2017-01-15T19:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': 700.0, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
               'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTR8MTQ4NDUwMzIwMDAwMA==',
               'date_time': '2017-01-15T21:00:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': 700.0, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 700.0,
               'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTV8MTQ4NDUwNTAwMDAwMA==',
               'date_time': '2017-01-15T21:30:00'},
-             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'price_max': 450.0, 'city': 'moscow',
+             {'movie_api_id': '5874ea2a685ae0b186614bb5', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 450.0,
               'ticket_api_id': 'Mjg5fDUwNDMzfDQwOTV8MTQ4NDUxMzcwMDAwMA==',
               'date_time': '2017-01-15T23:55:00'},
-             {'movie_api_id': '581aa06f9c183f11f21b5e13', 'price_max': 200.0, 'city': 'moscow',
+             {'movie_api_id': '581aa06f9c183f11f21b5e13', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 200.0,
               'ticket_api_id': 'Mjg5fDUxNzk2fDQwOTV8MTQ4NDQ2MTIwMDAwMA==',
               'date_time': '2017-01-15T09:20:00'},
-             {'movie_api_id': '5852bab76ee3daff5c975610', 'price_max': 200.0, 'city': 'moscow',
+             {'movie_api_id': '5852bab76ee3daff5c975610', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 200.0,
               'ticket_api_id': 'Mjg5fDQ4OTY2fDQwOTR8MTQ4NDQ2MDYwMDAwMA==',
               'date_time': '2017-01-15T09:10:00'},
-             {'movie_api_id': '5575facfcc1c725c1b9865ee', 'price_max': 350.0, 'city': 'moscow',
+             {'movie_api_id': '5575facfcc1c725c1b9865ee', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 350.0,
               'ticket_api_id': 'Mjg5fDUwNDMwfDQwOTR8MTQ4NDQ3NTYwMDAwMA==',
               'date_time': '2017-01-15T13:20:00'},
-             {'movie_api_id': '5575facfcc1c725c1b9865ee', 'price_max': 450.0, 'city': 'moscow',
+             {'movie_api_id': '5575facfcc1c725c1b9865ee', 'city': 'moscow',
               'cinema_api_id': '561fdfed37753624b592f13f', 'price_min': 450.0,
               'ticket_api_id': 'Mjg5fDUwNDMwfDQwOTR8MTQ4NDUxMjgwMDAwMA==',
               'date_time': '2017-01-15T23:40:00'}]

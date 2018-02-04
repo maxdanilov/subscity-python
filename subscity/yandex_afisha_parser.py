@@ -18,6 +18,7 @@ class YandexAfishaParser(object):
     BASE_URL_API = '{}/api/'.format(BASE_URL)
     SKIPPED_GENRES = set([x.lower() for x in ['TheatreHD']])
     HAS_SUBS_TAG = 'На языке оригинала'
+    HAS_SUBS_NOTES = 'На языке оригинала, с русскими субтитрами'
     DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
     FETCH_DAYS = 10
 
@@ -111,6 +112,42 @@ class YandexAfishaParser(object):
             return None
         return datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
 
+    @staticmethod
+    def _get_screening_time(item: dict) -> Optional[datetime]:
+        date = item['@time']
+        return datetime.strptime(date, '%Y-%m-%dT%H:%M')
+
+    @staticmethod
+    def _get_screening_price(item: dict) -> Optional[float]:
+        price = item.get('@min_price')
+        if not price:
+            return None
+        return float(price) / 100
+
+    @classmethod
+    def _is_screening_with_subs(cls, item: dict) -> bool:
+        return item.get('@language_notes') == cls.HAS_SUBS_NOTES
+
+    # TODO test me
+    @classmethod
+    def get_screenings(cls, city: str) -> List[Dict]:
+        result = []
+        file = '{base}/afisha_files/{city}/cinema/bilet.xml'.format(base=cls.LOCAL_BASE_STORAGE,
+                                                                    city=city)
+        parsed = xmltodict.parse(read_file(file), force_list=('cinema', 'event', 'show'))
+        for cinema in parsed['tickets']['cinema']:
+            for movie in cinema['event']:
+                for screening in movie['show']:
+                    if cls._is_screening_with_subs(screening):
+                        result.append({
+                            'cinema_api_id': cinema['@id'],
+                            'movie_api_id': movie['@id'],
+                            'ticket_api_id': screening.get('@bilet_id'),
+                            'city': city,
+                            'price_min': cls._get_screening_price(screening),
+                            'date_time': cls._get_screening_time(screening)})
+        return result
+
     # TODO replace me
     @classmethod
     def get_cinema_screenings(cls, api_id: str, date: datetime, city: str) -> List[Dict]:
@@ -127,19 +164,17 @@ class YandexAfishaParser(object):
                 if cls.HAS_SUBS_TAG.lower() \
                         in [x['name'].lower() for x in schedule['tags']]:
                     for session in schedule['sessions']:
-                        min_price = max_price = ticket_id = None
+                        min_price = ticket_id = None
                         if session['ticket']:
                             ticket_id = session['ticket']['id']
                             min_price = (session['ticket']['price']['min'] or 0) / 100 or None
-                            max_price = (session['ticket']['price']['max'] or 0) / 100 or None
                         screening = {
                             'cinema_api_id': api_id,
                             'movie_api_id': movie['event']['id'],
                             'ticket_api_id': ticket_id,
                             'date_time': session['datetime'],
                             'city': city,
-                            'price_min': min_price,
-                            'price_max': max_price}
+                            'price_min': min_price}
                         result.append(screening)
         return result
 
