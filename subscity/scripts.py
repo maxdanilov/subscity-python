@@ -51,7 +51,6 @@ def update_cinemas() -> None:
         for cinema in cinemas:
             cinema_obj = Cinema(**cinema)
             cinema_obj.create_or_update()
-        time.sleep(2)
 
 
 def update_movies() -> None:

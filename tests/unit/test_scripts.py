@@ -1,4 +1,4 @@
-from mock import mock_open, patch, call
+from mock import call
 
 
 class TestScripts(object):
@@ -107,12 +107,10 @@ class TestScripts(object):
                 call(cinemas[1], datetime.datetime(2017, 1, 13, 9, 26, 0))]
 
     def test_update_cinemas(self, mocker):
-        import time
         from subscity.yandex_afisha_parser import YandexAfishaParser
         from subscity.scripts import update_cinemas
         from subscity.models.cinema import Cinema
 
-        mock_sleep = mocker.patch.object(time, 'sleep')
         mock_get_cinemas = mocker.patch.object(YandexAfishaParser, 'get_cinemas',
                                                side_effect=[[{'name': '1'}, {'name': '2'}],
                                                             [{'name': '3'}, {'name': '4'}]])
@@ -125,7 +123,6 @@ class TestScripts(object):
         assert mock_cinema_init.call_args_list == [call(name='1'), call(name='2'), call(name='3'),
                                                    call(name='4')]
         assert mock_cinema_save.call_args_list == [call()] * 4
-        assert mock_sleep.call_args_list == [call(2)] * 2
 
     def test_update_movies(self, mocker):
         import time

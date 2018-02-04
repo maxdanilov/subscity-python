@@ -52,6 +52,7 @@ class YandexAfishaParser(object):
         url += 'places/{}/schedule_cinema?date={}&city={}'.format(api_id, date, city)
         return url
 
+    # TODO replace me with get_movies
     @classmethod
     def get_movie_ids(cls, city: str) -> List[str]:
         offset = 0
@@ -70,6 +71,7 @@ class YandexAfishaParser(object):
             offset += limit
         return result
 
+    # TODO replace me with get_movies
     @classmethod
     def get_movie(cls, api_id: str, city: str = 'moscow') -> Dict:
         url = cls.url_movie(api_id, city)
@@ -176,6 +178,7 @@ class YandexAfishaParser(object):
             return None
         return int(rating.replace('+', ''))
 
+    # TODO replace me
     @classmethod
     def get_cinema_screenings(cls, api_id: str, date: datetime, city: str) -> List[Dict]:
         url = cls.url_cinema_schedule(api_id, date, city)
@@ -207,7 +210,6 @@ class YandexAfishaParser(object):
                         result.append(screening)
         return result
 
-    # TODO test me
     @classmethod
     def get_cinemas(cls, city_abbr: str) -> List[Dict]:
         result = []

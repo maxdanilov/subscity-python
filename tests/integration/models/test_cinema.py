@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-import os
 
 
 class TestModelCinema(object):
-    def _fread(self, fname):
-        return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
     def test_get_all_empty(self, dbsession):
         from subscity.models.cinema import Cinema
         assert Cinema.get_all() == []
