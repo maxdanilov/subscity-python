@@ -1,9 +1,8 @@
 #!/bin/sh
 if [ -z $1 ]; then
     pyenv exec pylint --rcfile=.pylintrc subscity
-    pyenv exec pep8 --config=pep8.ini subscity
+    pyenv exec pycodestyle --config=pycodestyle.ini subscity
 else
     pyenv exec pylint --rcfile=.pylintrc $@
-    pyenv exec pep8 --config=pep8.ini $@
+    pyenv exec pycodestyle --config=pycodestyle.ini $@
 fi
-

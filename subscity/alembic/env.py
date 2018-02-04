@@ -54,4 +54,5 @@ def run_migrations_online():
         for rec in engines.values():
             rec['connection'].close()
 
+
 run_migrations_online()
