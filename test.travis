@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export DB_NAME='subscity'
 export DB_URI="mysql+pymysql://travis:@127.0.0.1:3306/${DB_NAME}?charset=utf8"
 mysql -u travis -e "CREATE DATABASE ${DB_NAME} DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci"

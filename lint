@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ -z $1 ]; then
     pyenv exec pylint --rcfile=.pylintrc subscity
     pyenv exec pycodestyle --config=pycodestyle.ini subscity
