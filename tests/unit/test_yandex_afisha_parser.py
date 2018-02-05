@@ -19,15 +19,6 @@ class TestYandexAfishaParser(object):
         assert result == "https://afisha.yandex.ru/places/cinema_api_id?city=city_name" \
                          "&place-schedule-date=2017-02-28"
 
-    def test_fetch(self, mocker):
-        class UrlOpenResultFake(object):
-            def read(self):
-                return b'fake-val'
-
-        mock_url_open = mocker.patch('urllib.request.urlopen', return_value=UrlOpenResultFake())
-        assert Yap.fetch('some-url') == 'fake-val'
-        mock_url_open.assert_called_once_with('some-url')
-
     @parametrize('input_, output', [({}, None),
                                     ({'release_date': ''}, None),
                                     ({'release_date': '2018-01-12 00:00:00'},

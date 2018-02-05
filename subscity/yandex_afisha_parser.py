@@ -2,7 +2,6 @@
 
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
-import urllib.request
 
 import xmltodict
 
@@ -15,11 +14,6 @@ class YandexAfishaParser(object):
     BASE_URL = 'https://afisha.yandex.ru'
     HAS_SUBS_TAG = 'На языке оригинала, с русскими субтитрами'
     DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
-
-    @staticmethod
-    def fetch(url: str) -> str:
-        print(url)
-        return urllib.request.urlopen(url).read().decode('utf-8')
 
     @classmethod
     def url_tickets(cls, cinema_api_id: str, city: str, day: datetime) -> str:
