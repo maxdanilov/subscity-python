@@ -80,7 +80,7 @@ def update_test_screening_fixtures() -> None:
     _update_test_fixture('spb', 'screenings', 'bilet.xml')
 
 
-def download_base() -> None:
+def update_base() -> None:
     base_download_url = 'https://afisha.yandex.ru/export/legacy'
     auth_token = os.environ.get('YANDEX_AUTH_TOKEN')
     headers = {'Authorization': 'token {0}'.format(auth_token)}

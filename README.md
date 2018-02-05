@@ -42,6 +42,7 @@ pyenv exec pip3 install -e .
 
 ## Tasks
 ```
+./run update_base
 ./run update_movies
 ./run update_cinemas
 ./run update_screenings
