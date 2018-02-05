@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 from sqlalchemy import (
     Boolean,
@@ -58,6 +59,13 @@ class Movie(Base):  # pylint: disable=no-init
     created_at = Column(DateTime, default=datetime.datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now,
                         nullable=False)
+
+    # TODO test me
+    @classmethod
+    def get_hidden_api_ids(cls) -> List[str]:
+        query = DB.session.query(cls.api_id)
+        query = query.filter(cls.hide.is_(True))
+        return [x[0] for x in query.all()]
 
     def create_or_update(self) -> None:
         cls = self.__class__

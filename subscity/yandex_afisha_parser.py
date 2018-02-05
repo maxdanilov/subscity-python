@@ -14,6 +14,7 @@ class YandexAfishaParser(object):
     BASE_URL = 'https://afisha.yandex.ru'
     HAS_SUBS_TAG = 'На языке оригинала, с русскими субтитрами'
     DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
+    MIN_DAYS_BEFORE_FIRST_SCREENING = 5
 
     @classmethod
     def url_tickets(cls, cinema_api_id: str, city: str, day: datetime) -> str:
@@ -50,7 +51,6 @@ class YandexAfishaParser(object):
             return None
         return ', '.join(directors.split(', ')[:10])
 
-    # TODO test me
     @staticmethod
     def _get_directors(item: dict) -> Optional[str]:
         directors = item.get('d')

@@ -1,4 +1,5 @@
 import datetime
+from collections import namedtuple
 from typing import List
 
 from sqlalchemy import (
@@ -32,6 +33,13 @@ class Screening(Base):  # pylint: disable=no-init
     created_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, nullable=False)
     updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now,
                         onupdate=datetime.datetime.now, nullable=False)
+
+    # TODO test me
+    @classmethod
+    def bulk_save(cls, obj: List['Screening']) -> int:
+        DB.session.bulk_save_objects(obj)
+        DB.session.commit()
+        return len(obj)
 
     @property
     def day(self):
@@ -108,8 +116,7 @@ class Screening(Base):  # pylint: disable=no-init
         return query.all()
 
     @staticmethod
-    def get_movie_api_ids(city: str) -> List:
-        # NB: hidden movies are not filtered here
+    def get_movie_api_ids(city: str) -> List[namedtuple]:
         query = DB.session.query(func.min(Screening.date_time).label('next_screening'),
                                  func.count().label('screenings'),
                                  Screening.movie_api_id)
@@ -126,3 +133,24 @@ class Screening(Base):  # pylint: disable=no-init
             DB.session.delete(screening)
         DB.session.commit()
         return len(screenings)
+
+    # TODO test me
+    @staticmethod
+    def clean_premature(city: str) -> int:
+        count = 0
+        first_screenings = Screening.get_movie_api_ids(city)
+        movie_api_ids_remove = [m.movie_api_id for m in first_screenings
+                                if m.next_screening > get_now(city) +
+                                datetime.timedelta(days=Yap.MIN_DAYS_BEFORE_FIRST_SCREENING)]
+        for movie_api_id in movie_api_ids_remove:
+            count += Screening.clean(movie_api_id=movie_api_id, city=city)
+        return count
+
+    # TODO test me
+    @staticmethod
+    def clean_hidden(city: str) -> int:
+        count = 0
+        movie_api_ids = Movie.get_hidden_api_ids()
+        for movie_api_id in movie_api_ids:
+            count += Screening.clean(movie_api_id=movie_api_id, city=city)
+        return count

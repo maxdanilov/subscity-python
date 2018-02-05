@@ -43,6 +43,8 @@ def upgrade_subscity():
                     sa.UniqueConstraint('api_id')
                     )
 
+    # TODO: have a proper unique constraint (can have >1 screening for the same movies at the same
+    # cinema at exactly the same time
     op.create_table('screenings',
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
                     sa.Column('cinema_api_id', sa.String(length=64), nullable=False),

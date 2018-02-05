@@ -15,16 +15,20 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 def update_screenings() -> None:
     for city in Yap.CITIES:
-        print('{city} Parsing new screenings'.format(city=city))
         screenings = Yap.get_screenings(city)
+        print('{city} Parsed new screenings: {count}'.format(city=city, count=len(screenings)))
 
-        print('{city} Dropping screenings'.format(city=city))
-        Screening.clean(city=city)
+        count = Screening.clean(city=city)
+        print('{city} Dropped screenings: {count}'.format(city=city, count=count))
 
-        print('{city} Saving screenings'.format(city=city))
-        DB.session.bulk_save_objects([Screening(**screening_dict) for screening_dict in screenings])
-        DB.session.commit()
-        # TODO cleanup (if first scr. is > 5d in the future
+        count = Screening.bulk_save([Screening(**screening_dict) for screening_dict in screenings])
+        print('{city} Saved screenings: {count}'.format(city=city, count=count))
+
+        count = Screening.clean_hidden(city=city)
+        print('{city} Dropped screening for hidden movies: {count}'.format(city=city, count=count))
+
+        count = Screening.clean_premature(city=city)
+        print('{city} Dropped premature screenings: {count}'.format(city=city, count=count))
 
 
 def update_cinemas() -> None:
