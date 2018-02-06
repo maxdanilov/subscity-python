@@ -101,7 +101,8 @@ def upgrade_subscity():
 def downgrade_subscity():
     op.drop_index('ix_movies', table_name='movies')
     op.drop_index('ix_cinemas', table_name='cinemas')
+    op.drop_index('ix_screenings2', table_name='screenings')
     op.drop_index('ix_screenings', table_name='screenings')
-    op.drop_table('cinemas')
     op.drop_table('screenings')
+    op.drop_table('cinemas')
     op.drop_table('movies')
