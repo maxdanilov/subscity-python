@@ -8,7 +8,7 @@ Create Date: 2017-01-09 20:48:05.974076
 
 from alembic import op
 import sqlalchemy as sa
-
+from sqlalchemy import ForeignKey
 
 revision = 'e6e68fd5007e'
 down_revision = None
@@ -42,23 +42,6 @@ def upgrade_subscity():
                     sa.PrimaryKeyConstraint('id', 'api_id', 'name'),
                     sa.UniqueConstraint('api_id')
                     )
-
-    # TODO: have a proper unique constraint (can have >1 screening for the same movies at the same
-    # cinema at exactly the same time
-    op.create_table('screenings',
-                    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
-                    sa.Column('cinema_api_id', sa.String(length=64), nullable=False),
-                    sa.Column('movie_api_id', sa.String(length=64), nullable=False),
-                    sa.Column('ticket_api_id', sa.String(length=128), nullable=True),
-                    sa.Column('city', sa.String(length=64), nullable=False),
-                    sa.Column('date_time', sa.DateTime(), nullable=False),
-                    sa.Column('price_min', sa.Float(), nullable=True),
-                    sa.Column('source', sa.String(length=32), nullable=True),
-                    sa.Column('created_at', sa.DateTime(), nullable=False),
-                    sa.Column('updated_at', sa.DateTime(), nullable=False),
-                    sa.PrimaryKeyConstraint('id', 'cinema_api_id', 'movie_api_id', 'date_time'),
-                    sa.UniqueConstraint('cinema_api_id', 'movie_api_id', 'date_time')
-    )
 
     op.create_table('movies',
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
@@ -95,10 +78,24 @@ def upgrade_subscity():
                     sa.UniqueConstraint('api_id')
                     )
 
+    op.create_table('screenings',
+                    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
+                    sa.Column('cinema_api_id', sa.String(length=64), ForeignKey('cinemas.api_id')),
+                    sa.Column('movie_api_id', sa.String(length=64), ForeignKey('movies.api_id')),
+                    sa.Column('ticket_api_id', sa.String(length=128), nullable=True),
+                    sa.Column('city', sa.String(length=64), nullable=False),
+                    sa.Column('date_time', sa.DateTime(), nullable=False),
+                    sa.Column('price_min', sa.Float(), nullable=True),
+                    sa.Column('source', sa.String(length=32), nullable=True),
+                    sa.Column('created_at', sa.DateTime(), nullable=False),
+                    sa.Column('updated_at', sa.DateTime(), nullable=False),
+                    sa.PrimaryKeyConstraint('id')
+                    )
+
     op.create_index('ix_movies', 'movies', ['api_id'], unique=False)
     op.create_index('ix_cinemas', 'cinemas', ['api_id', 'city'], unique=False)
-    op.create_index('ix_screenings', 'screenings', ['cinema_api_id', 'movie_api_id', 'city',
-                                                    'date_time'], unique=False)
+    op.create_index('ix_screenings', 'screenings', ['city', 'cinema_api_id'], unique=False)
+    op.create_index('ix_screenings2', 'screenings', ['city', 'movie_api_id'], unique=False)
 
 
 def downgrade_subscity():
