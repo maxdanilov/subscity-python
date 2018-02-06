@@ -34,7 +34,6 @@ class Screening(Base):  # pylint: disable=no-init
     updated_at = Column(DATETIME(fsp=6), default=datetime.datetime.now,
                         onupdate=datetime.datetime.now, nullable=False)
 
-    # TODO test me
     @classmethod
     def bulk_save(cls, obj: List['Screening']) -> int:
         DB.session.bulk_save_objects(obj)
@@ -134,7 +133,6 @@ class Screening(Base):  # pylint: disable=no-init
         DB.session.commit()
         return len(screenings)
 
-    # TODO test me
     @staticmethod
     def clean_premature(city: str) -> int:
         count = 0
@@ -146,7 +144,6 @@ class Screening(Base):  # pylint: disable=no-init
             count += Screening.clean(movie_api_id=movie_api_id, city=city)
         return count
 
-    # TODO test me
     @staticmethod
     def clean_hidden(city: str) -> int:
         count = 0

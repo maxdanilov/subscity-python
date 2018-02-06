@@ -216,9 +216,9 @@ class TestMovie(object):
                                                'afisha_files/spb/cinema/events.xml')
 
     def test_get_by_api_ids(self, dbsession):
-        m1 = Movie(api_id='fake_movie1', title='cinema1')
-        m2 = Movie(api_id='fake_movie2', title='cinema2')
-        m3 = Movie(api_id='fake_movie3', title='cinema3')
+        m1 = Movie(api_id='fake_movie1', title='title1')
+        m2 = Movie(api_id='fake_movie2', title='title2')
+        m3 = Movie(api_id='fake_movie3', title='title3')
         [dbsession.add(x) for x in [m1, m2, m3]]
         dbsession.commit()
         result = Movie.get_by_api_ids([m1.api_id, m3.api_id])
@@ -226,3 +226,24 @@ class TestMovie(object):
 
         result2 = Movie.get_by_api_ids([])
         assert result2 == []
+
+    def test_get_hidden_api_ids_empty_db(self, dbsession):
+        assert Movie.get_hidden_api_ids() == []
+
+    def test_get_hidden_api_ids_empty_result(self, dbsession):
+        m1 = Movie(api_id='fake_movie1', title='title1')
+        m2 = Movie(api_id='fake_movie2', title='title2')
+        m3 = Movie(api_id='fake_movie3', title='title3')
+        [dbsession.add(x) for x in [m1, m2, m3]]
+        dbsession.commit()
+
+        assert Movie.get_hidden_api_ids() == []
+
+    def test_get_hidden_api_ids(self, dbsession):
+        m1 = Movie(api_id='fake_movie1', title='title1')
+        m2 = Movie(api_id='fake_movie2', title='title2', hide=True)
+        m3 = Movie(api_id='fake_movie3', title='title3', hide=True)
+        [dbsession.add(x) for x in [m1, m2, m3]]
+        dbsession.commit()
+
+        assert Movie.get_hidden_api_ids() == ['fake_movie2', 'fake_movie3']

@@ -3,7 +3,7 @@ import pytest
 from datetime import datetime
 
 from subscity.models.screening import Screening
-from tests.utils import fread
+from tests.utils import fread, filter_dict, mock_datetime
 
 parametrize = pytest.mark.parametrize
 
@@ -194,7 +194,6 @@ class TestModelScreening(object):
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
         import datetime
-        from tests.utils import mock_datetime
 
         m1 = Movie(api_id='fake_movie1', title='fake_title1')
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
@@ -231,7 +230,6 @@ class TestModelScreening(object):
 
     def test_get_for_cinema(self, dbsession):
         import datetime
-        from tests.utils import mock_datetime
 
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
@@ -274,7 +272,6 @@ class TestModelScreening(object):
 
     def test_get_for_day(self, dbsession):
         import datetime
-        from tests.utils import mock_datetime
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
 
@@ -334,9 +331,9 @@ class TestModelScreening(object):
 
     def test_get_movies_cinemas(self, dbsession):
         import datetime
-        from tests.utils import mock_datetime
         from subscity.models.movie import Movie
         from subscity.models.cinema import Cinema
+
         m1 = Movie(api_id='fake_movie1', title='fake_title1', hide=True)
         m2 = Movie(api_id='fake_movie2', title='fake_title2')
         m4 = Movie(api_id='fake_movie4', title='fake_title4')
@@ -385,7 +382,7 @@ class TestModelScreening(object):
 
     def test_get_movie_api_ids(self, dbsession):
         import datetime
-        from tests.utils import mock_datetime
+
         # passed
         s0 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
                        city='msk', date_time=datetime.datetime(2017, 2, 10, 13, 15))
@@ -414,3 +411,116 @@ class TestModelScreening(object):
         assert result[0].next_screening == datetime.datetime(2017, 2, 15, 13, 0)
         assert result[0].screenings == 2
         assert result[0].movie_api_id == 'fake_movie2'
+
+    def test_bulk_save_empty_input(self, dbsession):
+        Screening.bulk_save([])
+        assert dbsession.query(Screening).all() == []
+
+    def test_bulk_save(self, dbsession):
+        import datetime
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie2',
+                       city='msk', date_time=datetime.datetime(2017, 2, 15, 13, 0))
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
+                       city='msk', date_time=datetime.datetime(2017, 2, 16, 20, 0))
+        s3 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
+                       city='spb', date_time=datetime.datetime(2017, 2, 16, 21, 0))
+        s1.save()
+
+        assert dbsession.query(Screening).all() == [s1]
+        Screening.bulk_save([s2, s3])
+
+        result = dbsession.query(Screening).all()
+        assert len(result) == 3
+
+        filter_keys = ['cinema_api_id', 'movie_api_id', 'city', 'date_time']
+        assert filter_dict(result[0].to_dict(), filter_keys) == {
+            'cinema_api_id': 'fake_cinema1',
+            'movie_api_id': 'fake_movie2',
+            'city': 'msk',
+            'date_time': '2017-02-15T13:00:00'
+        }
+
+        assert filter_dict(result[1].to_dict(), filter_keys) == {
+            'cinema_api_id': 'fake_cinema2',
+            'movie_api_id': 'fake_movie3',
+            'city': 'msk',
+            'date_time': '2017-02-16T20:00:00'
+        }
+
+        assert filter_dict(result[2].to_dict(), filter_keys) == {
+            'cinema_api_id': 'fake_cinema2',
+            'movie_api_id': 'fake_movie3',
+            'city': 'spb',
+            'date_time': '2017-02-16T21:00:00'
+        }
+
+    def test_clean_hidden_empty(self, dbsession):
+        assert Screening.clean_hidden('msk') == 0
+
+    def test_clean_hidden(self, dbsession):
+        import datetime
+        from subscity.models.movie import Movie
+
+        m1 = Movie(api_id='fake_movie1', title='title1')
+        m2 = Movie(api_id='fake_movie2', title='title2', hide=True)
+        m3 = Movie(api_id='fake_movie3', title='title3', hide=True)
+        [dbsession.add(x) for x in [m1, m2, m3]]
+        dbsession.commit()
+
+        # not a hidden movie
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='msk', date_time=datetime.datetime(2017, 2, 15, 13, 0))
+        # will be deleted
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='msk', date_time=datetime.datetime(2017, 2, 16, 20, 0))
+        # a hidden movie but from a different city
+        s3 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
+                       city='spb', date_time=datetime.datetime(2017, 2, 16, 21, 0))
+        [dbsession.add(s) for s in [s1, s2, s3]]
+        dbsession.commit()
+
+        result = Screening.clean_hidden('msk')
+        assert result == 1
+
+        screenings = dbsession.query(Screening).all()
+        assert [s.id for s in screenings] == [s1.id, s3.id]
+
+    def test_clean_premature_empty(self, dbsession):
+        assert Screening.clean_premature('msk') == 0
+
+    def test_clean_premature(self, dbsession):
+        import datetime
+        from subscity.models.movie import Movie
+
+        m1 = Movie(api_id='fake_movie1', title='title1')
+        m2 = Movie(api_id='fake_movie2', title='title2')
+        m3 = Movie(api_id='fake_movie3', title='title3')
+        [dbsession.add(x) for x in [m1, m2, m3]]
+        dbsession.commit()
+
+        # a premature screening
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='msk', date_time=datetime.datetime(2018, 6, 6, 0, 1))
+
+        # a premature screening
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie1',
+                       city='msk', date_time=datetime.datetime(2018, 6, 6, 5, 5))
+
+        # a different city, will be kept
+        s3 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie1',
+                       city='spb', date_time=datetime.datetime(2018, 6, 2, 12, 0))
+
+        # will be kept
+        s4 = Screening(cinema_api_id='fake_cinema4', movie_api_id='fake_movie2',
+                       city='msk', date_time=datetime.datetime(2018, 6, 1, 20, 0))
+
+        [dbsession.add(s) for s in [s1, s2, s3, s4]]
+        dbsession.commit()
+
+        with mock_datetime(mock_utcnow=datetime.datetime(2018, 5, 31, 21, 0)):  # midnight msk
+            result = Screening.clean_premature('msk')
+
+        assert result == 2
+
+        screenings = dbsession.query(Screening).all()
+        assert [s.id for s in screenings] == [s3.id, s4.id]
