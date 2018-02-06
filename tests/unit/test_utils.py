@@ -37,7 +37,7 @@ class TestUtils(object):
             validator_date()(data)
         assert 'date should be in this format: YYYY-MM-DD' in str(excinfo.value)
 
-    @parametrize('data, expected', [('msk', 'moscow'), ('spb', 'saint-petersburg')])
+    @parametrize('data, expected', [('msk', 'msk'), ('spb', 'spb')])
     def test_validator_city_valid(self, data, expected):
         from subscity.utils import validator_city
         result = validator_city()(data)
@@ -50,7 +50,7 @@ class TestUtils(object):
 
         with pytest.raises(Invalid) as excinfo:
             validator_city()(data)
-        assert 'city should be one of: msk, spb' in str(excinfo.value)
+        assert 'city should be one of: [\'msk\', \'spb\']' in str(excinfo.value)
 
     @parametrize('city, expected', [('moscow', 'Europe/Moscow'),
                                     ('saint-petersburg', 'Europe/Moscow')])

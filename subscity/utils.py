@@ -32,10 +32,10 @@ def validator_date():
 
 def validator_city():
     def city_by_code(code: str) -> str:
-        mapping = {'msk': 'moscow', 'spb': 'saint-petersburg'}
-        if code not in mapping:
-            raise Invalid('city should be one of: msk, spb')
-        return mapping[code]
+        allowed_cities = ['msk', 'spb']
+        if code not in allowed_cities:
+            raise Invalid('city should be one of: {}'.format(allowed_cities))
+        return code
     return city_by_code
 
 
