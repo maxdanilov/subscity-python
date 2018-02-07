@@ -27,7 +27,7 @@ def requires_auth(func):
     return decorated
 
 
-@APP.route('/movies/<city>', methods=['GET'])
+@APP.route('/<city>/movies', methods=['GET'])
 def get_movies(city: str) -> (Response, int):
     validator = Schema({Required('city'): validator_city()})
     try:
@@ -38,7 +38,7 @@ def get_movies(city: str) -> (Response, int):
     return json_response(result), 200
 
 
-@APP.route('/cinemas/<city>', methods=['GET'])
+@APP.route('/<city>/cinemas', methods=['GET'])
 def get_cinemas(city: str) -> (Response, int):
     validator = Schema({Required('city'): validator_city()})
     try:
@@ -49,7 +49,7 @@ def get_cinemas(city: str) -> (Response, int):
     return json_response(result), 200
 
 
-@APP.route('/screenings/<city>/movie/<movie_id>', methods=['GET'])
+@APP.route('/<city>/screenings/movie/<movie_id>', methods=['GET'])
 def get_screenings_for_movie(city: str, movie_id: str) -> (Response, int):
     validator = Schema({Required('id'): All(Coerce(int), Range(min=1),
                                             msg='movie id must be an integer'),
@@ -62,7 +62,7 @@ def get_screenings_for_movie(city: str, movie_id: str) -> (Response, int):
     return json_response(result), 200
 
 
-@APP.route('/screenings/<city>/cinema/<cinema_id>', methods=['GET'])
+@APP.route('/<city>/screenings/cinema/<cinema_id>', methods=['GET'])
 def get_screenings_for_cinema(city: str, cinema_id: str) -> (Response, int):
     validator = Schema({Required('id'): All(Coerce(int), Range(min=1),
                                             msg='cinema id must be an integer'),
@@ -75,7 +75,7 @@ def get_screenings_for_cinema(city: str, cinema_id: str) -> (Response, int):
     return json_response(result), 200
 
 
-@APP.route('/screenings/<city>/date/<date>', methods=['GET'])
+@APP.route('/<city>/screenings/date/<date>', methods=['GET'])
 def get_screenings_for_day(city: str, date: str) -> (Response, int):
     validator = Schema({Required('date'): validator_date(),
                         Required('city'): validator_city()})
