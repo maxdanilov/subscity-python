@@ -92,6 +92,17 @@ def upgrade_subscity():
                     sa.PrimaryKeyConstraint('id')
                     )
 
+    op.create_table('accounts',
+                    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
+                    sa.Column('api_token', sa.String(length=32), nullable=False),
+                    sa.Column('name', sa.String(length=64), nullable=False),
+                    sa.Column('active', sa.Boolean, nullable=False),
+                    sa.Column('created_at', sa.DateTime(), nullable=False),
+                    sa.Column('updated_at', sa.DateTime(), nullable=False),
+                    sa.PrimaryKeyConstraint('id'),
+                    sa.UniqueConstraint('api_token')
+                    )
+
     op.create_index('ix_movies', 'movies', ['api_id'], unique=False)
     op.create_index('ix_cinemas', 'cinemas', ['api_id', 'city'], unique=False)
     op.create_index('ix_screenings', 'screenings', ['city', 'cinema_api_id'], unique=False)
@@ -106,3 +117,4 @@ def downgrade_subscity():
     op.drop_table('screenings')
     op.drop_table('cinemas')
     op.drop_table('movies')
+    op.drop_table('accounts')
