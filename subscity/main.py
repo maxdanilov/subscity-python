@@ -1,20 +1,30 @@
 # -*- coding: utf-8 -*-
 import os
 
-from flask import Response
+from flask import Response, request
 from flask_sqlalchemy import SQLAlchemy
-from voluptuous import Schema, Required, MultipleInvalid, All, Range, Coerce
+from voluptuous import Schema, Required, MultipleInvalid, All, Range, Coerce, wraps
 
 from subscity.app import get_app
 from subscity.controllers.cinemas import CinemasController
 from subscity.controllers.movies import MoviesController
 from subscity.controllers.screenings import ScreeningsController
+from subscity.models.account import Account
 from subscity.utils import validator_date, validator_city, json_response, error_msg
 
 DB_URI = os.environ.get('DB_URI')
 
 APP = get_app()
 DB = SQLAlchemy(APP)
+
+
+def requires_auth(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        if not Account.check(request.headers.get('Authorization')):
+            return json_response({'result': 'not allowed'}), 403
+        return func(*args, **kwargs)
+    return decorated
 
 
 @APP.route('/movies/<city>', methods=['GET'])
@@ -75,3 +85,9 @@ def get_screenings_for_day(city: str, date: str) -> (Response, int):
         return json_response(error_msg(exc)), 400
     result = ScreeningsController.get_for_day(validated['date'], validated['city'])
     return json_response(result), 200
+
+
+@APP.route('/secret')
+@requires_auth
+def get_info() -> (Response, int):
+    return json_response({'result': 42}), 200

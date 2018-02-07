@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+import pytest
 from subscity.models.account import Account
+
+parametrize = pytest.mark.parametrize
 
 
 class TestModelAccount(object):
@@ -25,7 +28,7 @@ class TestModelAccount(object):
 
         assert "Duplicate entry" in str(excinfo.value)
 
-    def test_check_empty(self, dbsession):
+    def test_check_non_existing(self, dbsession):
         assert Account.check('some-non-existing-token') is False
 
     def test_check_inactive(self, dbsession):
@@ -35,10 +38,12 @@ class TestModelAccount(object):
 
         assert Account.check('sometoken') is False
 
-    def test_check_valid(self, dbsession):
+    @parametrize('api_token, result', [('sometoken', True), ('someothertoken', False),
+                                       ('', False), (None, False)])
+    def test_check_valid(self, api_token, result, dbsession):
         account = Account(api_token='sometoken', name='app-user', active=True)
         dbsession.add(account)
         dbsession.commit()
 
-        assert Account.check('sometoken') is True
-        assert Account.check('someothertoken') is False
+        assert Account.check(api_token) == result
+

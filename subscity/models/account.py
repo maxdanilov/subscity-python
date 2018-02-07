@@ -1,4 +1,6 @@
 import datetime
+from typing import Optional
+
 from sqlalchemy import Column, String, Integer, DateTime, Boolean
 from subscity.models.base import Base, DB
 
@@ -15,7 +17,9 @@ class Account(Base):  # pylint: disable=no-init
                         nullable=False)
 
     @classmethod
-    def check(cls, api_token: str) -> bool:
+    def check(cls, api_token: Optional[str]) -> bool:
+        if not api_token:
+            return False
         query = DB.session.query(Account)
         query = query.filter(cls.api_token == api_token)
         query = query.filter(cls.active.is_(True))

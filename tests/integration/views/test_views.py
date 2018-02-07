@@ -89,3 +89,30 @@ class TestAppViews(object):
         assert result.status_code == 200
         assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['m1', 'm2']
         mock_get_movies.assert_called_once_with('msk')
+
+    def test_requires_auth_not_authorized(self, client):
+        result = client.get('/secret')
+        assert result.status_code == 403
+        assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
+
+    def test_requires_auth_wrong_token(self, client, dbsession):
+        from subscity.models.account import Account
+
+        account = Account(api_token='sometoken', active=True, name='app')
+        dbsession.add(account)
+        dbsession.commit()
+
+        result = client.get('/secret', headers={'Authorization': 'wrong_token'})
+        assert result.status_code == 403
+        assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
+
+    def test_requires_auth_authorized(self, client, dbsession):
+        from subscity.models.account import Account
+
+        account = Account(api_token='sometoken', active=True, name='app')
+        dbsession.add(account)
+        dbsession.commit()
+
+        result = client.get('/secret', headers={'Authorization': 'sometoken'})
+        assert result.status_code == 200
+        assert json.loads(result.get_data().decode('utf-8')) == {'result': 42}
