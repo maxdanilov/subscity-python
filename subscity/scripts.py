@@ -84,6 +84,7 @@ def update_test_screening_fixtures() -> None:
     _update_test_fixture('spb', 'screenings', 'bilet.xml')
 
 
+# TODO test me
 def update_base() -> None:
     base_download_url = 'https://afisha.yandex.ru/export/legacy'
     auth_token = os.environ.get('YANDEX_AUTH_TOKEN')
@@ -105,6 +106,10 @@ def update_base() -> None:
     tar = tarfile.open(file_name, 'r:gz')
     tar.extractall(Yap.LOCAL_BASE_STORAGE)
     tar.close()
+
+    print("Reformatting with xmllint")
+    os.system("find " + Yap.LOCAL_BASE_STORAGE + " -path \"*cinema/*.xml\" -type f -exec "
+              "xmllint --output '{}' --format '{}' \\;")
 
     print('Removing archive')
     os.remove(file_name)
