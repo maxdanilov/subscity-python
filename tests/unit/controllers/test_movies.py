@@ -123,6 +123,24 @@ class TestMoviesController(object):
                   'imdb': {'votes': None, 'id': None, 'rating': None}},
              'description': {'ru': None, 'en': None}}]
 
+    def test_get_movie_not_found(self, mocker):
+        from subscity.models.movie import Movie
+        mock_get_by_id = mocker.patch.object(Movie, 'get_by_id', return_value=None)
+        result = MoviesController.get_movie(42)
+        assert result == {}
+        mock_get_by_id.assert_called_once_with(42)
+
+    def test_get_movie(self, mocker):
+        from subscity.models.movie import Movie
+        mock_movie = Movie()
+        mock_get_by_id = mocker.patch.object(Movie, 'get_by_id', return_value=mock_movie)
+        mock_render = mocker.patch.object(MoviesController, 'render_movie', return_value='result')
+
+        result = MoviesController.get_movie(42)
+        assert result == 'result'
+        mock_get_by_id.assert_called_once_with(42)
+        mock_render.assert_called_once_with(mock_movie, None)
+
     def test_get_movies(self, mocker):
         from subscity.models.screening import Screening
         from subscity.models.movie import Movie

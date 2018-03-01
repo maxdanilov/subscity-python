@@ -1,3 +1,4 @@
+from collections import namedtuple
 from typing import List
 
 from subscity.models.movie import Movie
@@ -13,6 +14,13 @@ class MoviesController(object):
         return cls.render_movies(movies, movies_api_ids_stats)
 
     @classmethod
+    def get_movie(cls, movie_id: int) -> dict:
+        movie = Movie.get_by_id(movie_id)
+        if not movie:
+            return {}
+        return cls.render_movie(movie, None)
+
+    @classmethod
     def render_movies(cls, movies: List, movies_api_ids_stats: List) -> List:
         result = []
         for movie in movies:
@@ -22,70 +30,74 @@ class MoviesController(object):
                          None)
             if not stats:
                 continue
-            movie_dict = \
-                {
-                    # TODO poster, trailers
-                    'id': movie.id,
-                    'age_restriction': movie.age_restriction,
-                    'duration': movie.duration,
-                    'year': movie.year,
-                    'cast':
-                        {
-                            'en': movie.cast_en.split(', ') if movie.cast_en else None,
-                            'ru': movie.cast.split(', ') if movie.cast else None
-                        },
-                    'genres':
-                        {
-                            'en': movie.genres_en.split(', ') if movie.genres_en else None,
-                            'ru': movie.genres.split(', ') if movie.genres else None,
-                        },
-                    'directors':
-                        {
-                            'en': movie.directors_en.split(', ') if movie.directors_en else None,
-                            'ru': movie.directors.split(', ') if movie.directors else None,
-                        },
-                    'countries':
-                        {
-                            'en': movie.countries_en.split(', ') if movie.countries_en else None,
-                            'ru': movie.countries.split(', ') if movie.countries else None
-                        },
-                    'description':
-                        {
-                            'en': movie.description_en,
-                            'ru': movie.description,
-                        },
-                    'languages':
-                        {
-                            'en': movie.languages_en.split(', ') if movie.languages_en else None,
-                            'ru': movie.languages.split(', ') if movie.languages else None,
-                        },
-                    'title':
-                        {
-                            'en': movie.title_en,
-                            'ru': movie.title
-                        },
-                    'screenings':
-                        {
-                            'count': stats.screenings,
-                            'next': stats.next_screening.isoformat() if stats.next_screening
-                            else None,  # pylint:disable=bad-continuation
-                        },
-                    'ratings':
-                        {
-                            'kinopoisk':
-                                {
-                                    'id': movie.kinopoisk_id,
-                                    'rating': movie.kinopoisk_rating,
-                                    'votes': movie.kinopoisk_votes
-                                },
-                            'imdb':
-                                {
-                                    'id': movie.imdb_id,
-                                    'rating': movie.imdb_rating,
-                                    'votes': movie.imdb_votes
-                                }
-                        },
-                    'premiere': movie.premiere.strftime("%Y-%m-%d") if movie.premiere else None
-                }
-            result.append(movie_dict)
+            result.append(cls.render_movie(movie, stats))
         return result
+
+    @classmethod
+    def render_movie(cls, movie: Movie, stats: namedtuple) -> dict:
+        # TODO poster, trailers
+        screenings = None
+        if stats:
+            screenings = {
+                'count': stats.screenings,
+                'next': stats.next_screening.isoformat() if stats.next_screening else None
+            }
+
+        return {
+            'id': movie.id,
+            'age_restriction': movie.age_restriction,
+            'duration': movie.duration,
+            'year': movie.year,
+            'cast':
+                {
+                    'en': movie.cast_en.split(', ') if movie.cast_en else None,
+                    'ru': movie.cast.split(', ') if movie.cast else None
+                },
+            'genres':
+                {
+                    'en': movie.genres_en.split(', ') if movie.genres_en else None,
+                    'ru': movie.genres.split(', ') if movie.genres else None,
+                },
+            'directors':
+                {
+                    'en': movie.directors_en.split(', ') if movie.directors_en else None,
+                    'ru': movie.directors.split(', ') if movie.directors else None,
+                },
+            'countries':
+                {
+                    'en': movie.countries_en.split(', ') if movie.countries_en else None,
+                    'ru': movie.countries.split(', ') if movie.countries else None
+                },
+            'description':
+                {
+                    'en': movie.description_en,
+                    'ru': movie.description,
+                },
+            'languages':
+                {
+                    'en': movie.languages_en.split(', ') if movie.languages_en else None,
+                    'ru': movie.languages.split(', ') if movie.languages else None,
+                },
+            'title':
+                {
+                    'en': movie.title_en,
+                    'ru': movie.title
+                },
+            'screenings': screenings,
+            'ratings':
+                {
+                    'kinopoisk':
+                        {
+                            'id': movie.kinopoisk_id,
+                            'rating': movie.kinopoisk_rating,
+                            'votes': movie.kinopoisk_votes
+                        },
+                    'imdb':
+                        {
+                            'id': movie.imdb_id,
+                            'rating': movie.imdb_rating,
+                            'votes': movie.imdb_votes
+                        }
+                },
+            'premiere': movie.premiere.strftime("%Y-%m-%d") if movie.premiere else None
+        }

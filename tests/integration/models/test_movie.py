@@ -24,6 +24,23 @@ class TestMovie(object):
         result = Movie.get_all_api_ids()
         assert result == ['aaa', 'bbb']
 
+    def test_get_by_id_empty(self, dbsession):
+        assert Movie.get_by_id(1234) is None
+
+    def test_get_by_id(self, dbsession):
+        import datetime
+        m1 = Movie(id=12, api_id='aaa', title='Title A',
+                   created_at=datetime.datetime(2017, 1, 1),
+                   updated_at=datetime.datetime(2017, 1, 2))
+        m2 = Movie(id=13, api_id='bbb', title='Title B',
+                   created_at=datetime.datetime(2017, 1, 1),
+                   updated_at=datetime.datetime(2017, 1, 2))
+        dbsession.add(m1)
+        dbsession.add(m2)
+        dbsession.commit()
+
+        assert Movie.get_by_id(13) == m2
+
     def test_get_all_empty(self, dbsession):
         assert Movie.get_all() == []
 

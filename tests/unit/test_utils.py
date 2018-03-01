@@ -5,6 +5,12 @@ parametrize = pytest.mark.parametrize
 
 
 class TestUtils(object):
+    def test_read_file(self):
+        from subscity.utils import read_file
+        result = read_file('pytest.ini')
+        assert result == '[pytest]\n\naddopts=--cov=subscity subscity/ --cov=tests ' \
+                         '--cov-report html -v --random\n'
+
     def test_format_datetime_none(self):
         from subscity.utils import format_datetime
         result = format_datetime(None)

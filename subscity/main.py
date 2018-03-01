@@ -38,6 +38,20 @@ def get_movies(city: str) -> (Response, int):
     return json_response(result), 200
 
 
+@APP.route('/<city>/movies/<movie_id>', methods=['GET'])
+def get_movie(city: str, movie_id: str) -> (Response, int):
+    validator = Schema({Required('movie_id'): All(Coerce(int), Range(min=1),
+                                                  msg='movie id must be an integer'),
+                        Required('city'): validator_city()})
+    try:
+        validated = validator({'movie_id': movie_id, 'city': city})
+    except MultipleInvalid as exc:
+        return json_response(error_msg(exc)), 400
+    result = MoviesController.get_movie(validated['movie_id'])
+    code = 200 if result else 404
+    return json_response(result), code
+
+
 @APP.route('/<city>/cinemas', methods=['GET'])
 def get_cinemas(city: str) -> (Response, int):
     validator = Schema({Required('city'): validator_city()})

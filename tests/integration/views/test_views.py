@@ -90,6 +90,31 @@ class TestAppViews(object):
         assert sorted(json.loads(result.get_data().decode('utf-8'))) == ['m1', 'm2']
         mock_get_movies.assert_called_once_with('msk')
 
+    def test_get_movie_wrong_arguments(self, client):
+        result = client.get('/bad_city/movies/bad_id')
+        assert result.status_code == 400
+        assert sorted(json.loads(result.get_data().decode('utf-8'))['errors']) == \
+           ['city should be one of: [\'msk\', \'spb\']',
+            'movie id must be an integer']
+
+    def test_get_movie_not_found(self, client, mocker):
+        from subscity.controllers.movies import MoviesController
+        mock_get_movie = mocker.patch.object(MoviesController, 'get_movie',
+                                             return_value={})
+        result = client.get('/msk/movies/42')
+        assert result.status_code == 404
+        assert json.loads(result.get_data().decode('utf-8')) == {}
+        mock_get_movie.assert_called_once_with(42)
+
+    def test_get_movie(self, client, mocker):
+        from subscity.controllers.movies import MoviesController
+        mock_get_movie = mocker.patch.object(MoviesController, 'get_movie',
+                                             return_value={'id': 42})
+        result = client.get('/msk/movies/42')
+        assert result.status_code == 200
+        assert json.loads(result.get_data().decode('utf-8')) == {'id': 42}
+        mock_get_movie.assert_called_once_with(42)
+
     def test_requires_auth_not_authorized(self, client):
         result = client.get('/secret')
         assert result.status_code == 403

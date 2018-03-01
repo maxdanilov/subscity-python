@@ -4,7 +4,6 @@ from mock import call
 class TestScripts(object):
     def test_update_screenings(self, mocker):
         import datetime
-        from subscity.main import DB
         from subscity.models.screening import Screening
         from subscity.scripts import update_screenings
         from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
@@ -54,6 +53,36 @@ class TestScripts(object):
                                                    call(name='3', api_id='ccc'),
                                                    call(name='4', api_id='ddd')]
         assert mock_cinema_save.call_args_list == [call()] * 4
+
+    def test_update_cinemas_exception(self, mocker):
+        import traceback
+
+        from subscity.main import DB
+        from subscity.yandex_afisha_parser import YandexAfishaParser
+        from subscity.scripts import update_cinemas
+        from subscity.models.cinema import Cinema
+
+        mock_get_cinemas = mocker.patch.object(YandexAfishaParser, 'get_cinemas',
+                                               side_effect=[[{'name': '1', 'api_id': 'aaa'},
+                                                             {'name': '2', 'api_id': 'bbb'}],
+                                                            [{'name': '3', 'api_id': 'ccc'},
+                                                             {'name': '4', 'api_id': 'ddd'}]])
+        mock_cinema_init = mocker.patch.object(Cinema, '__init__', return_value=None)
+        mock_cinema_save = mocker.patch.object(Cinema, 'create_or_update',
+                                               side_effect=[None, ValueError('error'), None, None])
+        mock_rollback = mocker.patch.object(DB.session, 'rollback')
+        mock_traceback = mocker.patch.object(traceback, 'print_exc')
+
+        update_cinemas()
+
+        assert mock_get_cinemas.call_args_list == [call('msk'), call('spb')]
+        assert mock_cinema_init.call_args_list == [call(name='1', api_id='aaa'),
+                                                   call(name='2', api_id='bbb'),
+                                                   call(name='3', api_id='ccc'),
+                                                   call(name='4', api_id='ddd')]
+        assert mock_cinema_save.call_args_list == [call()] * 4
+        mock_rollback.assert_called_once_with()
+        mock_traceback.assert_called_once_with()
 
     def test_update_movies(self, mocker):
         from subscity.yandex_afisha_parser import YandexAfishaParser
