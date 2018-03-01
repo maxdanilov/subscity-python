@@ -168,20 +168,13 @@ class TestModelCinema(object):
                    updated_at=datetime.datetime(2017, 2, 3))
         d.create_or_update()
         result2 = dbsession.query(Cinema).all()
-        assert len(result2) == 1
-        assert result2[0].to_dict() == {'address': None,
-                                        'api_id': 'badcode',
-                                        'city': 'paris',
-                                        'created_at': '2017-02-01T00:00:00',
-                                        'fetch_all': True,
-                                        'id': c.id,
-                                        'metro': None,
-                                        'name': 'Cinema',
-                                        'phone': 'phone',
-                                        'updated_at': '2017-02-03T00:00:00',
-                                        'latitude': None,
-                                        'longitude': None,
-                                        'url': 'url'}
+        assert len(result2) == 2
+
+        assert result2[0].name == 'Cinema'
+        assert result2[0].api_id == 'deadbeef'
+
+        assert result2[1].name == 'Cinema'
+        assert result2[1].api_id == 'badcode'
 
     def test_save_or_update_with_same_api_id(self, dbsession):
         from subscity.models.cinema import Cinema

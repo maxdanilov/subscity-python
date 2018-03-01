@@ -6,8 +6,7 @@ from sqlalchemy import (
     String,
     DateTime,
     Boolean,
-    Numeric,
-    or_
+    Numeric
 )
 
 from subscity.models.base import Base, DB
@@ -46,7 +45,7 @@ class Cinema(Base):  # pylint: disable=no-init
     def create_or_update(self) -> None:
         cls = self.__class__
         query = DB.session.query(cls)
-        query = query.filter(or_(cls.name == self.name, cls.api_id == self.api_id))
+        query = query.filter(cls.api_id == self.api_id)
         obj_in_db = query.one_or_none()
         obj = self
 
