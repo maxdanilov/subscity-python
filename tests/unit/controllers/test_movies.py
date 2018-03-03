@@ -108,7 +108,7 @@ class TestMoviesController(object):
                  {'ru': None, 'en': None},
              'cast': {'ru': None, 'en': None},
              'stats':
-                 {'screenings': 1, 'cinemas': 1, 'next_screening': "2017-02-20T09:15:00"},
+                 {'screenings': 1, 'cinemas': 1, 'next_screening': '2017-02-20T09:15:00'},
              'age_restriction': None,
              'duration': None,
              'year': None,
@@ -126,21 +126,59 @@ class TestMoviesController(object):
 
     def test_get_movie_not_found(self, mocker):
         from subscity.models.movie import Movie
+        from subscity.models.screening import Screening
+
         mock_get_by_id = mocker.patch.object(Movie, 'get_by_id', return_value=None)
-        result = MoviesController.get_movie(42)
+        mock_get_movie_api_ids = mocker.patch.object(Screening, 'get_movie_api_ids',
+                                                     return_value=[])
+        result = MoviesController.get_movie('msk', 42)
         assert result == {}
         mock_get_by_id.assert_called_once_with(42)
+        mock_get_movie_api_ids.assert_called_once_with('msk')
 
-    def test_get_movie(self, mocker):
+    def test_get_movie_empty_stats(self, mocker):
         from subscity.models.movie import Movie
+        from subscity.models.screening import Screening
+
         mock_movie = Movie()
         mock_get_by_id = mocker.patch.object(Movie, 'get_by_id', return_value=mock_movie)
+        mock_get_movie_api_ids = mocker.patch.object(Screening, 'get_movie_api_ids',
+                                                     return_value=[])
         mock_render = mocker.patch.object(MoviesController, 'render_movie', return_value='result')
 
-        result = MoviesController.get_movie(42)
+        result = MoviesController.get_movie('msk', 42)
         assert result == 'result'
         mock_get_by_id.assert_called_once_with(42)
+        mock_get_movie_api_ids.assert_called_once_with('msk')
         mock_render.assert_called_once_with(mock_movie, None)
+
+    def test_get_movie(self, mocker):
+        from datetime import datetime
+        from subscity.models.movie import Movie
+        from subscity.models.screening import Screening
+
+        class Row(object):
+            def __init__(self, next_screening, screenings, movie_api_id):
+                self.next_screening = next_screening
+                self.screenings = screenings
+                self.movie_api_id = movie_api_id
+
+        api_ids_stats = [Row(next_screening=datetime(2017, 2, 23, 8, 20), screenings=10,
+                             movie_api_id='api_id1'),
+                         Row(next_screening=datetime(2017, 2, 20, 9, 15), screenings=1,
+                             movie_api_id='api_id2')]
+
+        mock_movie = Movie(api_id='api_id2')
+        mock_get_by_id = mocker.patch.object(Movie, 'get_by_id', return_value=mock_movie)
+        mock_get_movie_api_ids = mocker.patch.object(Screening, 'get_movie_api_ids',
+                                                     return_value=api_ids_stats)
+        mock_render = mocker.patch.object(MoviesController, 'render_movie', return_value='result')
+
+        result = MoviesController.get_movie('msk', 42)
+        assert result == 'result'
+        mock_get_by_id.assert_called_once_with(42)
+        mock_get_movie_api_ids.assert_called_once_with('msk')
+        mock_render.assert_called_once_with(mock_movie, api_ids_stats[1])
 
     def test_get_movies(self, mocker):
         from subscity.models.screening import Screening

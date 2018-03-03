@@ -47,7 +47,7 @@ def get_movie(city: str, movie_id: str) -> (Response, int):
         validated = validator({'movie_id': movie_id, 'city': city})
     except MultipleInvalid as exc:
         return json_response(error_msg(exc)), 400
-    result = MoviesController.get_movie(validated['movie_id'])
+    result = MoviesController.get_movie(validated['city'], validated['movie_id'])
     code = 200 if result else 404
     return json_response(result), code
 

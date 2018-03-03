@@ -104,7 +104,7 @@ class TestAppViews(object):
         result = client.get('/msk/movies/42')
         assert result.status_code == 404
         assert json.loads(result.get_data().decode('utf-8')) == {}
-        mock_get_movie.assert_called_once_with(42)
+        mock_get_movie.assert_called_once_with('msk', 42)
 
     def test_get_movie(self, client, mocker):
         from subscity.controllers.movies import MoviesController
@@ -113,7 +113,7 @@ class TestAppViews(object):
         result = client.get('/msk/movies/42')
         assert result.status_code == 200
         assert json.loads(result.get_data().decode('utf-8')) == {'id': 42}
-        mock_get_movie.assert_called_once_with(42)
+        mock_get_movie.assert_called_once_with('msk', 42)
 
     def test_requires_auth_not_authorized(self, client):
         result = client.get('/secret')

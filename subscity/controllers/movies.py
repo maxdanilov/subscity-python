@@ -14,11 +14,15 @@ class MoviesController(object):
         return cls.render_movies(movies, movies_api_ids_stats)
 
     @classmethod
-    def get_movie(cls, movie_id: int) -> dict:
+    def get_movie(cls, city: str, movie_id: int) -> dict:
+        movies_api_ids_stats = Screening.get_movie_api_ids(city)
         movie = Movie.get_by_id(movie_id)
+
         if not movie:
             return {}
-        return cls.render_movie(movie, None)
+        stats = next((obj for obj in movies_api_ids_stats if obj.movie_api_id == movie.api_id),
+                     None)
+        return cls.render_movie(movie, stats)
 
     @classmethod
     def render_movies(cls, movies: List, movies_api_ids_stats: List) -> List:
@@ -36,13 +40,12 @@ class MoviesController(object):
     @classmethod
     def render_movie(cls, movie: Movie, stats: namedtuple) -> dict:
         # TODO poster, trailers
-        stats_dict = None
-        if stats:
-            stats_dict = {
-                'screenings': stats.screenings,
-                'cinemas': stats.cinemas,
-                'next_screening': stats.next_screening.isoformat() if stats.next_screening else None
-            }
+
+        stats_info = {
+            'screenings': stats.screenings if stats else 0,
+            'cinemas': stats.cinemas if stats else 0,
+            'next_screening': stats.next_screening.isoformat() if stats else None
+        }
 
         return {
             'id': movie.id,
@@ -84,7 +87,7 @@ class MoviesController(object):
                     'en': movie.title_en,
                     'ru': movie.title
                 },
-            'stats': stats_dict,
+            'stats': stats_info,
             'ratings':
                 {
                     'kinopoisk':
