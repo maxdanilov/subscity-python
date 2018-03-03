@@ -116,9 +116,11 @@ class Screening(Base):  # pylint: disable=no-init
 
     @staticmethod
     def get_movie_api_ids(city: str) -> List[namedtuple]:
-        query = DB.session.query(func.min(Screening.date_time).label('next_screening'),
-                                 func.count().label('screenings'),
-                                 Screening.movie_api_id)
+        query = DB.session.query(
+            func.min(Screening.date_time).label('next_screening'),
+            func.count().label('screenings'),
+            func.count(func.distinct(Screening.cinema_api_id)).label('cinemas'),
+            Screening.movie_api_id)
         query = query.filter(Screening.city == city)
         query = query.filter(Screening.date_time > get_now(city))
         query = query.group_by(Screening.movie_api_id)

@@ -36,11 +36,12 @@ class MoviesController(object):
     @classmethod
     def render_movie(cls, movie: Movie, stats: namedtuple) -> dict:
         # TODO poster, trailers
-        screenings = None
+        stats_dict = None
         if stats:
-            screenings = {
-                'count': stats.screenings,
-                'next': stats.next_screening.isoformat() if stats.next_screening else None
+            stats_dict = {
+                'screenings': stats.screenings,
+                'cinemas': stats.cinemas,
+                'next_screening': stats.next_screening.isoformat() if stats.next_screening else None
             }
 
         return {
@@ -83,7 +84,7 @@ class MoviesController(object):
                     'en': movie.title_en,
                     'ru': movie.title
                 },
-            'screenings': screenings,
+            'stats': stats_dict,
             'ratings':
                 {
                     'kinopoisk':

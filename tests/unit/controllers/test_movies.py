@@ -58,18 +58,19 @@ class TestMoviesController(object):
         })
 
         class Row(object):
-            def __init__(self, next_screening, screenings, movie_api_id):
+            def __init__(self, next_screening, screenings, cinemas, movie_api_id):
                 self.next_screening = next_screening
                 self.screenings = screenings
+                self.cinemas = cinemas
                 self.movie_api_id = movie_api_id
 
         movies = [m1, m2, m3, m4]
         movies_api_ids_stats = [Row(next_screening=datetime(2017, 2, 23, 8, 20), screenings=10,
-                                    movie_api_id='5874ea2a685ae0b186614bb5'),
+                                    cinemas=4, movie_api_id='5874ea2a685ae0b186614bb5'),
                                 Row(next_screening=datetime(2017, 2, 20, 9, 15), screenings=1,
-                                    movie_api_id='fishchipscupoteabadfoodworseweather'),
+                                    cinemas=1, movie_api_id='fishchipscupoteabadfoodworseweather'),
                                 Row(next_screening=datetime(2017, 2, 19, 18, 20), screenings=5,
-                                    movie_api_id='weneedtogodeeper')]
+                                    cinemas=2, movie_api_id='weneedtogodeeper')]
         result = MoviesController.render_movies(movies, movies_api_ids_stats)
         assert result == [
             {'languages':
@@ -79,8 +80,8 @@ class TestMoviesController(object):
                  {'ru': ['Райан Гослинг', 'Эмма Стоун', 'Финн Уиттрок', 'Дж.К. Симмонс',
                          'Соноя Мидзуно'],
                   'en': ['Ryan Gosling', 'Emma Stone', 'J.K. Simmons']},
-             'screenings':
-                 {'count': 10, 'next': '2017-02-23T08:20:00'},
+             'stats':
+                 {'screenings': 10, 'cinemas': 4, 'next_screening': '2017-02-23T08:20:00'},
              'age_restriction': 16,
              'duration': 128,
              'year': 2016,
@@ -106,8 +107,8 @@ class TestMoviesController(object):
             {'languages':
                  {'ru': None, 'en': None},
              'cast': {'ru': None, 'en': None},
-             'screenings':
-                 {'count': 1, 'next': "2017-02-20T09:15:00"},
+             'stats':
+                 {'screenings': 1, 'cinemas': 1, 'next_screening': "2017-02-20T09:15:00"},
              'age_restriction': None,
              'duration': None,
              'year': None,

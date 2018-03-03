@@ -432,11 +432,12 @@ class TestModelScreening(object):
 
         c1 = Cinema(api_id='fake_cinema1', city='spb', name='c1')
         c2 = Cinema(api_id='fake_cinema2', city='msk', name='c2')
+        c3 = Cinema(api_id='fake_cinema3', city='msk', name='c3')
         m1 = Movie(api_id='fake_movie1', title='t1')
         m2 = Movie(api_id='fake_movie2', title='t2')
         m3 = Movie(api_id='fake_movie3', title='t3')
 
-        [dbsession.add(x) for x in [c1, c2, m1, m2, m3]]
+        [dbsession.add(x) for x in [c1, c2, c3, m1, m2, m3]]
         dbsession.commit()
 
         # passed
@@ -456,16 +457,21 @@ class TestModelScreening(object):
         s4 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
                        city='msk', date_time=datetime.datetime(2017, 2, 16, 20, 0))
 
-        [dbsession.add(x) for x in [s0, s1, s2, s3, s4]]
+        # our guy
+        s5 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie3',
+                       city='msk', date_time=datetime.datetime(2017, 2, 16, 21, 0))
+
+        [dbsession.add(x) for x in [s0, s1, s2, s3, s4, s5]]
         dbsession.commit()
 
         with mock_datetime(mock_utcnow=datetime.datetime(2017, 2, 15, 8, 10)):
             result = Screening.get_movie_api_ids('msk')
-        assert result == [(datetime.datetime(2017, 2, 15, 13, 0), 2, 'fake_movie2'),
-                          (datetime.datetime(2017, 2, 16, 20, 0), 1, 'fake_movie3')]
+        assert result == [(datetime.datetime(2017, 2, 15, 13, 0), 2, 1, 'fake_movie2'),
+                          (datetime.datetime(2017, 2, 16, 20, 0), 2, 2, 'fake_movie3')]
         # test that we have a namedtuple, not just a tuple
         assert result[0].next_screening == datetime.datetime(2017, 2, 15, 13, 0)
         assert result[0].screenings == 2
+        assert result[0].cinemas == 1
         assert result[0].movie_api_id == 'fake_movie2'
 
     def test_bulk_save_empty_input(self, dbsession):
