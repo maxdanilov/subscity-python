@@ -116,28 +116,45 @@ class TestAppViews(object):
         mock_get_movie.assert_called_once_with('msk', 42)
 
     def test_requires_auth_not_authorized(self, client):
-        result = client.get('/secret')
+        result = client.get('/msk/secret')
         assert result.status_code == 403
         assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
 
     def test_requires_auth_wrong_token(self, client, dbsession):
         from subscity.models.account import Account
+        from subscity.models.account import AccountRole
 
-        account = Account(api_token='sometoken', active=True, name='app')
+        account = Account(api_token='sometoken', active=True, name='app',
+                          role=AccountRole.API_READ)
         dbsession.add(account)
         dbsession.commit()
 
-        result = client.get('/secret', headers={'Authorization': 'wrong_token'})
+        result = client.get('/msk/secret', headers={'Authorization': 'wrong_token'})
+        assert result.status_code == 403
+        assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
+
+    def test_requires_auth_too_weak_role(self, client, dbsession):
+        from subscity.models.account import Account
+        from subscity.models.account import AccountRole
+
+        account = Account(api_token='sometoken', active=True, name='app',
+                          role=AccountRole.API_READ)
+        dbsession.add(account)
+        dbsession.commit()
+
+        result = client.get('/msk/secret', headers={'Authorization': 'sometoken'})
         assert result.status_code == 403
         assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
 
     def test_requires_auth_authorized(self, client, dbsession):
         from subscity.models.account import Account
+        from subscity.models.account import AccountRole
 
-        account = Account(api_token='sometoken', active=True, name='app')
+        account = Account(api_token='sometoken', active=True, name='app',
+                          role=AccountRole.API_WRITE)
         dbsession.add(account)
         dbsession.commit()
 
-        result = client.get('/secret', headers={'Authorization': 'sometoken'})
+        result = client.get('/msk/secret', headers={'Authorization': 'sometoken'})
         assert result.status_code == 200
-        assert json.loads(result.get_data().decode('utf-8')) == {'result': 42}
+        assert json.loads(result.get_data().decode('utf-8')) == {'result': 42, 'city': 'msk'}

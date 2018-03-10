@@ -9,7 +9,7 @@ from subscity.app import get_app
 from subscity.controllers.cinemas import CinemasController
 from subscity.controllers.movies import MoviesController
 from subscity.controllers.screenings import ScreeningsController
-from subscity.models.account import Account
+from subscity.models.account import Account, AccountRole
 from subscity.utils import validator_date, validator_city, json_response, error_msg
 
 DB_URI = os.environ.get('DB_URI')
@@ -18,13 +18,15 @@ APP = get_app()
 DB = SQLAlchemy(APP)
 
 
-def requires_auth(func):
-    @wraps(func)
-    def decorated(*args, **kwargs):
-        if not Account.check(request.headers.get('Authorization')):
-            return json_response({'result': 'not allowed'}), 403
-        return func(*args, **kwargs)
-    return decorated
+def requires_auth(role: AccountRole = AccountRole.API_READ):
+    def decorator(func):
+        @wraps(func)
+        def decorated(*args, **kwargs):
+            if not Account.check(request.headers.get('Authorization'), role):
+                return json_response({'result': 'not allowed'}), 403
+            return func(*args, **kwargs)
+        return decorated
+    return decorator
 
 
 @APP.route('/<city>/movies', methods=['GET'])
@@ -101,7 +103,7 @@ def get_screenings_for_day(city: str, date: str) -> (Response, int):
     return json_response(result), 200
 
 
-@APP.route('/secret')
-@requires_auth
-def get_info() -> (Response, int):
-    return json_response({'result': 42}), 200
+@APP.route('/<city>/secret')
+@requires_auth(AccountRole.API_WRITE)
+def get_info(city: str) -> (Response, int):
+    return json_response({'result': 42, 'city': city}), 200
