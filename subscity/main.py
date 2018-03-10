@@ -10,7 +10,7 @@ from subscity.controllers.cinemas import CinemasController
 from subscity.controllers.movies import MoviesController
 from subscity.controllers.screenings import ScreeningsController
 from subscity.models.account import Account, AccountRole
-from subscity.utils import validator_date, validator_city, json_response, error_msg
+from subscity.utils import validator_date, validator_city, json_response, error_msg, parse_headers
 
 DB_URI = os.environ.get('DB_URI')
 
@@ -22,7 +22,8 @@ def requires_auth(role: AccountRole = AccountRole.API_READ):
     def decorator(func):
         @wraps(func)
         def decorated(*args, **kwargs):
-            if not Account.check(request.headers.get('Authorization'), role):
+            name, api_token = parse_headers(request.headers.get('Authorization'))
+            if not Account.check(name, api_token, role):
                 return json_response({'result': 'not allowed'}), 403
             return func(*args, **kwargs)
         return decorated

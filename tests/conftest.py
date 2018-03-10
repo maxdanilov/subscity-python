@@ -17,6 +17,8 @@ def apply_migrations():
 
 @pytest.fixture(scope='session', autouse=True)
 def app():
+    from subscity.models.base import Base
+    Base.BCRYPT_ROUNDS = 4  # to decrease tests runtime
     # Setting up a flask test client
     APP.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
     APP.testing = True

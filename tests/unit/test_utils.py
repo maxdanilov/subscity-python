@@ -5,6 +5,27 @@ parametrize = pytest.mark.parametrize
 
 
 class TestUtils(object):
+    @parametrize('headers', [None, ''])
+    def test_parse_headers_empty(self, headers):
+        from subscity.utils import parse_headers
+        assert parse_headers(headers) == [None, None]
+
+    def test_parse_headers_broken_base64(self):
+        from subscity.utils import parse_headers
+        assert parse_headers('asaseoveoijeroiej') == [None, None]
+
+    def test_parse_headers_wrong_format_of_encoded_value(self):
+        import base64
+        from subscity.utils import parse_headers
+        headers = base64.b64encode(b'thisiswrong').decode('utf-8')
+        assert parse_headers(headers) == [None, None]
+
+    def test_parse_headers(self):
+        import base64
+        from subscity.utils import parse_headers
+        headers = base64.b64encode(b'fake_name,fake_token').decode('utf-8')
+        assert parse_headers(headers) == ['fake_name', 'fake_token']
+
     def test_read_file(self):
         from subscity.utils import read_file
         result = read_file('pytest.ini')

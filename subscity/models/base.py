@@ -14,6 +14,8 @@ DB = SQLAlchemy(APP)
 class Base(DB.Model):  # pylint:disable=no-init
     __abstract__ = True
 
+    BCRYPT_ROUNDS = 12
+
     def to_dict(self, stringify_datetime: bool = True) -> dict:
         result = {}
         for column in self.__table__.columns:

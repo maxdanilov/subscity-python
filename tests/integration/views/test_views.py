@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import base64
 import json
 
 import pytest
@@ -120,6 +120,19 @@ class TestAppViews(object):
         assert result.status_code == 403
         assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
 
+    def test_requires_auth_malformed_header(self, client, dbsession):
+        from subscity.models.account import Account
+        from subscity.models.account import AccountRole
+
+        account = Account(api_token='sometoken', active=True, name='app',
+                          role=AccountRole.API_READ)
+        dbsession.add(account)
+        dbsession.commit()
+
+        result = client.get('/msk/secret', headers={'Authorization': 'somethingwrong'})
+        assert result.status_code == 403
+        assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
+
     def test_requires_auth_wrong_token(self, client, dbsession):
         from subscity.models.account import Account
         from subscity.models.account import AccountRole
@@ -129,7 +142,8 @@ class TestAppViews(object):
         dbsession.add(account)
         dbsession.commit()
 
-        result = client.get('/msk/secret', headers={'Authorization': 'wrong_token'})
+        auth_header = base64.b64encode(b'app,someothertoken').decode('utf-8')
+        result = client.get('/msk/secret', headers={'Authorization': auth_header})
         assert result.status_code == 403
         assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
 
@@ -142,7 +156,8 @@ class TestAppViews(object):
         dbsession.add(account)
         dbsession.commit()
 
-        result = client.get('/msk/secret', headers={'Authorization': 'sometoken'})
+        auth_header = base64.b64encode(b'app,sometoken').decode('utf-8')
+        result = client.get('/msk/secret', headers={'Authorization': auth_header})
         assert result.status_code == 403
         assert json.loads(result.get_data().decode('utf-8')) == {'result': 'not allowed'}
 
@@ -155,6 +170,7 @@ class TestAppViews(object):
         dbsession.add(account)
         dbsession.commit()
 
-        result = client.get('/msk/secret', headers={'Authorization': 'sometoken'})
+        auth_header = base64.b64encode(b'app,sometoken').decode('utf-8')
+        result = client.get('/msk/secret', headers={'Authorization': auth_header})
         assert result.status_code == 200
         assert json.loads(result.get_data().decode('utf-8')) == {'result': 42, 'city': 'msk'}

@@ -1,12 +1,28 @@
+import base64
 import datetime
 import json
-from typing import Union, Optional
+from typing import Union, Optional, List
 
+import binascii
 from bs4 import BeautifulSoup
 from flask import Response
 import pytz
 from transliterate import translit
 from voluptuous import Invalid, MultipleInvalid
+
+
+def parse_headers(data: str) -> List[Optional[str]]:
+    # <name>,<api_token> in b64 -> [name, api_token]
+    if not data:
+        return [None, None]
+    try:
+        decoded = base64.b64decode(data.encode('utf-8')).decode('utf-8')
+    except binascii.Error:
+        return [None, None]
+    tokens = decoded.split(',')
+    if len(tokens) != 2:
+        return [None, None]
+    return tokens
 
 
 def json_response(data):
