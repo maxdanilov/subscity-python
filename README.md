@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/maxdanilov/subscity-python.svg?branch=master)](https://travis-ci.org/maxdanilov/subscity-python)
-[![Test Coverage](https://codeclimate.com/github/maxdanilov/subscity-python/badges/coverage.svg)](https://codeclimate.com/github/maxdanilov/subscity-python/coverage)
+[![codecov](https://codecov.io/gh/maxdanilov/subscity-python/branch/master/graph/badge.svg)](https://codecov.io/gh/maxdanilov/subscity-python)
 [![Updates](https://pyup.io/repos/github/maxdanilov/subscity-python/shield.svg)](https://pyup.io/repos/github/maxdanilov/subscity-python/)
 
 # SubsCity

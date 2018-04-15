@@ -13,4 +13,4 @@ script:
   - safety check
   - ./test.travis
 after_success:
-  - CODECLIMATE_REPO_TOKEN=b77e5f9ff68c9b8b3aa905273349ef3f440cbb69f55a1e5666775322c8463480 codeclimate-test-reporter
+  - codecov
