@@ -16,11 +16,10 @@ git clone https://github.com/s1341/pyenv-alias.git $(pyenv root)/plugins/pyenv-a
 ### Dependencies
 
 ```
-VERSION_ALIAS="subscity_3.6.4" pyenv install 3.6.4
-pyenv local subscity_3.6.4
-pyenv exec pip3 install --upgrade pip
-pyenv exec pip3 install -r requirements.txt
-pyenv exec pip3 install -e .
+VERSION_ALIAS="$(cat .python-version)" pyenv install $(cat .python-version | cut -d_ -f2)
+./run pip3 install --upgrade pip
+./run pip3 install -r requirements.txt
+./run pip3 install -e .
 ```
 
 ## Tests
