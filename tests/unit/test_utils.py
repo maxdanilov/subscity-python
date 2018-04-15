@@ -30,7 +30,7 @@ class TestUtils(object):
         from subscity.utils import read_file
         result = read_file('pytest.ini')
         assert result == '[pytest]\n\naddopts=--cov=subscity subscity/ --cov=tests ' \
-                         '--cov-report html -v --random\n'
+                         '--cov-report html -v\n'
 
     def test_format_datetime_none(self):
         from subscity.utils import format_datetime
