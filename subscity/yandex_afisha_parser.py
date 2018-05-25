@@ -106,7 +106,7 @@ class YandexAfishaParser(object):
         date = item.get('release_date')
         if not date:
             return None
-        return datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+        return datetime.strptime(date, '%Y-%m-%d')
 
     @staticmethod
     def _get_screening_time(item: dict) -> Optional[datetime]:
