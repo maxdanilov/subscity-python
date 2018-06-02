@@ -26,7 +26,7 @@ pathlib2==2.3.2
 pbr==4.0.3
 pexpect==4.5.0
 pickleshare==0.7.4
-prompt-toolkit==1.0.15
+prompt-toolkit==2.0.1
 ptyprocess==0.5.2
 py==1.5.3
 pycodestyle==2.4.0
