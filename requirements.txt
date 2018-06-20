@@ -33,7 +33,7 @@ pycodestyle==2.4.0
 Pygments==2.2.0
 pylint==1.9.1
 PyMySQL==0.8.1
-pytest==3.6.0
+pytest==3.6.2
 pytest-cov==2.5.1
 pytest-mock==1.10.0
 pytest-randomly==1.2.3
