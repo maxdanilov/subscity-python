@@ -4,7 +4,7 @@ astroid==2.0.1
 beautifulsoup4==4.6.1
 bcrypt==3.1.4
 click==6.7
-codecov==2.0.15
+codecov==2.1.5
 coverage==4.5.1
 decorator==4.2.1
 enum34==1.1.6
