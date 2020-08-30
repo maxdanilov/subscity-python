@@ -142,8 +142,7 @@ class YandexAfishaParser:
                             'city': city,
                             'price_min': cls._get_screening_price(screening),
                             'price_max': cls._get_screening_price(screening),
-                            'date_time': cls._get_screening_time(screening),
-                            'source': 'yandex'})
+                            'date_time': cls._get_screening_time(screening)})
         return result
 
     @staticmethod

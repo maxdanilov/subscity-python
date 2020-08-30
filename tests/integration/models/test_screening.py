@@ -78,7 +78,6 @@ class TestModelScreening(object):
             'date_time': datetime(2017, 1, 1, 9, 0),
             'price_min': 400,
             'price_max': 400,
-            'source': None,
             'created_at': screening.created_at,
             'updated_at': screening.updated_at
         }
@@ -231,7 +230,6 @@ class TestModelScreening(object):
                          'movie_api_id': '5575ec34cc1c72361ee31384',
                          'price_min': None,
                          'price_max': None,
-                         'source': 'yandex',
                          'ticket_api_id': None}
         assert dict2_ == {'cinema_api_id': '578c15008dabaf9ff14b9048',
                           'city': 'spb',
@@ -240,7 +238,6 @@ class TestModelScreening(object):
                           'movie_api_id': '55762ad4cc1c725c189884be',
                           'price_min': None,
                           'price_max': None,
-                          'source': 'yandex',
                           'ticket_api_id': None}
 
     @parametrize('date_time, day', [(datetime(2017, 2, 16, 10, 50), datetime(2017, 2, 16)),
