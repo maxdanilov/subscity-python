@@ -23,15 +23,14 @@ class Movie(Base):  # pylint: disable=no-init
     title = Column(String(255), nullable=False)
     title_original = Column(String(255))
 
+    languages = Column(String(255))
+
     countries = Column(String(255))
     countries_en = Column(String(255))
 
     year = Column(Integer)
     age_restriction = Column(Integer)
     duration = Column(Integer)
-
-    languages = Column(String(255))
-    languages_en = Column(String(255))
 
     cast = Column(String(512))
     cast_en = Column(String(512))
