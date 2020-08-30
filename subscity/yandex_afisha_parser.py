@@ -40,7 +40,7 @@ class YandexAfishaParser:
                 'poster_url': item.get('cover'),
                 'premiere': cls._get_premiere(item),
                 'title': item.get('t'),
-                'title_en': item.get('or'),
+                'title_original': item.get('or'),
                 'year': cls._get_year(item)
             })
         return result

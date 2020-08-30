@@ -4,7 +4,6 @@ from typing import List
 from sqlalchemy import (
     Boolean,
     Column,
-    Float,
     Integer,
     String,
     DateTime,
@@ -18,8 +17,11 @@ class Movie(Base):  # pylint: disable=no-init
     __tablename__ = 'movies'
     id = Column(Integer, autoincrement=True, primary_key=True)  # pylint: disable=invalid-name
     api_id = Column(String(64), primary_key=True, unique=True)
+
+    active = Column(Boolean)
+
     title = Column(String(255), nullable=False)
-    title_en = Column(String(255))
+    title_original = Column(String(255))
 
     countries = Column(String(255))
     countries_en = Column(String(255))

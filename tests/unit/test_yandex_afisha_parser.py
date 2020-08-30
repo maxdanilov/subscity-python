@@ -150,7 +150,7 @@ class TestYandexAfishaParser(object):
                           'b2823c79fe50ed1ca28cff7abea46f46/orig',
             'premiere': datetime(2018, 2, 1, 0, 0),
             'title': 'Три билборда на границе Эббинга, Миссури',
-            'title_en': 'Three Billboards Outside Ebbing, Missouri',
+            'title_original': 'Three Billboards Outside Ebbing, Missouri',
             'year': 2017
         }
         assert result[0] == expected

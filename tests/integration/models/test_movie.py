@@ -65,13 +65,14 @@ class TestMovie(object):
 
         m = Movie(api_id='deadbeef',
                   title='Название',
-                  title_en='Title',
+                  title_original='Title',
                   countries='Франция',
                   countries_en='France',
                   created_at=datetime.datetime(2017, 1, 1),
                   updated_at=datetime.datetime(2017, 1, 1))
         assert m.to_dict() == {'api_id': 'deadbeef',
                                'age_restriction': None,
+                               'active': None,
                                'cast': None,
                                'cast_en': None,
                                'countries': 'Франция',
@@ -93,7 +94,7 @@ class TestMovie(object):
                                'poster_url': None,
                                'premiere': None,
                                'title': 'Название',
-                               'title_en': 'Title',
+                               'title_original': 'Title',
                                'updated_at': '2017-01-01T00:00:00',
                                'year': None}
 
@@ -132,6 +133,7 @@ class TestMovie(object):
         expected = {
             'api_id': '56f38372cc1c7224437a4ecc',
             'age_restriction': None,
+            'active': None,
             'cast': 'Фрэнсис МакДорманд, Вуди Харрельсон, Сэм Рокуэлл, Джон Хоукс, Питер '
                     'Динклэйдж, Калеб Лэндри Джонс, Лукас Хеджес, Эбби Корниш, Керри '
                     'Кондон, Даррел Бритт-Гибсон',
@@ -177,7 +179,7 @@ class TestMovie(object):
                           'b2823c79fe50ed1ca28cff7abea46f46/orig',
             'premiere': '2018-02-01T00:00:00',
             'title': 'Три билборда на границе Эббинга, Миссури',
-            'title_en': 'Three Billboards Outside Ebbing, Missouri',
+            'title_original': 'Three Billboards Outside Ebbing, Missouri',
             'year': 2017
         }
         assert dict_ == expected
