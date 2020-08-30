@@ -42,11 +42,10 @@ class Movie(Base):  # pylint: disable=no-init
 
     duration = Column(Integer)
 
-    premiere = Column(DateTime)
-
     kinopoisk_id = Column(Integer)
-
     imdb_id = Column(Integer)
+
+    premiere = Column(DateTime)
 
     hide = Column(Boolean, default=False, nullable=False)
 
