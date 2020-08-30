@@ -26,7 +26,8 @@ class Screening(Base):  # pylint: disable=no-init
     ticket_api_id = Column(String(128), nullable=True)
     city = Column(String(64), nullable=False)
     date_time = Column(DateTime, nullable=False, primary_key=True)
-    price_min = Column(Float, nullable=True)
+    price_min = Column(Integer, nullable=True)
+    price_max = Column(Integer, nullable=True)
     source = Column(String(32), nullable=False)
 
     created_at = Column(DATETIME(fsp=6), default=datetime.datetime.now, nullable=False)

@@ -119,7 +119,7 @@ class YandexAfishaParser:
         price = item.get('@min_price')
         if not price:
             return None
-        return float(price) / 100
+        return int(float(price) / 100)
 
     @classmethod
     def _is_screening_with_subs(cls, item: dict) -> bool:
@@ -141,6 +141,7 @@ class YandexAfishaParser:
                             'ticket_api_id': screening.get('@bilet_id'),
                             'city': city,
                             'price_min': cls._get_screening_price(screening),
+                            'price_max': cls._get_screening_price(screening),
                             'date_time': cls._get_screening_time(screening),
                             'source': 'yandex'})
         return result

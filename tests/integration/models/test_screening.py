@@ -23,7 +23,7 @@ class TestModelScreening(object):
         dbsession.commit()
 
         screening = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
-                              ticket_api_id='fake_ticket', price_min=400.0,
+                              ticket_api_id='fake_ticket', price_min=400,
                               city='msk', date_time=datetime(2017, 1, 1, 9))
         dbsession.add(screening)
         dbsession.commit()
@@ -63,7 +63,7 @@ class TestModelScreening(object):
         dbsession.commit()
 
         screening = Screening(cinema_api_id='fake_cinema', movie_api_id='fake_movie',
-                              ticket_api_id='fake_ticket', price_min=400.0,
+                              ticket_api_id='fake_ticket', price_min=400, price_max=400,
                               city='msk', date_time=datetime(2017, 1, 1, 9))
         screening.save()
 
@@ -77,6 +77,7 @@ class TestModelScreening(object):
             'city': 'msk',
             'date_time': datetime(2017, 1, 1, 9, 0),
             'price_min': 400,
+            'price_max': 400,
             'source': None,
             'created_at': screening.created_at,
             'updated_at': screening.updated_at
@@ -145,19 +146,19 @@ class TestModelScreening(object):
         dbsession.commit()
 
         sc1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
-                        ticket_api_id='fake_ticket1', price_min=400.0,
+                        ticket_api_id='fake_ticket1', price_min=400,
                         city='msk', date_time=datetime(2017, 1, 1, 9))
 
         sc2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
-                        ticket_api_id='fake_ticket2', price_min=400.0,
+                        ticket_api_id='fake_ticket2', price_min=400,
                         city='prs', date_time=datetime(2017, 1, 2, 2, 31))
 
         sc3 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie3',
-                        ticket_api_id='fake_ticket3', price_min=400.0,
+                        ticket_api_id='fake_ticket3', price_min=400,
                         city='msk', date_time=datetime(2017, 1, 1, 9))
 
         sc4 = Screening(cinema_api_id='fake_cinema3', movie_api_id='fake_movie4',
-                        ticket_api_id='fake_ticket4', price_min=400.0,
+                        ticket_api_id='fake_ticket4', price_min=400,
                         city='lnd', date_time=datetime(2017, 1, 2, 2, 29))
         [dbsession.add(x) for x in [sc1, sc2, sc3, sc4]]
         dbsession.commit()
@@ -229,6 +230,7 @@ class TestModelScreening(object):
                          'id': sc1.id,
                          'movie_api_id': '5575ec34cc1c72361ee31384',
                          'price_min': None,
+                         'price_max': None,
                          'source': 'yandex',
                          'ticket_api_id': None}
         assert dict2_ == {'cinema_api_id': '578c15008dabaf9ff14b9048',
@@ -237,6 +239,7 @@ class TestModelScreening(object):
                           'id': sc2.id,
                           'movie_api_id': '55762ad4cc1c725c189884be',
                           'price_min': None,
+                          'price_max': None,
                           'source': 'yandex',
                           'ticket_api_id': None}
 
