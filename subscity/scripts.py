@@ -94,7 +94,7 @@ def update_base() -> None:
         print('Error code during API call: {}'.format(req.status_code))
         exit(1)
 
-    url = req.json()['data'][0]['url']
+    url = req.json()[0]['url']
     print('Downloading {}'.format(url))
     file_name = "archive.tar.gz"
     urllib.request.urlretrieve(url, file_name)

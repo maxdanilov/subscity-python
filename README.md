@@ -16,10 +16,16 @@ git clone https://github.com/s1341/pyenv-alias.git $(pyenv root)/plugins/pyenv-a
 ### Dependencies
 
 ```
-VERSION_ALIAS="$(cat .python-version)" pyenv install $(cat .python-version | cut -d_ -f2)
+VERSION_ALIAS="$(cat .python-version)" AR="/usr/bin/ar" pyenv install $(cat .python-version | cut -d_ -f2)
 ./run pip3 install --upgrade pip
 ./run pip3 install -r requirements.txt
 ./run pip3 install -e .
+```
+
+## Initial DB migration
+
+```
+./run alembic upgrade head
 ```
 
 ## Tests
