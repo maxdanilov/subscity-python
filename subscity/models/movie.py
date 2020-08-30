@@ -34,8 +34,9 @@ class Movie(Base):  # pylint: disable=no-init
     countries = Column(String(255))
     countries_en = Column(String(255))
 
-    year = Column(Integer)
     age_restriction = Column(Integer)
+
+    year = Column(Integer)
     duration = Column(Integer)
 
     genres = Column(String(255))
