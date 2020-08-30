@@ -13,7 +13,6 @@ from sqlalchemy import func
 from sqlalchemy.dialects.mysql import DATETIME
 
 from subscity.models.base import Base, DB
-from subscity.models.cinema import Cinema
 from subscity.models.movie import Movie
 from subscity.utils import get_now
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
@@ -48,45 +47,6 @@ class Screening(Base):  # pylint: disable=no-init
         return start_day - datetime.timedelta(days=1)
 
     @staticmethod
-    def get_for_movie(movie_id: int, city: str) -> List:
-        movie_api_id = DB.session.query(Movie.api_id).filter(Movie.id == movie_id).as_scalar()
-        query = DB.session.query(Screening, Movie, Cinema)
-        query = query.filter(Screening.city == city)
-        query = query.filter(Screening.movie_api_id == movie_api_id)
-        query = query.filter(Screening.cinema_api_id == Cinema.api_id)
-        query = query.filter(Screening.movie_api_id == Movie.api_id)
-        query = query.filter(Screening.date_time > get_now(city))
-        query = query.order_by(Screening.date_time)
-        return query.all()
-
-    @staticmethod
-    def get_for_cinema(cinema_id: int, city: str) -> List:
-        cinema_api_id = DB.session.query(Cinema.api_id).filter(Cinema.id == cinema_id).as_scalar()
-        query = DB.session.query(Screening, Movie, Cinema)
-        query = query.filter(Screening.city == city)
-        query = query.filter(Screening.cinema_api_id == cinema_api_id)
-        query = query.filter(Screening.cinema_api_id == Cinema.api_id)
-        query = query.filter(Screening.movie_api_id == Movie.api_id)
-        query = query.filter(Screening.date_time > get_now(city))
-        query = query.filter(Movie.hide.is_(False))
-        query = query.order_by(Screening.date_time)
-        return query.all()
-
-    @staticmethod
-    def get_for_day(day: datetime, city: str) -> List:
-        start_day = day.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_day = start_day + datetime.timedelta(days=1)
-        query = DB.session.query(Screening, Movie, Cinema)
-        query = query.filter(Screening.date_time > start_day + Yap.DAY_STARTS_AT)
-        query = query.filter(Screening.date_time <= end_day + Yap.DAY_STARTS_AT)
-        query = query.filter(Screening.city == city)
-        query = query.filter(Screening.cinema_api_id == Cinema.api_id)
-        query = query.filter(Screening.movie_api_id == Movie.api_id)
-        query = query.filter(Screening.date_time > get_now(city))
-        query = query.order_by(Screening.date_time)
-        return query.all()
-
-    @staticmethod
     def get(cinema_api_id: str = None, movie_api_id: str = None, start_day: datetime = None,
             end_day: datetime = None, city: str = None) -> List:
         query = DB.session.query(Screening)
@@ -100,18 +60,6 @@ class Screening(Base):  # pylint: disable=no-init
             end_day = end_day.replace(hour=0, minute=0, second=0, microsecond=0)
             query = query.filter(Screening.date_time <= end_day + Yap.DAY_STARTS_AT)
         query = query.order_by(Screening.date_time)
-        return query.all()
-
-    @staticmethod
-    def get_movies_cinemas(city: str) -> List:
-        query = DB.session.query(Cinema.id.label('cinema_id'),
-                                 Movie.id.label('movie_id'))
-        query = query.filter(Screening.date_time > get_now(city))
-        query = query.filter(Screening.cinema_api_id == Cinema.api_id)
-        query = query.filter(Screening.movie_api_id == Movie.api_id)
-        query = query.filter(Movie.hide.is_(False))
-        query = query.filter(Screening.city == city)
-        query = query.distinct()
         return query.all()
 
     @staticmethod
@@ -140,8 +88,8 @@ class Screening(Base):  # pylint: disable=no-init
         count = 0
         first_screenings = Screening.get_movie_api_ids(city)
         movie_api_ids_remove = [m.movie_api_id for m in first_screenings
-                                if m.next_screening > get_now(city) +
-                                datetime.timedelta(days=Yap.MIN_DAYS_BEFORE_FIRST_SCREENING)]
+                                if m.next_screening > get_now(city)
+                                + datetime.timedelta(days=Yap.MIN_DAYS_BEFORE_FIRST_SCREENING)]
         for movie_api_id in movie_api_ids_remove:
             count += Screening.clean(movie_api_id=movie_api_id, city=city)
         return count

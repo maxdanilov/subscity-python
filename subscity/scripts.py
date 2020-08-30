@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 import tarfile
 import traceback
 import urllib
@@ -92,7 +93,7 @@ def update_base() -> None:
     req = requests.get(base_download_url, headers=headers)
     if req.status_code != 200:
         print('Error code during API call: {}'.format(req.status_code))
-        exit(1)
+        sys.exit(1)
 
     url = req.json()[0]['url']
     print('Downloading {}'.format(url))

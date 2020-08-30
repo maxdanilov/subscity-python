@@ -1,62 +1,14 @@
-import base64
 import datetime
-import json
-from typing import Union, Optional, List
+from typing import Union
 
-import binascii
-from bs4 import BeautifulSoup
-from flask import Response
 import pytz
 from transliterate import translit
-from voluptuous import Invalid, MultipleInvalid
-
-
-def parse_headers(data: str) -> List[Optional[str]]:
-    # <name>,<api_token> in b64 -> [name, api_token]
-    if not data:
-        return [None, None]
-    try:
-        decoded = base64.b64decode(data.encode('utf-8')).decode('utf-8')
-    except binascii.Error:
-        return [None, None]
-    tokens = decoded.split(',')
-    if len(tokens) != 2:
-        return [None, None]
-    return tokens
-
-
-def json_response(data):
-    # unlike Flask's jsonify this one doesn't escape unicode characters
-    return Response(json.dumps(data, ensure_ascii=False, indent=4, sort_keys=True).
-                    encode('utf8'), mimetype='application/json')
 
 
 def format_datetime(date_time: datetime) -> Union[str, None]:
     if not date_time:
         return None
     return date_time.isoformat()
-
-
-def validator_date():
-    def parse_date(date_str: str) -> datetime:
-        try:
-            return datetime.datetime.strptime(date_str, '%Y-%m-%d')
-        except (ValueError, TypeError):
-            raise Invalid('date should be in this format: YYYY-MM-DD')
-    return parse_date
-
-
-def validator_city():
-    def city_by_code(code: str) -> str:
-        allowed_cities = ['msk', 'spb']
-        if code not in allowed_cities:
-            raise Invalid('city should be one of: {}'.format(allowed_cities))
-        return code
-    return city_by_code
-
-
-def error_msg(exc: MultipleInvalid) -> dict:
-    return {'errors': [e.msg for e in exc.errors]}
 
 
 def get_timezone(city: str) -> str:
@@ -72,15 +24,6 @@ def get_now(city: str) -> datetime:
 
 def transliterate(data: str) -> str:
     return translit(data, 'ru', reversed=True) if data else None
-
-
-def html_to_text(data: str) -> Optional[str]:
-    if data:
-        soup = BeautifulSoup(data, "html.parser")
-        text = soup.get_text(separator='\n')
-        text = text.replace('& \n', '& ')  # for some reason, BS adds a line break after &amp;
-        return text
-    return None
 
 
 def read_file(filename: str) -> str:

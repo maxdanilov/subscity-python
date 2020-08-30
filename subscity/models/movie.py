@@ -65,18 +65,3 @@ class Movie(Base):  # pylint: disable=no-init
         query = DB.session.query(cls.api_id)
         query = query.filter(cls.hide.is_(True))
         return [x[0] for x in query.all()]
-
-    def create_or_update(self) -> None:
-        cls = self.__class__
-        query = DB.session.query(cls)
-        query = query.filter(cls.api_id == self.api_id)
-        obj_in_db = query.one_or_none()
-        obj = self
-
-        if obj_in_db:
-            update_dict = self.to_dict(stringify_datetime=False)
-            obj_in_db.update_from_dict(update_dict)
-            obj = obj_in_db
-
-        DB.session.add(obj)
-        DB.session.commit()
