@@ -74,7 +74,6 @@ class TestMovie(object):
                                'age_restriction': None,
                                'active': None,
                                'cast': None,
-                               'cast_en': None,
                                'countries': 'Франция',
                                'countries_en': 'France',
                                'created_at': '2017-01-01T00:00:00',
@@ -135,7 +134,6 @@ class TestMovie(object):
             'cast': 'Фрэнсис МакДорманд, Вуди Харрельсон, Сэм Рокуэлл, Джон Хоукс, Питер '
                     'Динклэйдж, Калеб Лэндри Джонс, Лукас Хеджес, Эбби Корниш, Керри '
                     'Кондон, Даррел Бритт-Гибсон',
-            'cast_en': None,
             'countries': 'США, Великобритания',
             'countries_en': None,
             'description': 'Спустя несколько месяцев после убийства дочери Милдред Хейс преступники'

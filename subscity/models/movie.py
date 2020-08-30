@@ -29,6 +29,7 @@ class Movie(Base):  # pylint: disable=no-init
     description_english = Column(Text())
 
     director = Column(String(255))
+    cast = Column(String(512))
 
     countries = Column(String(255))
     countries_en = Column(String(255))
@@ -36,9 +37,6 @@ class Movie(Base):  # pylint: disable=no-init
     year = Column(Integer)
     age_restriction = Column(Integer)
     duration = Column(Integer)
-
-    cast = Column(String(512))
-    cast_en = Column(String(512))
 
     genres = Column(String(255))
     genres_en = Column(String(255))
