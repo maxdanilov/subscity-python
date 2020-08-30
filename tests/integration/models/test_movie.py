@@ -66,16 +66,14 @@ class TestMovie(object):
         m = Movie(api_id='deadbeef',
                   title='Название',
                   title_original='Title',
-                  countries='Франция',
-                  countries_en='France',
+                  country='Франция',
                   created_at=datetime.datetime(2017, 1, 1),
                   updated_at=datetime.datetime(2017, 1, 1))
         assert m.to_dict() == {'api_id': 'deadbeef',
                                'age_restriction': None,
                                'active': None,
                                'cast': None,
-                               'countries': 'Франция',
-                               'countries_en': 'France',
+                               'country': 'Франция',
                                'created_at': '2017-01-01T00:00:00',
                                'description': None,
                                'description_english': None,
@@ -134,8 +132,7 @@ class TestMovie(object):
             'cast': 'Фрэнсис МакДорманд, Вуди Харрельсон, Сэм Рокуэлл, Джон Хоукс, Питер '
                     'Динклэйдж, Калеб Лэндри Джонс, Лукас Хеджес, Эбби Корниш, Керри '
                     'Кондон, Даррел Бритт-Гибсон',
-            'countries': 'США, Великобритания',
-            'countries_en': None,
+            'country': 'США, Великобритания',
             'description': 'Спустя несколько месяцев после убийства дочери Милдред Хейс преступники'
                            ' так и не найдены. Отчаявшаяся женщина решается на смелый шаг, арендуя '
                            'на въезде в город три биллборда с посланием к авторитетному главе '

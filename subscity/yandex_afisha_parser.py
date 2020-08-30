@@ -31,7 +31,7 @@ class YandexAfishaParser:
             result.append({
                 'api_id': item['e'],
                 'cast': cls._get_cast(item),
-                'countries': item.get('ct'),
+                'country': item.get('ct'),
                 'description': item.get('description'),
                 'director': cls._get_directors(item),
                 'duration': cls._get_duration(item),

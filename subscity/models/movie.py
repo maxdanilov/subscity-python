@@ -31,10 +31,9 @@ class Movie(Base):  # pylint: disable=no-init
     director = Column(String(255))
     cast = Column(String(512))
 
-    countries = Column(String(255))
-    countries_en = Column(String(255))
-
     age_restriction = Column(Integer)
+
+    country = Column(String(255))
 
     year = Column(Integer)
     duration = Column(Integer)
