@@ -7,7 +7,7 @@ from sqlalchemy import (
     Integer,
     String,
     DateTime,
-    Text
+    Text, SmallInteger
 )
 
 from subscity.models.base import Base, DB
@@ -46,6 +46,8 @@ class Movie(Base):  # pylint: disable=no-init
     imdb_id = Column(Integer)
 
     trailer = Column(String(255))
+
+    fetch_mode = Column(SmallInteger, default=0, nullable=False)  # legacy: for v1 compatibility
 
     premiere = Column(DateTime)
 

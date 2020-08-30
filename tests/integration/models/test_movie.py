@@ -67,6 +67,7 @@ class TestMovie(object):
                   title='Название',
                   title_original='Title',
                   country='Франция',
+                  fetch_mode=0,
                   created_at=datetime.datetime(2017, 1, 1),
                   updated_at=datetime.datetime(2017, 1, 1))
         assert m.to_dict() == {'api_id': 'deadbeef',
@@ -79,6 +80,7 @@ class TestMovie(object):
                                'description_english': None,
                                'director': None,
                                'duration': None,
+                               'fetch_mode': 0,
                                'genres': None,
                                'hide': None,
                                'id': None,
@@ -158,6 +160,7 @@ class TestMovie(object):
             'description_english': None,
             'director': 'Мартин МакДона',
             'duration': 115,
+            'fetch_mode': 0,
             'genres': 'артхаус, драма, комедия',
             'hide': False,
             'id': m.id,

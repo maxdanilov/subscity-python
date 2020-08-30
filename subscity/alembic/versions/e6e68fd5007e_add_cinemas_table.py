@@ -64,6 +64,8 @@ def upgrade_subscity():
                     sa.Column('kinopoisk_id', sa.Integer, nullable=True),
                     sa.Column('imdb_id', sa.Integer, nullable=True),
                     sa.Column('trailer', sa.String(length=255), nullable=True),
+                    sa.Column('fetch_mode', sa.SmallInteger, default=0,
+                              nullable=False),  # legacy: for compatibility with v1
                     sa.Column('premiere', sa.DateTime(), nullable=True),
                     sa.Column('hide', sa.Boolean, nullable=False),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
