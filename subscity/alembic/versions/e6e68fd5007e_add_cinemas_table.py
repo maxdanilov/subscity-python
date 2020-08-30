@@ -15,6 +15,10 @@ down_revision = None
 branch_labels = None
 depends_on = None
 
+CINEMAS_TABLE_NAME = 'cinemas-v2'
+MOVIES_TABLE_NAME = 'movies-v2'
+SCREENINGS_TABLE_NAME = 'screenings-v2'
+
 
 def upgrade(engine_name):
     globals()["upgrade_%s" % engine_name]()
@@ -25,7 +29,7 @@ def downgrade(engine_name):
 
 
 def upgrade_subscity():
-    op.create_table('cinemas-v2',
+    op.create_table(CINEMAS_TABLE_NAME,
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
                     sa.Column('api_id', sa.String(length=64), nullable=False),
                     sa.Column('city', sa.String(length=64), nullable=False),
@@ -44,7 +48,7 @@ def upgrade_subscity():
                     sa.UniqueConstraint('api_id')
                     )
 
-    op.create_table('movies-v2',
+    op.create_table(MOVIES_TABLE_NAME,
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
                     sa.Column('api_id', sa.String(length=64), nullable=False),
                     sa.Column('active', sa.Boolean, default=False),
@@ -74,10 +78,12 @@ def upgrade_subscity():
                     sa.UniqueConstraint('api_id')
                     )
 
-    op.create_table('screenings-v2',
+    op.create_table(SCREENINGS_TABLE_NAME,
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
-                    sa.Column('cinema_api_id', sa.String(length=64), ForeignKey('cinemas-v2.api_id')),
-                    sa.Column('movie_api_id', sa.String(length=64), ForeignKey('movies-v2.api_id')),
+                    sa.Column('cinema_api_id', sa.String(length=64),
+                              ForeignKey(f'{CINEMAS_TABLE_NAME}.api_id')),
+                    sa.Column('movie_api_id', sa.String(length=64),
+                              ForeignKey(f'{MOVIES_TABLE_NAME}.api_id')),
                     sa.Column('ticket_api_id', sa.String(length=128), nullable=True),
                     sa.Column('city', sa.String(length=64), nullable=False),
                     sa.Column('date_time', sa.DateTime(), nullable=False),
@@ -89,17 +95,17 @@ def upgrade_subscity():
                     sa.PrimaryKeyConstraint('id')
                     )
 
-    op.create_index('ix_movies', 'movies-v2', ['api_id'], unique=False)
-    op.create_index('ix_cinemas', 'cinemas-v2', ['api_id', 'city'], unique=False)
-    op.create_index('ix_screenings', 'screenings-v2', ['city', 'cinema_api_id'], unique=False)
-    op.create_index('ix_screenings2', 'screenings-v2', ['city', 'movie_api_id'], unique=False)
+    op.create_index('ix_movies', MOVIES_TABLE_NAME, ['api_id'], unique=False)
+    op.create_index('ix_cinemas', CINEMAS_TABLE_NAME, ['api_id', 'city'], unique=False)
+    op.create_index('ix_screenings', SCREENINGS_TABLE_NAME, ['city', 'cinema_api_id'], unique=False)
+    op.create_index('ix_screenings2', SCREENINGS_TABLE_NAME, ['city', 'movie_api_id'], unique=False)
 
 
 def downgrade_subscity():
-    op.drop_index('ix_movies', table_name='movies-v2')
-    op.drop_index('ix_cinemas', table_name='cinemas-v2')
-    op.drop_index('ix_screenings2', table_name='screenings-v2')
-    op.drop_index('ix_screenings', table_name='screenings-v2')
-    op.drop_table('screenings-v2')
-    op.drop_table('cinemas-v2')
-    op.drop_table('movies-v2')
+    op.drop_index('ix_movies', table_name=MOVIES_TABLE_NAME)
+    op.drop_index('ix_cinemas', table_name=CINEMAS_TABLE_NAME)
+    op.drop_index('ix_screenings2', table_name=SCREENINGS_TABLE_NAME)
+    op.drop_index('ix_screenings', table_name=SCREENINGS_TABLE_NAME)
+    op.drop_table(SCREENINGS_TABLE_NAME)
+    op.drop_table(CINEMAS_TABLE_NAME)
+    op.drop_table(MOVIES_TABLE_NAME)
