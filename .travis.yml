@@ -1,13 +1,12 @@
 language: python
 sudo: required
 python:
-  - "3.6.5"
-  # - "3.7-dev"
+  - "3.8.5"
 services:
   - mysql
 install:
-  - pip install -r requirements.txt
-  - pip install -e .
+  - pip3 install -r requirements.txt
+  - pip3 install -e .
 script:
   - safety check -r requirements.txt
   - safety check
