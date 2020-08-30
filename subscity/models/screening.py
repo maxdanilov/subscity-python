@@ -19,7 +19,7 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 
 class Screening(Base):  # pylint: disable=no-init
-    __tablename__ = 'screenings'
+    __tablename__ = 'screenings-v2'
     id = Column(Integer, autoincrement=True, primary_key=True)  # pylint: disable=invalid-name
     cinema_api_id = Column(String(64), primary_key=True)
     movie_api_id = Column(String(64), primary_key=True)

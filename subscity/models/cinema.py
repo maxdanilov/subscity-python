@@ -14,7 +14,7 @@ from subscity.utils import transliterate
 
 
 class Cinema(Base):  # pylint: disable=no-init
-    __tablename__ = 'cinemas'
+    __tablename__ = 'cinemas-v2'
     id = Column(Integer, autoincrement=True, primary_key=True)  # pylint: disable=invalid-name
     api_id = Column(String(64), primary_key=True, unique=True)  # was cinema_id before
     city = Column(String(64), nullable=False)
