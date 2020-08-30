@@ -89,9 +89,9 @@ class TestMovie(object):
                                'premiere': None,
                                'title': 'Название',
                                'title_original': 'Title',
+                               'trailer': None,
                                'updated_at': '2017-01-01T00:00:00',
                                'year': None}
-
 
     def test_insert_duplicate_api_id(self, dbsession):
         import pytest
@@ -169,6 +169,7 @@ class TestMovie(object):
             'premiere': '2018-02-01T00:00:00',
             'title': 'Три билборда на границе Эббинга, Миссури',
             'title_original': 'Three Billboards Outside Ebbing, Missouri',
+            'trailer': None,
             'year': 2017
         }
         assert dict_ == expected
