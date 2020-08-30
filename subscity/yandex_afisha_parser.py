@@ -8,7 +8,7 @@ import xmltodict
 from subscity.utils import read_file
 
 
-class YandexAfishaParser(object):
+class YandexAfishaParser:
     LOCAL_BASE_STORAGE = '/tmp/subscity_afisha_files'
     CITIES = ('msk', 'spb')
     BASE_URL = 'https://afisha.yandex.ru'

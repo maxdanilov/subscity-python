@@ -88,8 +88,8 @@ class Screening(Base):  # pylint: disable=no-init
         count = 0
         first_screenings = Screening.get_movie_api_ids(city)
         movie_api_ids_remove = [m.movie_api_id for m in first_screenings
-                                if m.next_screening > get_now(city) +
-                                datetime.timedelta(days=Yap.MIN_DAYS_BEFORE_FIRST_SCREENING)]
+                                if m.next_screening > get_now(city)
+                                + datetime.timedelta(days=Yap.MIN_DAYS_BEFORE_FIRST_SCREENING)]
         for movie_api_id in movie_api_ids_remove:
             count += Screening.clean(movie_api_id=movie_api_id, city=city)
         return count
