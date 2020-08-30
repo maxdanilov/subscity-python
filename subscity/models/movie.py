@@ -36,10 +36,9 @@ class Movie(Base):  # pylint: disable=no-init
     country = Column(String(255))
 
     year = Column(Integer)
-    duration = Column(Integer)
-
     genres = Column(String(255))
-    genres_en = Column(String(255))
+
+    duration = Column(Integer)
 
     poster_url = Column(String(512))
     premiere = Column(DateTime)
