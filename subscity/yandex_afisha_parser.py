@@ -33,7 +33,7 @@ class YandexAfishaParser:
                 'cast': cls._get_cast(item),
                 'countries': item.get('ct'),
                 'description': item.get('description'),
-                'directors': cls._get_directors(item),
+                'director': cls._get_directors(item),
                 'duration': cls._get_duration(item),
                 'genres': cls._get_genres(item),
                 'kinopoisk_id': cls._get_kinopoisk_id(item),
