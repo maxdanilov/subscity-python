@@ -47,12 +47,8 @@ class Movie(Base):  # pylint: disable=no-init
     premiere = Column(DateTime)
 
     kinopoisk_id = Column(Integer)
-    kinopoisk_rating = Column(Float)
-    kinopoisk_votes = Column(Integer)
 
     imdb_id = Column(Integer)
-    imdb_rating = Column(Float)
-    imdb_votes = Column(Integer)
 
     hide = Column(Boolean, default=False, nullable=False)
 
