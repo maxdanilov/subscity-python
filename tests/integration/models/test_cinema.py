@@ -9,11 +9,11 @@ class TestModelCinema(object):
     def test_get_all(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c1 = Cinema(city='moscow', api_id='deadbeef', name='Cinema', url='url',
+        c1 = Cinema(city='msk', city_id=2, api_id='deadbeef', name='Cinema', url='url',
                     phone='phone', fetch_all=True,
                     created_at=datetime.datetime(2017, 1, 1),
                     updated_at=datetime.datetime(2017, 1, 1))
-        c2 = Cinema(city='paris', api_id='badcode', name='Cinema Neu', url=None,
+        c2 = Cinema(city='paris', city_id=4, api_id='badcode', name='Cinema Neu', url=None,
                     phone='phone', fetch_all=False,
                     created_at=datetime.datetime(2017, 1, 1),
                     updated_at=datetime.datetime(2017, 1, 2))
@@ -29,9 +29,9 @@ class TestModelCinema(object):
         from sqlalchemy.exc import IntegrityError
         import pytest
         from subscity.models.cinema import Cinema
-        c1 = Cinema(city='moscow', api_id='deadbeef', name='Cinema', url='url',
+        c1 = Cinema(city='msk', city_id=2, api_id='deadbeef', name='Cinema', url='url',
                     phone='phone', fetch_all=True)
-        c2 = Cinema(city='paris', api_id='deadbeef', name='Cinema Neu', url=None,
+        c2 = Cinema(city='paris', city_id=4, api_id='deadbeef', name='Cinema Neu', url=None,
                     phone='phone', fetch_all=False)
         dbsession.add(c1)
         dbsession.commit()
@@ -45,7 +45,8 @@ class TestModelCinema(object):
         import datetime
         from subscity.models.cinema import Cinema
 
-        c = Cinema(city='moscow',
+        c = Cinema(city='msk',
+                   city_id=2,
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
@@ -56,7 +57,8 @@ class TestModelCinema(object):
                    updated_at=datetime.datetime(2017, 1, 1))
         assert c.to_dict() == {'address': None,
                                'api_id': 'deadbeef',
-                               'city': 'moscow',
+                               'city': 'msk',
+                               'city_id': 2,
                                'created_at': '2017-01-01T00:00:00',
                                'fetch_all': None,
                                'id': None,
@@ -100,7 +102,8 @@ class TestModelCinema(object):
     def test_db_add(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c = Cinema(city='moscow',
+        c = Cinema(city='msk',
+                   city_id=2,
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
@@ -117,7 +120,8 @@ class TestModelCinema(object):
         res = result[0].to_dict()
         assert res == {'id': c.id,
                        'api_id': 'deadbeef',
-                       'city': 'moscow',
+                       'city': 'msk',
+                       'city_id': 2,
                        'name': 'Cinema',
                        'address': None,
                        'metro': None,
@@ -146,7 +150,8 @@ class TestModelCinema(object):
     def test_save_or_update_with_same_name(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c = Cinema(city='moscow',
+        c = Cinema(city='msk',
+                   city_id=2,
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
@@ -159,6 +164,7 @@ class TestModelCinema(object):
         assert result[0].to_dict() == c.to_dict()
 
         d = Cinema(city='paris',
+                   city_id=4,
                    api_id='badcode',
                    name='Cinema',
                    url='url',
@@ -179,7 +185,8 @@ class TestModelCinema(object):
     def test_save_or_update_with_same_api_id(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c = Cinema(city='moscow',
+        c = Cinema(city='msk',
+                   city_id=2,
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
@@ -192,6 +199,7 @@ class TestModelCinema(object):
         assert result[0].to_dict() == c.to_dict()
 
         d = Cinema(city='paris',
+                   city_id=4,
                    api_id='deadbeef',
                    name='New Cinema',
                    url='url',
@@ -205,6 +213,7 @@ class TestModelCinema(object):
         assert result2[0].to_dict() == {'address': None,
                                         'api_id': 'deadbeef',
                                         'city': 'paris',
+                                        'city_id': 4,
                                         'created_at': '2017-02-01T00:00:00',
                                         'fetch_all': True,
                                         'id': c.id,
@@ -219,7 +228,8 @@ class TestModelCinema(object):
     def test_save_or_update(self, dbsession):
         from subscity.models.cinema import Cinema
         import datetime
-        c = Cinema(city='moscow',
+        c = Cinema(city='msk',
+                   city_id=2,
                    api_id='deadbeef',
                    name='Cinema',
                    url='url',
@@ -232,6 +242,7 @@ class TestModelCinema(object):
         assert result[0].to_dict() == c.to_dict()
 
         d = Cinema(city='paris',
+                   city_id=4,
                    api_id='badcode',
                    name='New Cinema',
                    url='url',
@@ -277,6 +288,7 @@ class TestModelCinema(object):
             'url': u'http://www.angleterrecinema.ru',
             'metro': u'Адмиралтейская, Садовая, Сенная площадь',
             'city': u'spb',
+            'city_id': 3,
             'latitude': 59.933946,
             'longitude': 30.308878,
             'fetch_all': False
@@ -284,14 +296,14 @@ class TestModelCinema(object):
 
     def test_get_by_ids_empty(self, dbsession):
         from subscity.models.cinema import Cinema
-        result = Cinema.get_by_ids([1,2,3])
+        result = Cinema.get_by_ids([1, 2, 3])
         assert result == []
 
     def test_get_by_ids(self, dbsession):
         from subscity.models.cinema import Cinema
-        c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='saint-petersburg')
-        c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='moscow')
-        c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='moscow')
+        c1 = Cinema(api_id='fake_cinema1', name='cinema1', city='spb', city_id=3)
+        c2 = Cinema(api_id='fake_cinema2', name='cinema2', city='msk', city_id=2)
+        c3 = Cinema(api_id='fake_cinema3', name='cinema3', city='msk', city_id=2)
         [dbsession.add(x) for x in [c1, c2, c3]]
         dbsession.commit()
         result = Cinema.get_by_ids([c1.id, c3.id])

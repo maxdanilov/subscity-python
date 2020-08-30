@@ -15,7 +15,7 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 
 
 def update_screenings() -> None:
-    for city in Yap.CITIES:
+    for city in Yap.CITIES_MAPPING:
         screenings = Yap.get_screenings(city)
         print('{city} Parsed new screenings: {count}'.format(city=city, count=len(screenings)))
 
@@ -33,7 +33,7 @@ def update_screenings() -> None:
 
 
 def update_cinemas() -> None:
-    for city in Yap.CITIES:
+    for city in Yap.CITIES_MAPPING:
         cinemas = Yap.get_cinemas(city)
         for cinema in cinemas:
             try:
@@ -46,7 +46,7 @@ def update_cinemas() -> None:
 
 
 def update_movies() -> None:
-    for city in Yap.CITIES:
+    for city in Yap.CITIES_MAPPING:
         movies = Yap.get_movies(city)
         movie_api_ids = [m['api_id'] for m in movies]
         movie_api_ids_db = Movie.get_all_api_ids()

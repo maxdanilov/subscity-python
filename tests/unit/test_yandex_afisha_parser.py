@@ -175,6 +175,7 @@ class TestYandexAfishaParser(object):
             'url': u'http://www.angleterrecinema.ru',
             'metro': u'Адмиралтейская, Садовая, Сенная площадь',
             'city': u'spb',
+            'city_id': 3,
             'latitude': 59.933946,
             'longitude': 30.308878
         }
@@ -187,6 +188,7 @@ class TestYandexAfishaParser(object):
             'url': u'http://www.formulakino.ru/',
             'metro': u'Ладожская, Новочеркасская',
             'city': u'spb',
+            'city_id': 3,
             'latitude': 59.933032,
             'longitude': 30.437617
         }

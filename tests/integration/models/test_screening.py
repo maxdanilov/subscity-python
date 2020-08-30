@@ -17,7 +17,7 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         from subscity.models.movie import Movie
 
-        c = Cinema(api_id='fake_cinema', city='msk', name='c1')
+        c = Cinema(api_id='fake_cinema', city='msk', city_id=2, name='c1')
         m = Movie(api_id='fake_movie', title='m1')
         [dbsession.add(x) for x in [c, m]]
         dbsession.commit()
@@ -35,7 +35,7 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         from subscity.models.movie import Movie
 
-        c = Cinema(api_id='fake_cinema', city='msk', name='c1')
+        c = Cinema(api_id='fake_cinema', city='msk', city_id=2, name='c1')
         m = Movie(api_id='fake_movie', title='m1')
         [dbsession.add(x) for x in [c, m]]
         dbsession.commit()
@@ -58,7 +58,7 @@ class TestModelScreening(object):
         from subscity.models.movie import Movie
 
         m = Movie(api_id='fake_movie', title='title')
-        c = Cinema(api_id='fake_cinema', city='msk', name='c1')
+        c = Cinema(api_id='fake_cinema', city='msk', city_id=2, name='c1')
         [dbsession.add(x) for x in [c, m]]
         dbsession.commit()
 
@@ -96,7 +96,7 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         from subscity.models.movie import Movie
 
-        c = Cinema(api_id='fake_cinema', city='msk', name='c1')
+        c = Cinema(api_id='fake_cinema', city='msk', city_id=2, name='c1')
         m = Movie(api_id='fake_movie', title='m1')
         [dbsession.add(x) for x in [c, m]]
         dbsession.commit()
@@ -138,9 +138,9 @@ class TestModelScreening(object):
         [dbsession.add(x) for x in [m1, m2, m3, m4]]
         dbsession.commit()
 
-        c1 = Cinema(api_id='fake_cinema1', city='msk', name='c1')
-        c2 = Cinema(api_id='fake_cinema2', city='prs', name='c2')
-        c3 = Cinema(api_id='fake_cinema3', city='lnd', name='c3')
+        c1 = Cinema(api_id='fake_cinema1', city='msk', city_id=2, name='c1')
+        c2 = Cinema(api_id='fake_cinema2', city='prs', city_id=4, name='c2')
+        c3 = Cinema(api_id='fake_cinema3', city='lnd', city_id=5, name='c3')
         [dbsession.add(x) for x in [c1, c2, c3]]
         dbsession.commit()
 
@@ -200,7 +200,7 @@ class TestModelScreening(object):
 
         m1 = Movie(api_id=result[0]['movie_api_id'], title='m1')
         m2 = Movie(api_id=result[1]['movie_api_id'], title='m2')
-        c = Cinema(api_id=result[0]['cinema_api_id'], name='c1', city='spb')
+        c = Cinema(api_id=result[0]['cinema_api_id'], name='c1', city='spb', city_id=3)
 
         [dbsession.add(x) for x in [m1, m2, c]]
         dbsession.commit()
@@ -258,9 +258,9 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         from subscity.models.movie import Movie
 
-        c1 = Cinema(api_id='fake_cinema1', city='spb', name='c1')
-        c2 = Cinema(api_id='fake_cinema2', city='msk', name='c2')
-        c3 = Cinema(api_id='fake_cinema3', city='msk', name='c3')
+        c1 = Cinema(api_id='fake_cinema1', city='spb', city_id=3, name='c1')
+        c2 = Cinema(api_id='fake_cinema2', city='msk', city_id=2, name='c2')
+        c3 = Cinema(api_id='fake_cinema3', city='msk', city_id=2, name='c3')
         m1 = Movie(api_id='fake_movie1', title='t1')
         m2 = Movie(api_id='fake_movie2', title='t2')
         m3 = Movie(api_id='fake_movie3', title='t3')
@@ -312,8 +312,8 @@ class TestModelScreening(object):
         from subscity.models.cinema import Cinema
         from subscity.models.movie import Movie
 
-        c1 = Cinema(api_id='fake_cinema1', city='msk', name='c1')
-        c2 = Cinema(api_id='fake_cinema2', city='spb', name='c2')
+        c1 = Cinema(api_id='fake_cinema1', city='msk', city_id=2, name='c1')
+        c2 = Cinema(api_id='fake_cinema2', city='spb', city_id=3, name='c2')
         m1 = Movie(api_id='fake_movie2', title='m2')
         m2 = Movie(api_id='fake_movie3', title='m3')
         [dbsession.add(x) for x in [c1, c2, m1, m2]]
@@ -366,9 +366,9 @@ class TestModelScreening(object):
         m1 = Movie(api_id='fake_movie1', title='title1')
         m2 = Movie(api_id='fake_movie2', title='title2', hide=True)
         m3 = Movie(api_id='fake_movie3', title='title3', hide=True)
-        c1 = Cinema(api_id='fake_cinema1', city='msk', name='c1')
-        c2 = Cinema(api_id='fake_cinema2', city='msk', name='c2')
-        c3 = Cinema(api_id='fake_cinema3', city='spb', name='c3')
+        c1 = Cinema(api_id='fake_cinema1', city='msk', city_id=2, name='c1')
+        c2 = Cinema(api_id='fake_cinema2', city='msk', city_id=2, name='c2')
+        c3 = Cinema(api_id='fake_cinema3', city='spb', city_id=3, name='c3')
         [dbsession.add(x) for x in [m1, m2, m3, c1, c2, c3]]
         dbsession.commit()
 
@@ -404,10 +404,10 @@ class TestModelScreening(object):
         [dbsession.add(x) for x in [m1, m2, m3]]
         dbsession.commit()
 
-        c1 = Cinema(api_id='fake_cinema1', city='msk', name='C1')
-        c2 = Cinema(api_id='fake_cinema2', city='msk', name='C2')
-        c3 = Cinema(api_id='fake_cinema3', city='spb', name='C3')
-        c4 = Cinema(api_id='fake_cinema4', city='msk', name='C4')
+        c1 = Cinema(api_id='fake_cinema1', city='msk', city_id=2, name='C1')
+        c2 = Cinema(api_id='fake_cinema2', city='msk', city_id=2, name='C2')
+        c3 = Cinema(api_id='fake_cinema3', city='spb', city_id=3, name='C3')
+        c4 = Cinema(api_id='fake_cinema4', city='msk', city_id=2, name='C4')
         [dbsession.add(x) for x in [c1, c2, c3, c4]]
         dbsession.commit()
 

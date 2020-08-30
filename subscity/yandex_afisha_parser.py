@@ -10,11 +10,12 @@ from subscity.utils import read_file
 
 class YandexAfishaParser:
     LOCAL_BASE_STORAGE = '/tmp/subscity_afisha_files'
-    CITIES = ('msk', 'spb')
+    # CITIES = ('msk', 'spb')
     BASE_URL = 'https://afisha.yandex.ru'
     HAS_SUBS_TAG = 'На языке оригинала, с русскими субтитрами'
     DAY_STARTS_AT = timedelta(hours=2.5)  # day starts @ 02:30 and not 00:00
     MIN_DAYS_BEFORE_FIRST_SCREENING = 5
+    CITIES_MAPPING = {'msk': 2, 'spb': 3}  # legacy: values for compatibility with v2
 
     @classmethod
     def url_tickets(cls, cinema_api_id: str, city: str, day: datetime) -> str:
@@ -166,6 +167,7 @@ class YandexAfishaParser:
                            'url': item.get('w'),
                            'metro': cls._get_metro(item),
                            'city': city_abbr,
+                           'city_id': cls.CITIES_MAPPING[city_abbr],
                            'latitude': float(item['lat']),
                            'longitude': float(item['lon'])})
         return result

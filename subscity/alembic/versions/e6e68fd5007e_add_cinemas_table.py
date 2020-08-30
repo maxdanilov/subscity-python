@@ -29,6 +29,7 @@ def upgrade_subscity():
                     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
                     sa.Column('api_id', sa.String(length=64), nullable=False),
                     sa.Column('city', sa.String(length=64), nullable=False),
+                    sa.Column('city_id', sa.Integer(), nullable=False),
                     sa.Column('name', sa.String(length=255), nullable=False),
                     sa.Column('address', sa.String(length=512), nullable=True),
                     sa.Column('metro', sa.String(length=255), nullable=True),
