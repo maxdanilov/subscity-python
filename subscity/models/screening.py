@@ -8,7 +8,7 @@ from sqlalchemy import (
     String,
     DateTime
 )
-from sqlalchemy import Float
+
 from sqlalchemy import func
 from sqlalchemy.dialects.mysql import DATETIME
 
