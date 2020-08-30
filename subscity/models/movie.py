@@ -25,6 +25,9 @@ class Movie(Base):  # pylint: disable=no-init
 
     languages = Column(String(255))
 
+    description = Column(Text())
+    description_english = Column(Text())
+
     countries = Column(String(255))
     countries_en = Column(String(255))
 
@@ -40,9 +43,6 @@ class Movie(Base):  # pylint: disable=no-init
 
     genres = Column(String(255))
     genres_en = Column(String(255))
-
-    description = Column(Text())
-    description_en = Column(Text())
 
     poster_url = Column(String(512))
     premiere = Column(DateTime)

@@ -79,7 +79,7 @@ class TestMovie(object):
                                'countries_en': 'France',
                                'created_at': '2017-01-01T00:00:00',
                                'description': None,
-                               'description_en': None,
+                               'description_english': None,
                                'directors': None,
                                'directors_en': None,
                                'duration': None,
@@ -162,7 +162,7 @@ class TestMovie(object):
                            ' симпатий за лучший фильм на международном кинофестивале в '
                            'Сан-Себастьяне (Испания, 2017).\nНоминация на премию Гильдии '
                            'продюсеров США (2018) в категории «Лучший фильм».',
-            'description_en': None,
+            'description_english': None,
             'directors': 'Мартин МакДона',
             'directors_en': None,
             'duration': 115,
