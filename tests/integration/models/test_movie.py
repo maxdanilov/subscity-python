@@ -101,51 +101,6 @@ class TestMovie(object):
                                'updated_at': '2017-01-01T00:00:00',
                                'year': None}
 
-    def test_create_or_update(self, dbsession):
-        filter_keys = ['api_id', 'title', 'genres']
-        m = Movie(api_id='bla', title='movie')
-        m.create_or_update()
-        result = dbsession.query(Movie).all()
-        assert len(result) == 1
-        assert filter_dict(result[0].to_dict(), filter_keys) == {
-            'api_id': 'bla',
-            'title': 'movie',
-            'genres': None
-        }
-
-        m2 = Movie(api_id='bla2', title='movie2')
-        m2.create_or_update()
-        result2 = dbsession.query(Movie).all()
-        assert len(result2) == 2
-        assert result2 == [m, m2]
-
-        assert filter_dict(result2[0].to_dict(), filter_keys) == {
-            'api_id': 'bla',
-            'title': 'movie',
-            'genres': None
-        }
-
-        assert filter_dict(result2[1].to_dict(), filter_keys) == {
-            'api_id': 'bla2',
-            'title': 'movie2',
-            'genres': None
-        }
-
-        m1 = Movie(api_id='bla')
-        m1.create_or_update()
-        result3 = dbsession.query(Movie).all()
-        assert len(result3) == 2
-        assert filter_dict(result3[0].to_dict(), filter_keys) == {
-            'api_id': 'bla',
-            'title': 'movie',  # is not nullable
-            'genres': None
-        }
-
-        assert filter_dict(result3[1].to_dict(), filter_keys) == {
-            'api_id': 'bla2',
-            'title': 'movie2',
-            'genres': None
-        }
 
     def test_insert_duplicate_api_id(self, dbsession):
         import pytest
