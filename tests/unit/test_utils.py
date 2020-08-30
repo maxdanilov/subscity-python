@@ -23,9 +23,9 @@ class TestUtils(object):
         from subscity.utils import get_timezone
         assert get_timezone(city) == expected
 
-    @parametrize('utc_now, expected', [(datetime.datetime(2017, 2, 15, 10, 0),   # winter time
+    @parametrize('utc_now, expected', [(datetime.datetime(2017, 2, 15, 10, 0),  # winter time
                                         datetime.datetime(2017, 2, 15, 13, 0)),
-                                       (datetime.datetime(2017, 6, 15, 10, 0),   # summer time
+                                       (datetime.datetime(2017, 6, 15, 10, 0),  # summer time
                                         datetime.datetime(2017, 6, 15, 13, 0))])
     def test_get_now(self, utc_now, expected):
         from subscity.utils import get_now
