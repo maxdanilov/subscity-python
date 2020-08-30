@@ -85,7 +85,7 @@ class TestMovie(object):
                                'imdb_id': None,
                                'kinopoisk_id': None,
                                'languages': None,
-                               'poster_url': None,
+                               'poster': None,
                                'premiere': None,
                                'title': 'Название',
                                'title_original': 'Title',
@@ -164,7 +164,7 @@ class TestMovie(object):
             'imdb_id': None,
             'kinopoisk_id': 944098,
             'languages': None,
-            'poster_url': 'https://avatars.mds.yandex.net/get-afishanew/28638/'
+            'poster': 'https://avatars.mds.yandex.net/get-afishanew/28638/'
                           'b2823c79fe50ed1ca28cff7abea46f46/orig',
             'premiere': '2018-02-01T00:00:00',
             'title': 'Три билборда на границе Эббинга, Миссури',

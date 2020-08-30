@@ -37,7 +37,7 @@ class YandexAfishaParser:
                 'duration': cls._get_duration(item),
                 'genres': cls._get_genres(item),
                 'kinopoisk_id': cls._get_kinopoisk_id(item),
-                'poster_url': item.get('cover'),
+                'poster': item.get('cover'),
                 'premiere': cls._get_premiere(item),
                 'title': item.get('t'),
                 'title_original': item.get('or'),

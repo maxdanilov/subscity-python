@@ -146,7 +146,7 @@ class TestYandexAfishaParser(object):
             'duration': 115,
             'genres': 'артхаус, драма, комедия',
             'kinopoisk_id': 944098,
-            'poster_url': 'https://avatars.mds.yandex.net/get-afishanew/28638/'
+            'poster': 'https://avatars.mds.yandex.net/get-afishanew/28638/'
                           'b2823c79fe50ed1ca28cff7abea46f46/orig',
             'premiere': datetime(2018, 2, 1, 0, 0),
             'title': 'Три билборда на границе Эббинга, Миссури',
