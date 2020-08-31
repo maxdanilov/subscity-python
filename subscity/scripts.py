@@ -17,19 +17,24 @@ from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
 def update_screenings() -> None:
     for city in Yap.CITIES_MAPPING:
         screenings = Yap.get_screenings(city)
-        print('{city} Parsed new screenings: {count}'.format(city=city, count=len(screenings)))
+        print(f'{city} Parsed new screenings: {len(screenings)}')
+
+        screenings_all = [Screening(**screening_dict) for screening_dict in screenings]
+        screenings_to_save = Screening.filter_invalid(screenings_all)
+        screenings_to_skip = [s for s in screenings_all if s not in screenings_to_save]
 
         count = Screening.clean(city=city)
-        print('{city} Dropped screenings: {count}'.format(city=city, count=count))
+        print(f'{city} Dropped screenings: {count}')
 
-        count = Screening.bulk_save([Screening(**screening_dict) for screening_dict in screenings])
-        print('{city} Saved screenings: {count}'.format(city=city, count=count))
+        count = Screening.bulk_save(screenings_to_save)
+        print(f'{city} Saved screenings: {count}')
+        print(f'{city} Skipped screenings to keep DB integrity: {len(screenings_to_skip)}')
 
         count = Screening.clean_hidden(city=city)
-        print('{city} Dropped screening for hidden movies: {count}'.format(city=city, count=count))
+        print(f'{city} Dropped screening for hidden movies: {count}')
 
         count = Screening.clean_premature(city=city)
-        print('{city} Dropped premature screenings: {count}'.format(city=city, count=count))
+        print(f'{city} Dropped premature screenings: {count}')
 
 
 def update_cinemas() -> None:
@@ -110,7 +115,7 @@ def update_base() -> None:
 
     print("Reformatting with xmllint")
     os.system("find " + Yap.LOCAL_BASE_STORAGE + " -path \"*cinema/*.xml\" -type f -exec "
-              "xmllint --output '{}' --format '{}' \\;")
+                                                 "xmllint --output '{}' --format '{}' \\;")
 
     print('Removing archive')
     os.remove(file_name)

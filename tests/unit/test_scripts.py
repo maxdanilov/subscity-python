@@ -1,5 +1,8 @@
 from mock import call
 
+from subscity.models.cinema import Cinema
+from subscity.models.movie import Movie
+
 
 class TestScripts(object):
     def test_update_screenings(self, mocker):
@@ -17,8 +20,13 @@ class TestScripts(object):
         mock_get_screenings.side_effect = [[{'cinema_api_id': 'aaa', 'movie_api_id': 'bbb'}],
                                            [{'cinema_api_id': 'ccc', 'movie_api_id': 'bbb'},
                                             {'cinema_api_id': 'eee', 'movie_api_id': 'fff'}]]
+        s1 = Screening()
+        s2 = Screening()
+        s3 = Screening()
         mock_screening_init = mocker.patch.object(Screening, '__init__',
                                                   return_value=None)
+        mock_screenings_filter_invalid = mocker.patch.object(Screening, 'filter_invalid')
+        mock_screenings_filter_invalid.side_effect = [[s1], [s2, s3]]
 
         with mock_datetime(datetime.datetime(2017, 1, 12, 9, 26, 0)):
             update_screenings()
@@ -30,7 +38,7 @@ class TestScripts(object):
                                                       call(cinema_api_id='eee', movie_api_id='fff')]
         assert mock_clean_hidden.call_args_list == [call(city='msk'), call(city='spb')]
         assert mock_clean_premature.call_args_list == [call(city='msk'), call(city='spb')]
-        assert len(mock_bulk_save.call_args_list) == 2
+        assert mock_bulk_save.call_args_list == [call([s1]), call([s2, s3])]
 
     def test_update_cinemas(self, mocker):
         from subscity.yandex_afisha_parser import YandexAfishaParser

@@ -390,6 +390,45 @@ class TestModelScreening(object):
         screenings = dbsession.query(Screening).all()
         assert [s.id for s in screenings] == [s1.id, s3.id]
 
+    def test_filter_invalid_empty(self, dbsession):
+        assert Screening.filter_invalid([]) == []
+
+    def test_filter_invalid(self, dbsession):
+        import datetime
+        from subscity.models.movie import Movie
+        from subscity.models.cinema import Cinema
+
+        m1 = Movie(api_id='fake_movie1', title='title1')
+        m2 = Movie(api_id='fake_movie2', title='title2')
+        [dbsession.add(x) for x in [m1, m2]]
+        dbsession.commit()
+
+        c1 = Cinema(api_id='fake_cinema1', city='msk', city_id=2, name='C1')
+        c2 = Cinema(api_id='fake_cinema2', city='msk', city_id=2, name='C2')
+        c3 = Cinema(api_id='fake_cinema3', city='spb', city_id=3, name='C3')
+        [dbsession.add(x) for x in [c1, c2, c3]]
+        dbsession.commit()
+
+        s1 = Screening(cinema_api_id='fake_cinema1', movie_api_id='fake_movie1',
+                       city='msk', date_time=datetime.datetime(2018, 6, 6, 0, 1))
+
+        s2 = Screening(cinema_api_id='fake_cinema2', movie_api_id='fake_movie2',
+                       city='msk', date_time=datetime.datetime(2018, 6, 6, 5, 5))
+
+        # movie_id is unknown
+        s3 = Screening(cinema_api_id='fake_cinema3', movie_api_id='unknown_movie1',
+                       city='spb', date_time=datetime.datetime(2018, 6, 2, 12, 0))
+
+        # cinema_id is unknown
+        s4 = Screening(cinema_api_id='unknown_cinema1', movie_api_id='fake_movie2',
+                       city='msk', date_time=datetime.datetime(2018, 6, 1, 20, 0))
+
+        # both movie_id ad cinema_id are unknown
+        s5 = Screening(cinema_api_id='unknown_cinema2', movie_api_id='unknown_movie2',
+                       city='msk', date_time=datetime.datetime(2018, 6, 1, 20, 0))
+
+        assert Screening.filter_invalid([s1, s2, s3, s4, s5]) == [s1, s2]
+
     def test_clean_premature_empty(self, dbsession):
         assert Screening.clean_premature('msk') == 0
 

@@ -13,6 +13,7 @@ from sqlalchemy import func
 from sqlalchemy.dialects.mysql import DATETIME
 
 from subscity.models.base import Base, DB
+from subscity.models.cinema import Cinema
 from subscity.models.movie import Movie
 from subscity.utils import get_now
 from subscity.yandex_afisha_parser import YandexAfishaParser as Yap
@@ -101,3 +102,12 @@ class Screening(Base):  # pylint: disable=no-init
         for movie_api_id in movie_api_ids:
             count += Screening.clean(movie_api_id=movie_api_id, city=city)
         return count
+
+    @staticmethod
+    def filter_invalid(screenings: List['Screening']) -> List['Screening']:
+        # sometimes the database integrity is not fulfilled by Yandex, and
+        # there are screenings referring to non-existent movies of cinemas,
+        # hence we need to filter those out before saving screenings to DB
+        return [s for s in screenings
+                if s.movie_api_id in Movie.get_all_api_ids()
+                and s.cinema_api_id in Cinema.get_all_api_ids()]
