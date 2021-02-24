@@ -45,7 +45,7 @@ def setup_clean_db(app):
     apply_migrations()
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def dbsession(request, monkeypatch, setup_clean_db):
     from subscity.models.base import DB
     # Prevent the dbsession from closing (make it a no-op) and
