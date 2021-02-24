@@ -1,0 +1,4 @@
+#!/bin/bash
+export DB_NAME='subscity'
+export DB_URI="mysql+pymysql://root:password@127.0.0.1:3306/${DB_NAME}?charset=utf8"
+py.test tests/ $@
