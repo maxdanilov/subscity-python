@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/maxdanilov/subscity-python.svg?branch=master)](https://travis-ci.org/maxdanilov/subscity-python)
+![Build Status](https://github.com/maxdanilov/subscity-python/actions/workflows/main.yml/badge.svg)
 [![codecov](https://codecov.io/gh/maxdanilov/subscity-python/branch/master/graph/badge.svg)](https://codecov.io/gh/maxdanilov/subscity-python)
 [![Updates](https://pyup.io/repos/github/maxdanilov/subscity-python/shield.svg)](https://pyup.io/repos/github/maxdanilov/subscity-python/)
 
