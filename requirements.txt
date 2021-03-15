@@ -10,7 +10,7 @@ decorator==4.4.2
 Flask==1.1.2
 Flask-SQLAlchemy==2.4.4
 funcsigs==1.0.2
-ipdb==0.13.4
+ipdb==0.13.6
 ipython==7.20.0
 ipython-genutils==0.2.0
 isort==5.7.0
