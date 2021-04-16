@@ -16,7 +16,7 @@ ipython-genutils==0.2.0
 isort==5.8.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
-lazy-object-proxy==1.5.2
+lazy-object-proxy==1.6.0
 Mako==1.1.4
 MarkupSafe==1.1.1
 mccabe==0.6.1
