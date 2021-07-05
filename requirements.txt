@@ -21,7 +21,7 @@ Mako==1.1.4
 MarkupSafe==1.1.1
 mccabe==0.6.1
 mock==4.0.3
-pathlib2==2.3.5
+pathlib2==2.3.6
 pbr==5.5.1
 pexpect==4.8.0
 pickleshare==0.7.5
