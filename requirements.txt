@@ -6,7 +6,7 @@ bcrypt==3.2.0
 click==7.1.2
 codecov==2.1.11
 coverage==5.5
-decorator==5.0.7
+decorator==5.1.0
 Flask==1.1.2
 Flask-SQLAlchemy==2.5.1
 funcsigs==1.0.2
