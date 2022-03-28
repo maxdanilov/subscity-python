@@ -3,7 +3,7 @@ appnope==0.1.2
 astroid==2.5.3
 beautifulsoup4==4.9.3
 bcrypt==3.2.0
-click==7.1.2
+click==8.1.0
 codecov==2.1.11
 coverage==5.5
 decorator==5.0.7
