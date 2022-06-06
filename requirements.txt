@@ -43,7 +43,7 @@ safety==1.10.3
 setuptools==56.0.0
 simplegeneric==0.8.1
 six==1.15.0
-SQLAlchemy==1.4.8
+SQLAlchemy==1.4.37
 traitlets==5.0.5
 transliterate==1.10.2
 urllib3==1.26.4
