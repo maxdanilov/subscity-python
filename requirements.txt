@@ -49,6 +49,6 @@ transliterate==1.10.2
 urllib3==1.26.4
 voluptuous==0.12.1
 wcwidth==0.2.5
-Werkzeug==1.0.1
+Werkzeug==2.2.1
 wrapt==1.12.1
 xmltodict==0.12.0
