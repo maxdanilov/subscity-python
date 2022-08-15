@@ -22,7 +22,7 @@ MarkupSafe==1.1.1
 mccabe==0.6.1
 mock==4.0.3
 pathlib2==2.3.5
-pbr==5.5.1
+pbr==5.10.0
 pexpect==4.8.0
 pickleshare==0.7.5
 prompt-toolkit==3.0.18
