@@ -1,6 +1,6 @@
 alembic==1.5.8
 appnope==0.1.2
-astroid==2.5.3
+astroid==2.12.5
 beautifulsoup4==4.9.3
 bcrypt==3.2.0
 click==7.1.2
