@@ -30,7 +30,7 @@ ptyprocess==0.7.0
 py==1.10.0
 pycodestyle==2.7.0
 Pygments==2.8.1
-pylint==2.7.4
+pylint==2.15.8
 PyMySQL==1.0.2
 pytest==6.2.3
 pytest-cov==2.11.1
