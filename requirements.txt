@@ -1,4 +1,4 @@
-alembic==1.5.8
+alembic==1.9.1
 appnope==0.1.2
 astroid==2.5.3
 beautifulsoup4==4.9.3
